@@ -2,18 +2,21 @@
   "name": "tiny-crud",
   "version": "1.0.1",
   "description": "",
-  "main": "lib/main.js",
+  "main": "dist/main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "webpack": "webpack --config webpack.config.js",
-    "build": "tsc"
+    "build": "rollup --config"
   },
   "author": "Xicheng_Guo",
   "license": "MIT",
   "files": [
-    "lib"
+    "dist"
   ],
   "devDependencies": {
+    "@rollup/plugin-typescript": "^11.1.5",
+    "rollup": "^4.3.0",
+    "tslib": "^2.6.2",
     "typescript": "^5.2.2",
     "webpack": "^5.89.0",
     "webpack-cli": "^5.1.4"
