@@ -3,7 +3,8 @@ export class TinyCRUD {
         private wx: any,
         private owner: string,
         private repo: string,
-        private issueNumber: number) {
+        private issueNumber: number,
+        private accessToken: string) {
 
     }
     find() {
@@ -11,7 +12,8 @@ export class TinyCRUD {
             url: `https://gitee.com/api/v5/repos/${this.owner}/${this.repo}/issues/${this.issueNumber}/comments?page=1&per_page=10&order=desc`, // 你的数据接口地址
             method: 'GET',
             header: {
-                'content-type': 'application/json' // 默认值
+                'content-type': 'application/json',
+                'Authorization': this.accessToken
             },
             success(res: any) {
                 console.log(res.data) // 在控制台输出返回的数据
