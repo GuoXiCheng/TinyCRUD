@@ -6,7 +6,7 @@
   "module": "dist/tiny-crud.esm.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "webpack": "webpack --config webpack.config.js",
+    "prebuild": "rimraf ./dist",
     "build": "rollup --config"
   },
   "author": "Xicheng_Guo",
@@ -19,6 +19,7 @@
     "@rollup/plugin-commonjs": "^25.0.7",
     "@rollup/plugin-node-resolve": "^15.2.3",
     "@rollup/plugin-typescript": "^11.1.5",
+    "rimraf": "^5.0.5",
     "rollup": "^4.3.0",
     "tslib": "^2.6.2",
     "typescript": "^5.2.2"
