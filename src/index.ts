@@ -1,5 +1,3 @@
-import axios from 'axios';
-import 'dotenv/config';
 export type TinyCRUDConfig = {
     base_url: string;
     owner: string;
@@ -21,7 +19,7 @@ export class TinyCRUD {
                 const url = `${this.config.base_url}/api/v5/repos/${this.config.owner}/${this.config.repo}/issues/${this.config.issue_number}/comments`;
                 if (this.config.request_lib === "axios") {
                     
-                    const result = await axios.post(url, { body }, { headers: { 'Authorization': this.config.access_token } });
+                    const result = await this.config.request_object.post(url, { body }, { headers: { 'Authorization': this.config.access_token } });
                     return result.data;
                 } else if (this.config.request_lib === "wx") {
                     return new Promise(resolve => {
