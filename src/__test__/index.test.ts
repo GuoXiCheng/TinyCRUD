@@ -1,5 +1,6 @@
 import { TinyCRUD } from "../index";
 import 'dotenv/config';
+import axios from "axios";
 test("index gitee", async ()=>{
     const tinyCRUD = new TinyCRUD({
         owner: "guoxicheng",
@@ -8,7 +9,8 @@ test("index gitee", async ()=>{
         base_url: "https://gitee.com",
         request_lib: "axios",
         access_token: process.env.GITEE_TOKEN as string,
-        git_platform: "gitee"
+        git_platform: "gitee",
+        request_object: axios
     });
 
     const detail = await tinyCRUD.createOne("测试");
