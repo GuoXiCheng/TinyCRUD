@@ -13,4 +13,4 @@ test("index gitee", async ()=>{
 
     const detail = await tinyCRUD.createOne("测试");
     expect(detail).toHaveProperty("body", "测试");
-});
+}, 30000);
