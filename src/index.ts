@@ -1,50 +1,60 @@
+import axios from 'axios';
+import 'dotenv/config';
+export type TinyCRUDConfig = {
+    base_url: string;
+    owner: string;
+    repo: string;
+    issue_number: string;
+    access_token: string;
+    git_platform: "gitee" | "github" | "gitlab";
+    request_lib: "axios" | "wx";
+    request_object?: any;
+}
 export class TinyCRUD {
-    constructor(
-        private wx: any,
-        private owner: string,
-        private repo: string,
-        private issueNumber: number,
-        private accessToken: string) {
+    constructor(private config: TinyCRUDConfig) {
 
     }
-    find() {
-        this.wx.request({
-            url: `https://gitee.com/api/v5/repos/${this.owner}/${this.repo}/issues/${this.issueNumber}/comments?page=1&per_page=10&order=desc`, // 你的数据接口地址
-            method: 'GET',
-            header: {
-                'content-type': 'application/json',
-                'Authorization': this.accessToken
-            },
-            success(res: any) {
-                console.log(res.data) // 在控制台输出返回的数据
-            },
-            fail(err: any) {
-                console.log(err) // 输出错误信息
-            }
-        })
+
+    async createOne(body: string | Object) {
+        switch (this.config.git_platform) {
+            case "gitee":
+                const url = `${this.config.base_url}/api/v5/repos/${this.config.owner}/${this.config.repo}/issues/${this.config.issue_number}/comments`;
+                if (this.config.request_lib === "axios") {
+                    
+                    const result = await axios.post(url, { body }, { headers: { 'Authorization': this.config.access_token } });
+                    return result.data;
+                } else if (this.config.request_lib === "wx") {
+                    return new Promise(resolve => {
+                        this.config.request_object.request({
+                            url: url,
+                            method: 'POST',
+                            header: {
+                                'Authorization': this.config.access_token
+                            },
+                            data: {
+                                body
+                            },
+                            async success(res: any) {
+                                resolve(res);
+                            }
+                        });
+                    });
+                }
+                break;
+            case "github":
+                if (this.config.request_lib === "axios") {
+
+                } else if (this.config.request_lib === "wx") { }
+                break;
+            case "gitlab":
+                if (this.config.request_lib === "axios") {
+
+                } else if (this.config.request_lib === "wx") { }
+                break;
+        }
+    }
+
+    findById(id: number) {
+
     }
 }
-
-// import axios, { AxiosRequestConfig } from 'axios';
-// export class TinyCRUD {
-//     constructor(
-//         private owner: string,
-//         private repo: string,
-//         private issueNumber: string,
-//         private accessToken: string) {
-
-//     }
-
-//     async find () {
-//         const config: AxiosRequestConfig = {
-//             method: 'get',
-//             maxBodyLength: Infinity,
-//             url: `https://gitee.com/api/v5/repos/${this.owner}/${this.repo}/issues/${this.issueNumber}/comments?page=1&per_page=10&order=desc`,
-//             headers: {
-//                 'Authorization': this.accessToken
-//             }
-//         }
-
-//         return axios.request(config).then(res=>res.data);
-//     }
-// }
