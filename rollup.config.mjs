@@ -8,11 +8,11 @@ export default {
     input: 'src/index.ts',
     output: [
         {
-            file: 'dist/tiny-crud.cjs.js', // CommonJS 输出文件
+            file: 'dist/bundle.cjs.js', // CommonJS 输出文件
             format: 'cjs',
         },
         {
-            file: 'dist/tiny-crud.esm.js', // ES Module 输出文件
+            file: 'dist/bundle.esm.js', // ES Module 输出文件
             format: 'esm',
         },
     ],
