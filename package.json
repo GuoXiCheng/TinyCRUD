@@ -2,8 +2,9 @@
   "name": "tiny-crud",
   "version": "1.0.10",
   "description": "",
-  "main": "dist/tiny-crud.cjs.js",
-  "module": "dist/tiny-crud.esm.js",
+  "main": "dist/bundle.cjs.js",
+  "module": "dist/bundle.esm.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "test": "jest --coverage",
     "prebuild": "rimraf ./dist",

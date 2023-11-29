@@ -1,4 +1,16 @@
-export {StoragePlatformType, RequestLibType} from './type';
+export enum StoragePlatform {
+    gitee = "gitee",
+    github = "github",
+    gitlab = "gitlab"
+}
+
+export enum RequestLib {
+    axios = "axios",
+    wx = "wx"
+}
+
+export type StoragePlatformType = keyof typeof StoragePlatform;
+export type RequestLibType = keyof typeof RequestLib;
 // export type TinyCRUDConfig = {
 //     base_url: string;
 //     owner: string;
