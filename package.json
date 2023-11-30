@@ -1,6 +1,6 @@
 {
   "name": "tiny-crud",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "description": "",
   "main": "dist/bundle.cjs.js",
   "module": "dist/bundle.esm.js",

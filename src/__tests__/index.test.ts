@@ -1,3 +1,6 @@
+test('example', ()=>{
+    expect(1).toBe(1);
+});
 // import { TinyCRUD } from "../index";
 // import 'dotenv/config';
 // import axios from "axios";
