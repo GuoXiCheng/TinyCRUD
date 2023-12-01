@@ -6,17 +6,17 @@ import { WxRequest } from "./wx-request";
 export type RequestInstance = WxInstance | AxiosInstance;
 
 abstract class TinyRequestFactory {
-    abstract createRequest(instance: RequestInstance): TinyRequest;
+    abstract createRequest(instance: RequestInstance, accessToken: string): TinyRequest;
 }
 
 export class AxiosRequestFactory extends TinyRequestFactory {
-    createRequest(instance: AxiosInstance) {
-        return new AxiosRequest(instance);
+    createRequest(instance: AxiosInstance, accessToken: string) {
+        return new AxiosRequest(instance, accessToken);
     }
 }
 
 export class WxRequestFactory extends TinyRequestFactory {
-    createRequest(instance: WxInstance) {
-        return new WxRequest(instance);
+    createRequest(instance: WxInstance, accessToken: string) {
+        return new WxRequest(instance, accessToken);
     }
 }
