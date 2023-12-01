@@ -6,10 +6,14 @@ export interface WxInstance {
 export interface WxRequestOptions {
     url: string;
     method: 'GET' | 'POST';
+    header?: object;
 }
 
 export interface TinyRequest {
-    get(url: string): void;
+    get(url: string): Promise<any>;
     post(url: string): void;
 };
 
+export interface TinyRequestOptions {
+    accessToken?: string;
+}
