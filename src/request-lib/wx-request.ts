@@ -1,19 +1,27 @@
 import { WxInstance, TinyRequest } from './interfaces';
 
 export class WxRequest implements TinyRequest {
-    constructor(private wx: WxInstance) { }
+    constructor(private wx: WxInstance, private accessToken: string) { }
 
-    get(url: string) {
-        this.wx.request({
+    async get(url: string) {
+        return this.wx.request({
             url,
-            method: 'GET'
+            method: 'GET',
+            header: {
+                'Authorization': this.accessToken,
+                'PRIVATE-TOKEN': this.accessToken
+            }
         });
     }
 
     post(url: string) {
         this.wx.request({
             url,
-            method: 'POST'
+            method: 'POST',
+            header: {
+                'Authorization': this.accessToken,
+                'PRIVATE-TOKEN': this.accessToken
+            }
         });
     }
 }
