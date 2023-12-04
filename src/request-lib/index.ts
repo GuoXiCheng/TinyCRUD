@@ -1,7 +1,8 @@
 import { AxiosInstance } from "axios";
-import { RequestLib, RequestLibType } from "..";
 import { AxiosRequestFactory, RequestInstance, WxRequestFactory } from "./request-factories";
 import { WxInstance } from "./interfaces";
+import { RequestLibType } from "../types";
+import { RequestLib } from "../enums";
 
 export function TinyRequestInstance(requestLibType: RequestLibType, instance: RequestInstance, accessToken: string) {
     switch (requestLibType) {
