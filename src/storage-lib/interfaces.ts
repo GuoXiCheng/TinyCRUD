@@ -1,4 +1,10 @@
-export interface TinyStorage {
+export interface TinyStorage<T> {
     findOne(): void;
-    findAll(): void;
+    findAll(): Promise<T[]>;
+}
+
+export class TinyModel {
+    id!: number;
+    created_at!: string;
+    updated_at!: string;
 }
