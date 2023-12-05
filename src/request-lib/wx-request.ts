@@ -3,7 +3,7 @@ import { WxInstance, TinyRequest } from './interfaces';
 export class WxRequest implements TinyRequest {
     constructor(private wx: WxInstance, private accessToken: string) { }
 
-    async get(url: string) {
+    async get<T>(url: string): Promise<T> {
         return new Promise((resolve, reject) => {
             this.wx.request({
                 url,
@@ -13,7 +13,7 @@ export class WxRequest implements TinyRequest {
                     'PRIVATE-TOKEN': this.accessToken
                 },
                 success: (res: {data: string | Object | ArrayBuffer, statusCode: number}) => {
-                    resolve(res);
+                    resolve(res as T);
                 },
                 fail: (errMsg: string, errNo: number) => {
                     reject(errMsg);

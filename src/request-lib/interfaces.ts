@@ -12,7 +12,7 @@ export interface WxRequestOptions {
 }
 
 export interface TinyRequest {
-    get(url: string): Promise<any>;
+    get<T>(url: string): Promise<T>;
     post(url: string): void;
 };
 
