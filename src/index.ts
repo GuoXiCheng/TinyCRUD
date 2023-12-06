@@ -1,3 +1,3 @@
-import {TinyRequestInstance} from "./request-lib";
-export {TinyRequestInstance};
+import {createRequest} from "./request-lib";
+export {createRequest};
 

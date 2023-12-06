@@ -4,7 +4,7 @@ export enum StoragePlatform {
     gitlab = "gitlab"
 }
 
-export enum RequestLib {
+export enum RequestType {
     axios = "axios",
     wx = "wx"
 }
