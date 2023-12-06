@@ -1,3 +1,6 @@
+import { AxiosInstance } from "axios";
+import { RequestType } from "../enums";
+
 export interface WxInstance {
     request(options: WxRequestOptions): void;
     [prop: string]: any;
@@ -16,6 +19,9 @@ export interface TinyRequest {
     post(url: string): void;
 };
 
+export type RequestInstance = WxInstance | AxiosInstance;
 export interface TinyRequestOptions {
-    accessToken?: string;
+    requestType: keyof typeof RequestType;
+    request: RequestInstance; 
+    accessToken: string;
 }

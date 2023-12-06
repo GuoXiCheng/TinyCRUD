@@ -25,7 +25,10 @@ jobs:
         run: npm run test
         env:
           GITEE_TOKEN: ${{ secrets.GITEE_TOKEN }}
-          GITEE_GET_ALL_URL: ${{ secrets.GITEE_GET_ALL_URL }}
+          GITEE_OWNER: ${{ secrets.GITEE_OWNER }}
+          GITEE_REPO: ${{ secrets.GITEE_REPO }}
+          GITEE_NUMBER: ${{ secrets.GITEE_NUMBER }}
+
 
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v3
