@@ -9,14 +9,31 @@ import { RequestType } from "../enums";
  * @returns The created request.
  * @throws Error if the request lib type is invalid.
  */
-export function createRequest(options: TinyRequestOptions) {
+export function createRequest<T extends RequestType>(options: TinyRequestOptions<T>) {
     const { requestType, request, accessToken } = options;
     switch (requestType) {
         case RequestType.axios:
-            return new AxiosRequestFactory().createRequest(request as AxiosInstance, accessToken);
+            if (isAxiosInstance(request)) {
+                return new AxiosRequestFactory().createRequest(request, accessToken);
+            }
         case RequestType.wx:
-            return new WxRequestFactory().createRequest(request as WxInstance, accessToken);
+            if (isWxInstance(request)) {
+                return new WxRequestFactory().createRequest(request, accessToken);
+            }
         default:
             throw new Error('invalid request lib type');
     }
+}
+
+function isAxiosInstance(instance: any): instance is AxiosInstance {
+    return instance
+        && typeof instance.get === 'function'
+        && typeof instance.post === 'function'
+        && typeof instance.put === 'function'
+        && typeof instance.delete === 'function'
+        && typeof instance.patch === 'function';
+}
+
+function isWxInstance(instance: any): instance is WxInstance {
+    return instance && typeof instance.request === 'function';
 }

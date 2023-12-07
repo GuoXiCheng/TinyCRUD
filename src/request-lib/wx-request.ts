@@ -9,8 +9,7 @@ export class WxRequest implements TinyRequest {
                 url,
                 method: 'GET',
                 header: {
-                    'Authorization': this.accessToken,
-                    'PRIVATE-TOKEN': this.accessToken
+                    'Authorization': this.accessToken
                 },
                 success: (res: {data: string | Object | ArrayBuffer, statusCode: number}) => {
                     resolve(res as T);
@@ -31,5 +30,9 @@ export class WxRequest implements TinyRequest {
         //         'PRIVATE-TOKEN': this.accessToken
         //     }
         // });
+    }
+
+    async ping() {
+        return;
     }
 }
