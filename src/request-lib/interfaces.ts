@@ -17,11 +17,17 @@ export interface WxRequestOptions {
 export interface TinyRequest {
     get<T>(url: string): Promise<T>;
     post(url: string): void;
+    ping(): Promise<any>;
 };
 
 export type RequestInstance = WxInstance | AxiosInstance;
-export interface TinyRequestOptions {
-    requestType: keyof typeof RequestType;
-    request: RequestInstance; 
+
+type RequestTypeMap = {
+    [RequestType.wx]: WxInstance;
+    [RequestType.axios]: AxiosInstance;
+}
+export interface TinyRequestOptions<T extends RequestType> {
+    requestType: T;
+    request: RequestTypeMap[T]; 
     accessToken: string;
 }

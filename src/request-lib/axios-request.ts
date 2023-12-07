@@ -8,8 +8,7 @@ export class AxiosRequest implements TinyRequest {
         return new Promise((resolve, reject) => {
             this.axios.get(url, {
                 headers: {
-                    'Authorization': this.accessToken,
-                    'PRIVATE-TOKEN': this.accessToken
+                    'Authorization': this.accessToken
                 }
             }).then((res) => {
                 resolve(res.data as T);
@@ -22,9 +21,12 @@ export class AxiosRequest implements TinyRequest {
     post(url: string) {
         this.axios.post(url, undefined, {
             headers: {
-                'Authorization': this.accessToken,
-                'PRIVATE-TOKEN': this.accessToken
+                'Authorization': this.accessToken
             }
         });
+    }
+
+    async ping() {
+        return this.get('https://gitee.com/api/v5/user');
     }
 }
