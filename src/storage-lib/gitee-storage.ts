@@ -1,4 +1,3 @@
-import { TinyRequest } from "../request-lib/interfaces";
 import { GiteeResponse, GiteeStorageOptions, TinyStorage } from "./interfaces";
 
 export abstract class GiteeStorage<T> implements TinyStorage<T> {
@@ -7,12 +6,11 @@ export abstract class GiteeStorage<T> implements TinyStorage<T> {
         this.baseUrl = options.baseUrl || this.baseUrl;
     }
 
-    async findOne(): Promise<void> {
+    async findById(): Promise<void> {
         this.options.request.get("");
     }
 
     async findAll(): Promise<T[]> {
-        // const url = `${this.baseUrl}/api/v5/repos/guoxicheng/tiny-crud/issues/${this.issueNumber}/comments`;
         const {owner, repo, number} = this.options;
         const url = `${this.baseUrl}/api/v5/repos/${owner}/${repo}/issues/${number}/comments`;
         const response = await this.options.request.get<GiteeResponse[]>(url);
