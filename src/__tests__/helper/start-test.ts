@@ -13,7 +13,8 @@ export class StartTest {
         return createRequest({
             requestType: RequestType.axios,
             request: axios,
-            accessToken: process.env.GITEE_TOKEN as string
+            accessToken: process.env.GITEE_TOKEN as string,
+            baseUrl: "https://gitee.com",
         });
     }
 

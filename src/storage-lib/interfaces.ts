@@ -1,7 +1,7 @@
 import { TinyRequest } from "../request-lib/interfaces";
 
 export interface TinyStorage<T> {
-    findOne(): void;
+    findById(): void;
     findAll(): Promise<T[]>;
 }
 

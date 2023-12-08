@@ -10,15 +10,15 @@ import { RequestType } from "../enums";
  * @throws Error if the request lib type is invalid.
  */
 export function createRequest<T extends RequestType>(options: TinyRequestOptions<T>) {
-    const { requestType, request, accessToken } = options;
+    const { requestType, request, accessToken, baseUrl } = options;
     switch (requestType) {
         case RequestType.axios:
             if (isAxiosInstance(request)) {
-                return new AxiosRequestFactory().createRequest(request, accessToken);
+                return new AxiosRequestFactory().createRequest(request, baseUrl, accessToken);
             }
         case RequestType.wx:
             if (isWxInstance(request)) {
-                return new WxRequestFactory().createRequest(request, accessToken);
+                return new WxRequestFactory().createRequest(request, baseUrl, accessToken);
             }
         default:
             throw new Error('invalid request lib type');
