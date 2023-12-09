@@ -1,13 +1,15 @@
-import { WxInstance } from './interfaces';
+import { TinyRequestOptions, WxInstance } from './interfaces';
 import { TinyRequest } from './tiny-request';
 
 export class WxRequest extends TinyRequest {
+    private wx: WxInstance;
+    private accessToken: string;
     constructor(
-        protected wx: WxInstance,
-        protected baseUrl: string,
-        protected accessToken: string
+        protected options: TinyRequestOptions
     ) {
-        super(wx, baseUrl, accessToken);
+        super(options);
+        this.wx = options.request as WxInstance;
+        this.accessToken = options.accessToken;
     }
 
     async get<T>(url: string): Promise<T> {

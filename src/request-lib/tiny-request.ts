@@ -1,12 +1,13 @@
 import { StoragePlatform } from "../enums";
-import { RequestInstance, StoragePlatformUserMap } from "./interfaces";
+import { RequestInstance, StoragePlatformUserMap, TinyRequestOptions } from "./interfaces";
 
 export abstract class TinyRequest {
+    private baseUrl: string;
     constructor(
-        protected instance: RequestInstance,
-        protected baseUrl: string,
-        protected accessToken: string
-    ) { }
+        protected options: TinyRequestOptions
+    ) { 
+        this.baseUrl = options.baseUrl;
+    }
 
     abstract get<T>(url: string): Promise<T>;
     abstract post(url: string): void;

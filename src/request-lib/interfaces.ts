@@ -27,9 +27,9 @@ type RequestTypeMap = {
     [RequestType.wx]: WxInstance;
     [RequestType.axios]: AxiosInstance;
 }
-export interface TinyRequestOptions<T extends RequestType> {
-    requestType: T;
-    request: RequestTypeMap[T];
+export interface TinyRequestOptions {
+    requestType: keyof typeof RequestType;
+    request: RequestInstance;
     baseUrl: string;
     accessToken: string;
 }

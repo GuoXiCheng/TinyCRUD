@@ -1,13 +1,16 @@
 import { AxiosInstance } from 'axios';
 import { TinyRequest } from './tiny-request';
+import { TinyRequestOptions } from './interfaces';
 
 export class AxiosRequest extends TinyRequest {
+    private axios: AxiosInstance;
+    private accessToken: string;
     constructor(
-        protected axios: AxiosInstance,
-        protected baseUrl: string,
-        protected accessToken: string
+        protected options: TinyRequestOptions
     ) {
-        super(axios, baseUrl, accessToken);
+        super(options);
+        this.axios = options.request as AxiosInstance;
+        this.accessToken = options.accessToken;
     }
 
     async get<T>(url: string): Promise<T> {
