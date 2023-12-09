@@ -1,8 +1,7 @@
 import { GiteeStorage } from '../../storage-lib/gitee-storage';
-import { UserModel } from './user-model';
 import { GiteeStorageOptions } from '../../storage-lib/interfaces';
 
-export class UserStorage extends GiteeStorage<UserModel> {
+export class UserStorage extends GiteeStorage {
     constructor(options: GiteeStorageOptions) {
         super(options);
     }
