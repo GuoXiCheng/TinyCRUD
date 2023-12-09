@@ -1,4 +1,4 @@
-import { TinyRequest } from "../request-lib/interfaces";
+import { TinyRequest } from "../request-lib/tiny-request";
 
 export interface TinyStorage<T> {
     findById(): void;

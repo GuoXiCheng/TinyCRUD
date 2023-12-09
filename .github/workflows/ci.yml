@@ -24,10 +24,12 @@ jobs:
       - name: Run Jest tests
         run: npm run test
         env:
-          GITEE_TOKEN: ${{ secrets.GITEE_TOKEN }}
-          GITEE_OWNER: ${{ secrets.GITEE_OWNER }}
-          GITEE_REPO: ${{ secrets.GITEE_REPO }}
-          GITEE_NUMBER: ${{ secrets.GITEE_NUMBER }}
+          TEST_GITEE_TOKEN: ${{ secrets.TEST_GITEE_TOKEN }}
+          TEST_GITEE_OWNER: ${{ secrets.TEST_GITEE_OWNER }}
+          TEST_GITEE_REPO: ${{ secrets.TEST_GITEE_REPO }}
+          TEST_GITEE_NUMBER: ${{ secrets.TEST_GITEE_NUMBER }}
+          TEST_GITHUB_TOKEN: ${{ secrets.TEST_GITHUB_TOKEN }}
+          TEST_GITLAB_TOKEN: ${{ secrets.TEST_GITLAB_TOKEN }}
 
 
       - name: Upload coverage reports to Codecov

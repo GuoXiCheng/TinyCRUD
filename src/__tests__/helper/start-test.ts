@@ -13,7 +13,7 @@ export class StartTest {
         return createRequest({
             requestType: RequestType.axios,
             request: axios,
-            accessToken: process.env.GITEE_TOKEN as string,
+            accessToken: process.env.TEST_GITEE_TOKEN as string,
             baseUrl: "https://gitee.com",
         });
     }
@@ -21,9 +21,27 @@ export class StartTest {
     static getGiteeOptions(): GiteeStorageOptions {
         return {
             request: this.getGiteeRequest(),
-            owner: process.env.GITEE_OWNER as string,
-            repo: process.env.GITEE_REPO as string,
-            number: process.env.GITEE_NUMBER as string,
+            owner: process.env.TEST_GITEE_OWNER as string,
+            repo: process.env.TEST_GITEE_REPO as string,
+            number: process.env.TEST_GITEE_NUMBER as string,
         }
+    }
+
+    static getGithubRequest() {
+        return createRequest({
+            requestType: RequestType.axios,
+            request: axios,
+            accessToken: process.env.TEST_GITHUB_TOKEN as string,
+            baseUrl: "https://api.github.com",
+        });
+    }
+
+    static getGitlabRequest() {
+        return createRequest({
+            requestType: RequestType.axios,
+            request: axios,
+            accessToken: process.env.TEST_GITLAB_TOKEN as string,
+            baseUrl: "https://gitlab.com",
+        });
     }
 }

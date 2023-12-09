@@ -14,11 +14,11 @@ export interface WxRequestOptions {
     fail: (errMsg: string, errNo: number) => void;
 }
 
-export interface TinyRequest {
-    get<T>(url: string): Promise<T>;
-    post(url: string): void;
-    ping<P extends keyof typeof StoragePlatform>(platform: P): Promise<StoragePlatformUserMap[typeof StoragePlatform[P]]>;
-};
+// export interface TinyRequest {
+//     get<T>(url: string): Promise<T>;
+//     post(url: string): void;
+//     ping<P extends keyof typeof StoragePlatform>(platform: P): Promise<StoragePlatformUserMap[typeof StoragePlatform[P]]>;
+// };
 
 export type RequestInstance = WxInstance | AxiosInstance;
 

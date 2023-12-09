@@ -1,8 +1,14 @@
-import { StoragePlatform } from '../enums';
-import { WxInstance, TinyRequest, GiteeUser, GithubUser, GitlabUser, StoragePlatformUserMap } from './interfaces';
+import { WxInstance } from './interfaces';
+import { TinyRequest } from './tiny-request';
 
-export class WxRequest implements TinyRequest {
-    constructor(private wx: WxInstance, private baseUrl: string, private accessToken: string) { }
+export class WxRequest extends TinyRequest {
+    constructor(
+        protected wx: WxInstance,
+        protected baseUrl: string,
+        protected accessToken: string
+    ) {
+        super(wx, baseUrl, accessToken);
+    }
 
     async get<T>(url: string): Promise<T> {
         return new Promise((resolve, reject) => {
@@ -10,9 +16,9 @@ export class WxRequest implements TinyRequest {
                 url,
                 method: 'GET',
                 header: {
-                    'Authorization': this.accessToken
+                    'Authorization': `Bearer ${this.accessToken}`
                 },
-                success: (res: {data: string | Object | ArrayBuffer, statusCode: number}) => {
+                success: (res: { data: string | Object | ArrayBuffer, statusCode: number }) => {
                     resolve(res as T);
                 },
                 fail: (errMsg: string, errNo: number) => {
@@ -27,22 +33,8 @@ export class WxRequest implements TinyRequest {
         //     url,
         //     method: 'POST',
         //     header: {
-        //         'Authorization': this.accessToken,
-        //         'PRIVATE-TOKEN': this.accessToken
+        //         'Authorization': `Bearer ${this.accessToken}`
         //     }
         // });
-    }
-
-    async ping<P extends keyof typeof StoragePlatform>(platform: P): Promise<StoragePlatformUserMap[typeof StoragePlatform[P]]> {
-        switch (platform) {
-            case StoragePlatform.gitee:
-                return this.get<GiteeUser>(`${this.baseUrl}/api/v5/user`) as Promise<StoragePlatformUserMap[typeof StoragePlatform[P]]>;
-            case StoragePlatform.github:
-                return this.get<GithubUser>(`${this.baseUrl}/api/v3/user`) as Promise<StoragePlatformUserMap[typeof StoragePlatform[P]]>;
-            case StoragePlatform.gitlab:
-                return this.get<GitlabUser>(`${this.baseUrl}/user`) as Promise<StoragePlatformUserMap[typeof StoragePlatform[P]]>;
-            default:
-                throw new Error('unsupported platform');
-        }
     }
 }
