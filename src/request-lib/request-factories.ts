@@ -1,7 +1,8 @@
 import { AxiosInstance } from "axios";
-import { RequestInstance, TinyRequest, WxInstance } from "./interfaces";
+import { RequestInstance, WxInstance } from "./interfaces";
 import { AxiosRequest } from "./axios-request";
 import { WxRequest } from "./wx-request";
+import { TinyRequest } from "./tiny-request";
 
 abstract class TinyRequestFactory {
     abstract createRequest(instance: RequestInstance, baseUrl: string, accessToken: string): TinyRequest;

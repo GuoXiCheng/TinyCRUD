@@ -26,4 +26,22 @@ export class StartTest {
             number: process.env.GITEE_NUMBER as string,
         }
     }
+
+    static getGithubRequest() {
+        return createRequest({
+            requestType: RequestType.axios,
+            request: axios,
+            accessToken: process.env.GITHUB_TOKEN as string,
+            baseUrl: "https://api.github.com",
+        });
+    }
+
+    static getGitlabRequest() {
+        return createRequest({
+            requestType: RequestType.axios,
+            request: axios,
+            accessToken: process.env.GITLAB_TOKEN as string,
+            baseUrl: "https://gitlab.com",
+        });
+    }
 }
