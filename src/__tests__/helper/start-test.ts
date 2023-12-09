@@ -1,6 +1,6 @@
 import axios from 'axios';
 import 'dotenv/config';
-import { RequestType } from '../../enums';
+import { OfficialUrl, RequestType } from '../../enums';
 import { createRequest } from '../../request-lib';
 import { GiteeStorageOptions } from '../../storage-lib/interfaces';
 
@@ -14,7 +14,7 @@ export class StartTest {
             requestType: RequestType.axios,
             request: axios,
             accessToken: process.env.TEST_GITEE_TOKEN as string,
-            baseUrl: "https://gitee.com",
+            baseUrl: OfficialUrl.gitee,
         });
     }
 
@@ -32,7 +32,7 @@ export class StartTest {
             requestType: RequestType.axios,
             request: axios,
             accessToken: process.env.TEST_GITHUB_TOKEN as string,
-            baseUrl: "https://api.github.com",
+            baseUrl: OfficialUrl.github,
         });
     }
 
@@ -41,7 +41,7 @@ export class StartTest {
             requestType: RequestType.axios,
             request: axios,
             accessToken: process.env.TEST_GITLAB_TOKEN as string,
-            baseUrl: "https://gitlab.com",
+            baseUrl: OfficialUrl.gitlab,
         });
     }
 }

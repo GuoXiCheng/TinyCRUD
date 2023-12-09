@@ -1,6 +1,6 @@
 import { GiteeResponse, GiteeStorageOptions, TinyStorage } from "./interfaces";
 
-export abstract class GiteeStorage<T> implements TinyStorage<T> {
+export abstract class GiteeStorage implements TinyStorage {
     private baseUrl = "https://gitee.com";
     constructor(private options: GiteeStorageOptions) { 
         this.baseUrl = options.baseUrl || this.baseUrl;
@@ -10,7 +10,7 @@ export abstract class GiteeStorage<T> implements TinyStorage<T> {
         this.options.request.get("");
     }
 
-    async findAll(): Promise<T[]> {
+    async find() {
         const {owner, repo, number} = this.options;
         const url = `${this.baseUrl}/api/v5/repos/${owner}/${repo}/issues/${number}/comments`;
         const response = await this.options.request.get<GiteeResponse[]>(url);
@@ -19,7 +19,7 @@ export abstract class GiteeStorage<T> implements TinyStorage<T> {
             ...JSON.parse(item.body),
             created_at: item.created_at,
             updated_at: item.updated_at
-        })) as T[];
+        }));
     }
 
 }

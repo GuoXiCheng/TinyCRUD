@@ -1,3 +1,4 @@
 import {createRequest} from "./request-lib";
-export {createRequest};
+import { OfficialUrl } from "./enums";
+export {createRequest, OfficialUrl};
 
