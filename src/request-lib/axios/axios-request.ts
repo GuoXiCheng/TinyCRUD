@@ -1,8 +1,8 @@
 import { AxiosInstance } from 'axios';
-import { TinyRequest } from './tiny-request';
-import { TinyRequestOptions } from './interfaces';
+import { TinyRequestOptions } from '../interfaces';
+import { BaseRequest } from '../base/base-request';
 
-export class AxiosRequest extends TinyRequest {
+export class AxiosRequest extends BaseRequest {
     private axios: AxiosInstance;
     private accessToken: string;
     constructor(

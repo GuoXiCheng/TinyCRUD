@@ -1,7 +1,8 @@
-import { TinyRequestOptions, WxInstance } from './interfaces';
-import { TinyRequest } from './tiny-request';
+import { BaseRequest } from '../base/base-request';
+import { TinyRequestOptions } from '../interfaces';
+import { WxInstance } from './wx-interface';
 
-export class WxRequest extends TinyRequest {
+export class WxRequest extends BaseRequest {
     private wx: WxInstance;
     private accessToken: string;
     constructor(
