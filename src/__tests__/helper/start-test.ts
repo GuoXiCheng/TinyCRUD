@@ -1,9 +1,8 @@
 import axios from 'axios';
 import 'dotenv/config';
 import { OfficialUrl, RequestType } from '../../enums';
-import { createRequest } from '../../request-lib';
-import { GiteeStorageOptions } from '../../storage-lib/interfaces';
-
+import { GiteeStorageOptions } from '../../storage-lib/gitee/gitee-storage-options';
+import {createRequest} from '../../request-lib';
 export class StartTest {
     constructor() {
         

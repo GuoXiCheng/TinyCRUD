@@ -1,6 +1,8 @@
-import { GiteeResponse, GiteeStorageOptions, TinyStorage } from "./interfaces";
+import { BaseStorage } from "../base/base-storage";
+import { GiteeResponse } from "./gitee-response";
+import { GiteeStorageOptions } from "./gitee-storage-options";
 
-export abstract class GiteeStorage implements TinyStorage {
+export abstract class GiteeStorage implements BaseStorage {
     private baseUrl = "https://gitee.com";
     constructor(private options: GiteeStorageOptions) { 
         this.baseUrl = options.baseUrl || this.baseUrl;
