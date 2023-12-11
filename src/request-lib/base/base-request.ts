@@ -1,5 +1,5 @@
 import { StoragePlatform } from "../../enums";
-import { StoragePlatformUserMap } from "../interfaces";
+import { GiteeUser, GithubUser, GitlabUser } from "../../storage-lib";
 import { RequestOptions } from "./request-options";
 
 export abstract class BaseRequest {
@@ -13,22 +13,16 @@ export abstract class BaseRequest {
     abstract get<T>(url: string): Promise<T>;
     abstract post(url: string): void;
 
-    async ping<P extends keyof typeof StoragePlatform>(platform: P): Promise<StoragePlatformUserMap[typeof StoragePlatform[P]]> {
-        let url: string;
-        switch (platform) {
+    async authenticate() {
+        switch(this.options.storagePlatform) {
             case StoragePlatform.gitee:
-                url = `${this.baseUrl}/api/v5/user`;
-                break;
+                return this.get<GiteeUser>(`${this.baseUrl}/api/v5/user`);
             case StoragePlatform.github:
-                url = `${this.baseUrl}/user`;
-                break;
+                return this.get<GithubUser>(`${this.baseUrl}/user`);
             case StoragePlatform.gitlab:
-                url = `${this.baseUrl}/api/v3/user`;
-                break;
+                return this.get<GitlabUser>(`${this.baseUrl}/api/v4/user`);
             default:
-                throw new Error('Unsupported platform');
+                throw new Error('Unsupported Platform');
         }
-    
-        return this.get<StoragePlatformUserMap[typeof StoragePlatform[P]]>(url);
     }
 }

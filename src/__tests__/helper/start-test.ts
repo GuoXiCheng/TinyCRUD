@@ -14,6 +14,9 @@ export class StartTest {
             request: axios,
             accessToken: process.env.TEST_GITEE_TOKEN as string,
             baseUrl: OfficialUrl.gitee,
+            storagePlatform: 'gitee',
+            owner: '',
+            repo: ''
         });
     }
 
@@ -32,6 +35,9 @@ export class StartTest {
             request: axios,
             accessToken: process.env.TEST_GITHUB_TOKEN as string,
             baseUrl: OfficialUrl.github,
+            storagePlatform: 'github',
+            owner: '',
+            repo: ''
         });
     }
 
@@ -41,6 +47,8 @@ export class StartTest {
             request: axios,
             accessToken: process.env.TEST_GITLAB_TOKEN as string,
             baseUrl: OfficialUrl.gitlab,
+            storagePlatform: 'gitlab',
+            projectId: ''
         });
     }
 }
