@@ -1,46 +1,44 @@
 import axios from 'axios';
 import 'dotenv/config';
-import { OfficialUrl, RequestType } from '../../enums';
-import { GiteeStorageOptions } from '../../storage-lib/gitee/gitee-storage-options';
 import {createRequest} from '../../request-lib';
 export class StartTest {
     constructor() {
         
     }
 
-    static getGiteeRequest() {
+    static createGiteeRequest() {
         return createRequest({
-            requestType: RequestType.axios,
+            requestType: 'axios',
             request: axios,
             accessToken: process.env.TEST_GITEE_TOKEN as string,
-            baseUrl: OfficialUrl.gitee,
+            storagePlatform: 'gitee',
+            owner: process.env.TEST_GITEE_OWNER as string,
+            repo: process.env.TEST_GITEE_REPO as string
         });
     }
 
-    static getGiteeOptions(): GiteeStorageOptions {
-        return {
-            request: this.getGiteeRequest(),
-            owner: process.env.TEST_GITEE_OWNER as string,
-            repo: process.env.TEST_GITEE_REPO as string,
-            number: process.env.TEST_GITEE_NUMBER as string,
-        }
+    static getGiteeIssueNumber() {
+        return process.env.TEST_GITEE_NUMBER as string;
     }
 
-    static getGithubRequest() {
+    static createGithubRequest() {
         return createRequest({
-            requestType: RequestType.axios,
+            requestType: 'axios',
             request: axios,
             accessToken: process.env.TEST_GITHUB_TOKEN as string,
-            baseUrl: OfficialUrl.github,
+            storagePlatform: 'github',
+            owner: '',
+            repo: ''
         });
     }
 
-    static getGitlabRequest() {
+    static createGitlabRequest() {
         return createRequest({
-            requestType: RequestType.axios,
+            requestType: 'axios',
             request: axios,
             accessToken: process.env.TEST_GITLAB_TOKEN as string,
-            baseUrl: OfficialUrl.gitlab,
+            storagePlatform: 'gitlab',
+            projectId: ''
         });
     }
 }

@@ -1,16 +1,14 @@
 import { BaseRequest } from '../base/base-request';
-import { TinyRequestOptions } from '../interfaces';
+import { RequestOptions } from '../base/request-options';
 import { WxInstance } from './wx-interface';
 
 export class WxRequest extends BaseRequest {
     private wx: WxInstance;
-    private accessToken: string;
     constructor(
-        protected options: TinyRequestOptions
+        protected options: RequestOptions
     ) {
         super(options);
         this.wx = options.request as WxInstance;
-        this.accessToken = options.accessToken;
     }
 
     async get<T>(url: string): Promise<T> {

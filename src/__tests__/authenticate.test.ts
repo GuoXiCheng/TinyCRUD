@@ -1,9 +1,9 @@
 import { StartTest } from "./helper/start-test";
 
-describe('Test Ping Function', () => {
-    test('Test Ping Gitee', async () => {
-        const request = StartTest.getGiteeRequest();
-        const res = await request.ping("gitee");
+describe('Test Authenticate Function', () => {
+    test('Test Authenticate Gitee', async () => {
+        const request = StartTest.createGiteeRequest();
+        const res = await request.authenticate();
         expect(Object.keys(res)).toEqual([
             'id', 'login',
             'name', 'avatar_url',
@@ -20,11 +20,12 @@ describe('Test Ping Function', () => {
             'stared', 'watched',
             'created_at', 'updated_at',
             'email'
-        ]);
+        ])
     });
-    test('Test Ping Github', async () => {
-        const request = StartTest.getGithubRequest();
-        const res = await request.ping("github");
+
+    test('Test Authenticate Github', async () => {
+        const request = StartTest.createGithubRequest();
+        const res = await request.authenticate();
         expect(Object.keys(res)).toEqual([
             'login', 'id',
             'node_id', 'avatar_url',
@@ -44,9 +45,10 @@ describe('Test Ping Function', () => {
             'created_at', 'updated_at'
         ]);
     });
-    test('Test Ping Gitlab', async () => {
-        const request = StartTest.getGitlabRequest();
-        const res = await request.ping("gitlab");
+
+    test('Test Authenticate Gitlab', async () => {
+        const request = StartTest.createGitlabRequest();
+        const res = await request.authenticate();
         expect(Object.keys(res)).toEqual([
             'id',
             'username',
@@ -91,4 +93,3 @@ describe('Test Ping Function', () => {
         ]);
     });
 });
-
