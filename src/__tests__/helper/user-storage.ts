@@ -1,8 +1,8 @@
 import { GiteeStorage } from '../../storage-lib/gitee/gitee-storage';
-import { GiteeStorageOptions } from '../../storage-lib/gitee/gitee-storage-options';
+import { StartTest } from './start-test';
 
 export class UserStorage extends GiteeStorage {
-    constructor(options: GiteeStorageOptions) {
-        super(options);
+    constructor() {
+        super(StartTest.createGiteeRequest(), StartTest.getGiteeIssueNumber());
     }
 }

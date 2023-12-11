@@ -12,9 +12,13 @@ export class StartTest {
             request: axios,
             accessToken: process.env.TEST_GITEE_TOKEN as string,
             storagePlatform: 'gitee',
-            owner: '',
-            repo: ''
+            owner: process.env.TEST_GITEE_OWNER as string,
+            repo: process.env.TEST_GITEE_REPO as string
         });
+    }
+
+    static getGiteeIssueNumber() {
+        return process.env.TEST_GITEE_NUMBER as string;
     }
 
     static createGithubRequest() {

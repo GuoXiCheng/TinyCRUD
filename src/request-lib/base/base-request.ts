@@ -8,7 +8,7 @@ export abstract class BaseRequest {
     constructor(
         protected options: RequestOptions
     ) { 
-        this.baseUrl = options.baseUrl ? options.baseUrl : this.getBaseUrl(options.storagePlatform);
+        this.baseUrl = options.baseUrl ? options.baseUrl : this.getBaseUrl();
         this.accessToken = options.accessToken;
     }
 
@@ -28,14 +28,27 @@ export abstract class BaseRequest {
         }
     }
 
-    private getBaseUrl(platform: keyof typeof StoragePlatform) {
-        switch(platform) {
+    private getBaseUrl() {
+        switch(this.options.storagePlatform) {
             case StoragePlatform.gitee:
                 return 'https://gitee.com';
             case StoragePlatform.github:
                 return 'https://api.github.com';
             case StoragePlatform.gitlab:
                 return 'https://gitlab.com';
+            default:
+                throw new Error('Unsupported Platform');
+        }
+    }
+
+    getUrlPrefix() {
+        switch(this.options.storagePlatform) {
+            case StoragePlatform.gitee:
+                return `${this.baseUrl}/api/v5/repos/${this.options.owner}/${this.options.repo}`;
+            case StoragePlatform.github:
+                return '/api/v3';
+            case StoragePlatform.gitlab:
+                return '/api/v4';
             default:
                 throw new Error('Unsupported Platform');
         }
