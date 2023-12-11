@@ -11,13 +11,6 @@ export const OfficialUrlValues = {
     gitlab: "https://gitlab.com"
 } as const;
 
-export interface TinyRequestOptions {
-    requestType: keyof typeof RequestType;
-    request: RequestInstance;
-    baseUrl: string;
-    accessToken: string;
-}
-
 export type StoragePlatformUserMap = {
     [StoragePlatform.gitee]: GiteeUser;
     [StoragePlatform.github]: GithubUser;

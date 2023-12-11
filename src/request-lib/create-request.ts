@@ -1,12 +1,12 @@
 import { AxiosInstance } from "axios";
-import { TinyRequestOptions } from "./interfaces";
 import { RequestType } from "../enums";
 import { AxiosRequest } from "./axios/axios-request";
 import { WxRequest } from "./wx/wx-request";
 import { WxInstance } from "./wx/wx-interface";
+import { RequestOptions } from "./base/request-options";
 
 
-export function createRequest(options: TinyRequestOptions) {
+export function createRequest(options: RequestOptions) {
     const { requestType, request } = options;
     switch (requestType) {
         case RequestType.axios:

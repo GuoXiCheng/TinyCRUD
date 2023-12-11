@@ -1,10 +1,11 @@
 import { StoragePlatform } from "../../enums";
-import { StoragePlatformUserMap, TinyRequestOptions } from "../interfaces";
+import { StoragePlatformUserMap } from "../interfaces";
+import { RequestOptions } from "./request-options";
 
 export abstract class BaseRequest {
     private baseUrl: string;
     constructor(
-        protected options: TinyRequestOptions
+        protected options: RequestOptions
     ) { 
         this.baseUrl = options.baseUrl;
     }
