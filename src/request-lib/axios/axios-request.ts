@@ -4,13 +4,11 @@ import { RequestOptions } from '../base/request-options';
 
 export class AxiosRequest extends BaseRequest {
     private axios: AxiosInstance;
-    private accessToken: string;
     constructor(
         protected options: RequestOptions
     ) {
         super(options);
         this.axios = options.request as AxiosInstance;
-        this.accessToken = options.accessToken;
     }
 
     async get<T>(url: string): Promise<T> {

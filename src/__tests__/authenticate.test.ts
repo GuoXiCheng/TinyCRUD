@@ -2,7 +2,7 @@ import { StartTest } from "./helper/start-test";
 
 describe('Test Authenticate Function', () => {
     test('Test Authenticate Gitee', async () => {
-        const request = StartTest.getGiteeRequest();
+        const request = StartTest.createGiteeRequest();
         const res = await request.authenticate();
         expect(Object.keys(res)).toEqual([
             'id', 'login',
@@ -24,7 +24,7 @@ describe('Test Authenticate Function', () => {
     });
 
     test('Test Authenticate Github', async () => {
-        const request = StartTest.getGithubRequest();
+        const request = StartTest.createGithubRequest();
         const res = await request.authenticate();
         expect(Object.keys(res)).toEqual([
             'login', 'id',
@@ -47,7 +47,7 @@ describe('Test Authenticate Function', () => {
     });
 
     test('Test Authenticate Gitlab', async () => {
-        const request = StartTest.getGitlabRequest();
+        const request = StartTest.createGitlabRequest();
         const res = await request.authenticate();
         expect(Object.keys(res)).toEqual([
             'id',

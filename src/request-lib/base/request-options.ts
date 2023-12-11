@@ -1,10 +1,10 @@
-import { RequestType } from "../../enums";
 import { GiteeOptions, GithubOptions, GitlabOptions } from "../../storage-lib";
-import { RequestInstance } from "../interfaces";
+import { AxiosOptions } from "../axios/axios-options";
+import { WxOptions } from "../wx/wx-options";
 
 export type RequestOptions = {
-    requestType: keyof typeof RequestType;
-    request: RequestInstance;
-    baseUrl: string;
+    baseUrl?: string;
     accessToken: string;
-} & (GiteeOptions | GithubOptions | GitlabOptions);
+}
+    & (GiteeOptions | GithubOptions | GitlabOptions)
+    & (AxiosOptions | WxOptions);
