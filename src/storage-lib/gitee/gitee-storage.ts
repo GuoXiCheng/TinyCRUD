@@ -1,23 +1,26 @@
 import { BaseRequest } from "../../request-lib";
+import { BaseComment } from "../base/base-comment";
+import { BaseModel } from "../base/base-model";
 import { BaseStorage } from "../base/base-storage";
-import { GiteeResponse } from "./gitee-response";
 
-export abstract class GiteeStorage implements BaseStorage {
-    constructor(private request: BaseRequest, private issueNumber: string) { }
+export abstract class GiteeStorage<M extends BaseModel> extends BaseStorage {
+    private endpoint: string;
 
-    async findById(): Promise<void> {
-        this.request.get("");
+    constructor(private request: BaseRequest, private issueNumber: string) {
+        super();
+        this.endpoint = request.getEndpoint();
+    }
+
+    async findById(id: number) {
+        const url = `${this.endpoint}/issues/comments/${id}`;
+        const response = await this.request.get<BaseComment>(url);
+        return this.deserialize<M>(response);
     }
 
     async find() {
-        const url = `${this.request.getUrlPrefix()}/issues/${this.issueNumber}/comments`;
-        const response = await this.request.get<GiteeResponse[]>(url);
-        return response.map((item: { id: any; body: string; created_at: any; updated_at: any; }) => ({
-            id: item.id,
-            ...JSON.parse(item.body),
-            created_at: item.created_at,
-            updated_at: item.updated_at
-        }));
+        const url = `${this.endpoint}/issues/${this.issueNumber}/comments`;
+        const response = await this.request.get<BaseComment[]>(url);
+        return response.map((item)=>this.deserialize<M>(item));
     }
 
 }

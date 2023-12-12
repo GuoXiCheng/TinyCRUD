@@ -41,7 +41,7 @@ export abstract class BaseRequest {
         }
     }
 
-    getUrlPrefix() {
+    getEndpoint() {
         switch(this.options.storagePlatform) {
             case StoragePlatform.gitee:
                 return `${this.baseUrl}/api/v5/repos/${this.options.owner}/${this.options.repo}`;
