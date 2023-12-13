@@ -25,11 +25,31 @@ export class AxiosRequest extends BaseRequest {
         });
     }
 
-    post(url: string) {
-        this.axios.post(url, undefined, {
-            headers: {
-                'Authorization': `Bearer ${this.accessToken}`
-            }
+    async post<T>(url: string, data: any): Promise<T> {
+        return new Promise((resolve, reject) => {
+            this.axios.post<T>(url, data, {
+                headers: {
+                    'Authorization': `Bearer ${this.accessToken}`
+                }
+            }).then((res) => {
+                resolve(res.data);
+            }).catch(error => {
+                reject(error);
+            });
+        });
+    }
+
+    async delete<T>(url: string): Promise<void> {
+        return new Promise((resolve, reject) => {
+            this.axios.delete<T>(url, {
+                headers: {
+                    'Authorization': `Bearer ${this.accessToken}`
+                }
+            }).then(() => {
+                resolve();
+            }).catch(error => {
+                reject(error);
+            });
         });
     }
 }

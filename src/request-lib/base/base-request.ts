@@ -13,7 +13,8 @@ export abstract class BaseRequest {
     }
 
     abstract get<T>(url: string): Promise<T>;
-    abstract post(url: string): void;
+    abstract post<T>(url: string, data: any): Promise<T>;
+    abstract delete<T>(url: string): Promise<void>;
 
     async authenticate() {
         switch(this.options.storagePlatform) {
