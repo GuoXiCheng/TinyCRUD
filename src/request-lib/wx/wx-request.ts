@@ -29,7 +29,7 @@ export class WxRequest extends BaseRequest {
         });
     }
 
-    post(url: string) {
+    // post(url: string) {
         // this.wx.request({
         //     url,
         //     method: 'POST',
@@ -37,5 +37,11 @@ export class WxRequest extends BaseRequest {
         //         'Authorization': `Bearer ${this.accessToken}`
         //     }
         // });
+    // }
+    post<T>(url: string, data: any): Promise<T> {
+        throw new Error('Method not implemented.');
+    }
+    delete<T>(url: string): Promise<void> {
+        throw new Error('Method not implemented.');
     }
 }

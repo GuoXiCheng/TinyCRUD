@@ -3,12 +3,21 @@ import { UserStorage } from "./helper/user-storage";
 describe('Test User Storage', () => {
     const userStorage = new UserStorage();
 
-    test('Test User Storage', async () => {
+    test('Test deleteAll User', async () => {
+        await userStorage.deleteAll();
         const detail = await userStorage.find();
-        expect(detail.length).toEqual(1);
+        expect(detail.length).toEqual(0);
+    });
 
-        const first = detail[0];
-        const result = await userStorage.findById(first.id);
-        expect(detail[0]).toEqual(result);
-    }, 30000);
+    test('Test create & User & findById User', async () => {
+        await userStorage.create({
+            name: 'test-user',
+            age: 18
+        });
+        const findResult = await userStorage.find();
+        expect(findResult.length).toEqual(1);
+
+        const findByIdResult = await userStorage.findById(findResult[0].id);
+        expect(findByIdResult).toEqual(findResult[0]);
+    });
 });
