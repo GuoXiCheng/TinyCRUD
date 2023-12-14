@@ -1,4 +1,4 @@
-import { BaseModel } from '../../storage-lib/base/base-model';
+import { BaseModel } from "../..";
 export interface UserModel extends BaseModel {
     name: string;
     age: number;

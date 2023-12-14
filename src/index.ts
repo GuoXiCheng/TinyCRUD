@@ -1,4 +1,4 @@
 import {createRequest} from "./request-lib/create-request";
-import { OfficialUrl } from "./enums";
-export {createRequest, OfficialUrl};
+import { BaseModel, GiteeStorage } from "./storage-lib";
+export {createRequest, BaseModel, GiteeStorage};
 

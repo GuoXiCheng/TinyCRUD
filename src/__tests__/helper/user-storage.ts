@@ -1,4 +1,4 @@
-import { GiteeStorage } from '../../storage-lib/gitee/gitee-storage';
+import { GiteeStorage } from '../..';
 import { StartTest } from './start-test';
 import { UserModel } from './user-model';
 
