@@ -1,6 +1,7 @@
 import axios from 'axios';
 import 'dotenv/config';
-import {createRequest} from '../../request-lib';
+import { createRequest } from '../..';
+
 export class StartTest {
     constructor() {
         

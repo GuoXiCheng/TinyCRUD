@@ -3,7 +3,7 @@ import { BaseComment } from "../base/base-comment";
 import { BaseModel } from "../base/base-model";
 import { BaseStorage } from "../base/base-storage";
 
-export class GiteeStorage<T extends BaseModel> extends BaseStorage {
+export class GiteeStorage<T extends BaseModel> extends BaseStorage<T> {
     private endpoint: string;
 
     constructor(private request: BaseRequest, private issueNumber: string) {
