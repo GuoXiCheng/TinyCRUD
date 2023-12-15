@@ -31,4 +31,31 @@ describe('Test User Storage', () => {
         expect(updateResult.name).toEqual(findByIdResult.name);
         expect(updateResult.age).toEqual(findByIdResult.age);
     });
+
+    test('Test deleteById User failed', async () => {
+        try {
+            await userStorage.deleteById(123);
+        } catch (error: any) {
+            expect(error.response.data).toEqual({ message: '404 Not Found' });
+        }
+    });
+
+    test('Test updateById User failed', async () => {
+        try {
+            await userStorage.updateById(123, {
+                name: 'test-user-update',
+                age: 20
+            });
+        } catch (error: any) {
+            expect(error.response.data).toEqual({ message: '404 Not Found' });
+        }
+    });
+
+    test('Test findById User failed', async () => {
+        try {
+            await userStorage.findById(123);
+        } catch (error: any) {
+            expect(error.response.data).toEqual({ message: '404 Not Found' });
+        }
+    });
 });
