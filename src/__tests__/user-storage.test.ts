@@ -20,4 +20,15 @@ describe('Test User Storage', () => {
         const findByIdResult = await userStorage.findById(findResult[0].id);
         expect(findByIdResult).toEqual(findResult[0]);
     });
+
+    test('Test updateById User', async () => {
+        const findResult = await userStorage.find();
+        const updateResult = await userStorage.updateById(findResult[0].id, {
+            name: 'test-user-update',
+            age: 20
+        });
+        const findByIdResult = await userStorage.findById(findResult[0].id);
+        expect(updateResult.name).toEqual(findByIdResult.name);
+        expect(updateResult.age).toEqual(findByIdResult.age);
+    });
 });

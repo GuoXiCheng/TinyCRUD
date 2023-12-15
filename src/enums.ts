@@ -8,9 +8,3 @@ export enum RequestType {
     axios = "axios",
     wx = "wx"
 }
-
-export enum OfficialUrl {
-    gitee = "https://gitee.com",
-    github = "https://api.github.com",
-    gitlab = "https://gitlab.com"
-}
