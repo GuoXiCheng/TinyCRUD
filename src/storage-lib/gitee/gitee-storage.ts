@@ -54,4 +54,16 @@ export class GiteeStorage<T extends BaseModel> extends BaseStorage<T> {
         return await this.request.delete(url);
     }
 
+    /**
+     * Updates a record by its ID.
+     * @param id - The ID of the record to update.
+     * @param data - The updated data for the record, excluding the id, created_at, and updated_at fields.
+     * @returns The updated record.
+     */
+    async updateById(id: number, data: Omit<T, 'id' | 'created_at' | 'updated_at'>) {
+        const url = `${this.endpoint}/issues/comments/${id}`;
+        const response = await this.request.patch<BaseComment>(url, {body: this.serialize<Omit<T, 'id' | 'created_at' | 'updated_at'>>(data)});
+        return this.deserialize<T>(response);
+    }
+
 }

@@ -19,29 +19,74 @@ export class WxRequest extends BaseRequest {
                 header: {
                     'Authorization': `Bearer ${this.accessToken}`
                 },
-                success: (res: { data: string | Object | ArrayBuffer, statusCode: number }) => {
-                    resolve(res as T);
+                success: (res: any) => {
+                    resolve(res.data);
                 },
-                fail: (errMsg: string, errNo: number) => {
+                fail: (errMsg: string) => {
+                    console.error(errMsg);
                     reject(errMsg);
                 }
             });
         });
     }
 
-    // post(url: string) {
-        // this.wx.request({
-        //     url,
-        //     method: 'POST',
-        //     header: {
-        //         'Authorization': `Bearer ${this.accessToken}`
-        //     }
-        // });
-    // }
     post<T>(url: string, data: any): Promise<T> {
-        throw new Error('Method not implemented.');
+        return new Promise((resolve, reject) => {
+            this.wx.request({
+                url,
+                method: 'POST',
+                data: data,
+                header: {
+                    'Authorization': `Bearer ${this.accessToken}`
+                },
+                success: (res: any) => {
+                    resolve(res.data);
+                },
+                fail: (errMsg: string) => {
+                    console.error(errMsg);
+                    reject(errMsg);
+                }
+            });
+        });
     }
-    delete<T>(url: string): Promise<void> {
-        throw new Error('Method not implemented.');
+
+    delete(url: string): Promise<void> {
+        return new Promise((resolve, reject) => {
+            this.wx.request({
+                url,
+                method: 'DELETE',
+                header: {
+                    'Authorization': `Bearer ${this.accessToken}`
+                },
+                success: (res: any) => {
+                    resolve();
+                },
+                fail: (errMsg: string) => {
+                    console.error(errMsg);
+                    reject(errMsg);
+                }
+            });
+        });
+    }
+
+    patch<T>(url: string, data: any): Promise<T> {
+        return new Promise((resolve, reject) => {
+            this.wx.request({
+                url,
+                method: 'POST',
+                data: data,
+                header: {
+                    'Authorization': `Bearer ${this.accessToken}`,
+                    'X-HTTP-Method-Override': 'PATCH'
+                },
+                success: (res: any) => {
+                    resolve(res.data);
+                },
+                fail: (errMsg: string) => {
+                    console.error(errMsg);
+                    reject(errMsg);
+                }
+            });
+        });
     }
 }

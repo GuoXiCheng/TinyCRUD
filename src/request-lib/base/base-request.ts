@@ -14,7 +14,8 @@ export abstract class BaseRequest {
 
     abstract get<T>(url: string): Promise<T>;
     abstract post<T>(url: string, data: any): Promise<T>;
-    abstract delete<T>(url: string): Promise<void>;
+    abstract delete(url: string): Promise<void>;
+    abstract patch<T>(url: string, data: any): Promise<T>;
 
     async authenticate() {
         switch(this.options.storagePlatform) {
@@ -47,9 +48,9 @@ export abstract class BaseRequest {
             case StoragePlatform.gitee:
                 return `${this.baseUrl}/api/v5/repos/${this.options.owner}/${this.options.repo}`;
             case StoragePlatform.github:
-                return '/api/v3';
+                return `${this.baseUrl}/user`;
             case StoragePlatform.gitlab:
-                return '/api/v4';
+                return `${this.baseUrl}/api/v4/user`;
             default:
                 throw new Error('Unsupported Platform');
         }
