@@ -1,6 +1,7 @@
 import { BaseRequest } from '../base/base-request';
+import { RequestMethods } from '../base/request-methods';
 import { RequestOptions } from '../base/request-options';
-import { WxInstance } from './wx-interface';
+import { WxInstance, WxRequestOptions } from './wx-interface';
 
 export class WxRequest extends BaseRequest {
     private wx: WxInstance;
@@ -11,11 +12,12 @@ export class WxRequest extends BaseRequest {
         this.wx = options.request as WxInstance;
     }
 
-    async get<T>(url: string): Promise<T> {
+    private async sendRequest<T>(url: string, method: RequestMethods, data?: any): Promise<T> {
         return new Promise((resolve, reject) => {
-            this.wx.request({
+            const options: WxRequestOptions = {
                 url,
-                method: 'GET',
+                method,
+                data,
                 header: {
                     'Authorization': `Bearer ${this.accessToken}`
                 },
@@ -24,69 +26,33 @@ export class WxRequest extends BaseRequest {
                 },
                 fail: (errMsg: string) => {
                     console.error(errMsg);
-                    reject(errMsg);
+                    reject(new Error(errMsg));
                 }
-            });
+            };
+
+            // wx不支持 PATCH，特别处理 PATCH 方法
+            if (method === 'PATCH') {
+                options.method = 'POST';
+                options.header['X-HTTP-Method-Override'] = 'PATCH';
+            }
+
+            this.wx.request(options);
         });
+    }
+
+    get<T>(url: string): Promise<T> {
+        return this.sendRequest<T>(url, 'GET');
     }
 
     post<T>(url: string, data: any): Promise<T> {
-        return new Promise((resolve, reject) => {
-            this.wx.request({
-                url,
-                method: 'POST',
-                data: data,
-                header: {
-                    'Authorization': `Bearer ${this.accessToken}`
-                },
-                success: (res: any) => {
-                    resolve(res.data);
-                },
-                fail: (errMsg: string) => {
-                    console.error(errMsg);
-                    reject(errMsg);
-                }
-            });
-        });
+        return this.sendRequest<T>(url, 'POST', data);
     }
 
     delete(url: string): Promise<void> {
-        return new Promise((resolve, reject) => {
-            this.wx.request({
-                url,
-                method: 'DELETE',
-                header: {
-                    'Authorization': `Bearer ${this.accessToken}`
-                },
-                success: (res: any) => {
-                    resolve();
-                },
-                fail: (errMsg: string) => {
-                    console.error(errMsg);
-                    reject(errMsg);
-                }
-            });
-        });
+        return this.sendRequest<void>(url, 'DELETE');
     }
 
     patch<T>(url: string, data: any): Promise<T> {
-        return new Promise((resolve, reject) => {
-            this.wx.request({
-                url,
-                method: 'POST',
-                data: data,
-                header: {
-                    'Authorization': `Bearer ${this.accessToken}`,
-                    'X-HTTP-Method-Override': 'PATCH'
-                },
-                success: (res: any) => {
-                    resolve(res.data);
-                },
-                fail: (errMsg: string) => {
-                    console.error(errMsg);
-                    reject(errMsg);
-                }
-            });
-        });
+        return this.sendRequest<T>(url, 'PATCH', data);
     }
 }

@@ -7,9 +7,12 @@ export interface WxInstance {
 
 export interface WxRequestOptions {
     url: string;
-    method: Exclude<RequestMethods, 'PATCH'>;
+    method: RequestMethods;
     data?: string | object | ArrayBuffer;
-    header?: object;
+    header: {
+        'Authorization': string;
+        'X-HTTP-Method-Override'?: string;
+    };
     success: (res: { data: string | Object | ArrayBuffer, statusCode: number }) => void;
     fail: (errMsg: string, errNo: number) => void;
 }
