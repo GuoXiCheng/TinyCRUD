@@ -1,7 +1,11 @@
 import { BaseComment } from "./base-comment";
 import { BaseModel } from "./base-model";
+import { BaseOptions } from "./base-options";
 
 export abstract class BaseStorage<T extends BaseModel> {
+
+    constructor(baseOptions: BaseOptions) {}
+
     abstract findById(id: number): void;
     abstract find(): Promise<T[]>;
     abstract create(data: any): void;

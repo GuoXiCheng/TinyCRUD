@@ -12,7 +12,7 @@ export class AxiosRequest extends BaseRequest {
         this.axios = options.request as AxiosInstance;
     }
 
-    private async sendRequest<T>(method: RequestMethods, url: string, data?: any): Promise<T> {
+    async sendRequest<T>(method: RequestMethods, url: string, data?: any): Promise<T> {
         try {
             const response = await this.axios.request<T>({
                 url,
@@ -28,21 +28,4 @@ export class AxiosRequest extends BaseRequest {
             throw error;
         }
     }
-
-    async get<T>(url: string): Promise<T> {
-        return this.sendRequest<T>('GET', url);
-    }
-
-    async post<T>(url: string, data: any): Promise<T> {
-        return this.sendRequest<T>('POST', url, data);
-    }
-
-    async delete(url: string): Promise<void> {
-        return this.sendRequest<void>('DELETE', url);
-    }
-
-    async patch<T>(url: string, data: any): Promise<T> {
-        return this.sendRequest<T>('PATCH', url, data);
-    }
-
 }
