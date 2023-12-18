@@ -12,7 +12,7 @@ export class WxRequest extends BaseRequest {
         this.wx = options.request as WxInstance;
     }
 
-    private async sendRequest<T>(url: string, method: RequestMethods, data?: any): Promise<T> {
+    async sendRequest<T>(method: RequestMethods, url: string, data?: any): Promise<T> {
         return new Promise((resolve, reject) => {
             const options: WxRequestOptions = {
                 url,
@@ -38,21 +38,5 @@ export class WxRequest extends BaseRequest {
 
             this.wx.request(options);
         });
-    }
-
-    get<T>(url: string): Promise<T> {
-        return this.sendRequest<T>(url, 'GET');
-    }
-
-    post<T>(url: string, data: any): Promise<T> {
-        return this.sendRequest<T>(url, 'POST', data);
-    }
-
-    delete(url: string): Promise<void> {
-        return this.sendRequest<void>(url, 'DELETE');
-    }
-
-    patch<T>(url: string, data: any): Promise<T> {
-        return this.sendRequest<T>(url, 'PATCH', data);
     }
 }

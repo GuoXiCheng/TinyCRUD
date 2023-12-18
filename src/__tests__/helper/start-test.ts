@@ -3,6 +3,9 @@ import 'dotenv/config';
 import { createRequest } from '../..';
 
 export class StartTest {
+
+    static GITEE_NUMBER = process.env.TEST_GITEE_NUMBER as string;
+
     constructor() {
         
     }
@@ -16,10 +19,6 @@ export class StartTest {
             owner: process.env.TEST_GITEE_OWNER as string,
             repo: process.env.TEST_GITEE_REPO as string
         });
-    }
-
-    static getGiteeIssueNumber() {
-        return process.env.TEST_GITEE_NUMBER as string;
     }
 
     static createGithubRequest() {

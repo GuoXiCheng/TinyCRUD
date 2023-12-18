@@ -1,14 +1,22 @@
 import { BaseRequest } from "../../request-lib";
 import { BaseComment } from "../base/base-comment";
 import { BaseModel } from "../base/base-model";
+import { BaseOptions } from "../base/base-options";
 import { BaseStorage } from "../base/base-storage";
 
 export class GiteeStorage<T extends BaseModel> extends BaseStorage<T> {
     private endpoint: string;
+    private request: BaseRequest;
+    private issueNumber: string;
 
-    constructor(private request: BaseRequest, private issueNumber: string) {
-        super();
+    constructor(baseOptions: BaseOptions) {
+        super(baseOptions);
+
+        const {request, issueNumber} = baseOptions;
+        this.request = request;
+        this.issueNumber = issueNumber;
         this.endpoint = request.getEndpoint();
+
     }
 
     /**

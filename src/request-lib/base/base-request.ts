@@ -1,5 +1,6 @@
 import { StoragePlatform } from "../../enums";
 import { GiteeUser, GithubUser, GitlabUser } from "../../storage-lib";
+import { RequestMethods } from "./request-methods";
 import { RequestOptions } from "./request-options";
 
 export abstract class BaseRequest {
@@ -12,10 +13,23 @@ export abstract class BaseRequest {
         this.accessToken = options.accessToken;
     }
 
-    abstract get<T>(url: string): Promise<T>;
-    abstract post<T>(url: string, data: any): Promise<T>;
-    abstract delete(url: string): Promise<void>;
-    abstract patch<T>(url: string, data: any): Promise<T>;
+    protected abstract sendRequest<T>(method: RequestMethods, url: string, data?: any): Promise<T>;
+
+    get<T>(url: string): Promise<T> {
+        return this.sendRequest<T>('GET', url);
+    }
+
+    post<T>(url: string, data: any): Promise<T> {
+        return this.sendRequest<T>('POST', url, data);
+    }
+
+    delete(url: string): Promise<void> {
+        return this.sendRequest<void>('DELETE', url);
+    }
+
+    patch<T>(url: string, data: any): Promise<T> {
+        return this.sendRequest<T>('PATCH', url, data);
+    }
 
     async authenticate() {
         switch(this.options.storagePlatform) {
