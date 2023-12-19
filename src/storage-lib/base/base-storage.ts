@@ -3,23 +3,26 @@ import { BaseModel } from "./base-model";
 import { BaseOptions } from "./base-options";
 
 export abstract class BaseStorage<T extends BaseModel> {
-
-    constructor(baseOptions: BaseOptions) {}
+    public readonly useEncrypt: boolean;
+    public readonly encryptFn?: (data: string) => string;
+    public readonly decryptFn?: (data: string) => string;
+    constructor(baseOptions: BaseOptions) {
+        this.useEncrypt = baseOptions.request.useEncrypt || false;
+        this.encryptFn = baseOptions.request.encryptFn;
+        this.decryptFn = baseOptions.request.decryptFn;
+    }
 
     abstract findById(id: number): void;
     abstract find(): Promise<T[]>;
     abstract create(data: any): void;
     abstract deleteById(id: number): Promise<void>;
 
-    async deleteAll() {
-        const resultList = await this.find();
-        const res = resultList.map((item)=>(this.deleteById(item.id)));
-        return Promise.all(res);
-    }
-
     // 序列化: 将对象转换为字符串
     serialize<T>(obj: T): string {
         try {
+            if (this.useEncrypt && this.encryptFn) {
+                return this.encryptFn(JSON.stringify(obj));
+            }
             return JSON.stringify(obj);
         } catch (error) {
             console.error(error);
@@ -31,7 +34,13 @@ export abstract class BaseStorage<T extends BaseModel> {
     deserialize<T>(comment: BaseComment): T {
         try {
             const {id, body, created_at, updated_at} = comment;
-            const obj = JSON.parse(body);
+            let obj;
+            if (this.useEncrypt && this.decryptFn) {
+                const decryptedBody = this.decryptFn(body);
+                obj = JSON.parse(decryptedBody);
+            } else {
+                obj = JSON.parse(body);
+            }
             return {id, ...obj, created_at, updated_at}
         } catch (error) {
             console.error(error);

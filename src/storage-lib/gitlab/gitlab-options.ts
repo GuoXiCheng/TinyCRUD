@@ -1,4 +1,4 @@
 export type GitlabOptions = {
-    storagePlatform: 'gitlab';
+    platform: 'gitlab';
     projectId: string;
 }

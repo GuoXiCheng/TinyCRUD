@@ -74,4 +74,10 @@ export class GiteeStorage<T extends BaseModel> extends BaseStorage<T> {
         return this.deserialize<T>(response);
     }
 
+    async deleteAll() {
+        const findUrl = `${this.endpoint}/issues/${this.issueNumber}/comments`;
+        const findResult = await this.request.get<BaseComment[]>(findUrl);
+        await Promise.all(findResult.map((item)=>this.deleteById(item.id)));
+    }
+
 }
