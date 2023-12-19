@@ -18,7 +18,7 @@ export class StartTest {
             requestType: 'axios',
             request: axios,
             accessToken: process.env.TEST_GITEE_TOKEN as string,
-            storagePlatform: 'gitee',
+            platform: 'gitee',
             owner: process.env.TEST_GITEE_OWNER as string,
             repo: process.env.TEST_GITEE_REPO as string,
             useEncrypt: false,
@@ -36,7 +36,7 @@ export class StartTest {
             requestType: 'axios',
             request: axios,
             accessToken: process.env.TEST_GITHUB_TOKEN as string,
-            storagePlatform: 'github',
+            platform: 'github',
             owner: '',
             repo: ''
         });
@@ -47,7 +47,7 @@ export class StartTest {
             requestType: 'axios',
             request: axios,
             accessToken: process.env.TEST_GITLAB_TOKEN as string,
-            storagePlatform: 'gitlab',
+            platform: 'gitlab',
             projectId: ''
         });
     }

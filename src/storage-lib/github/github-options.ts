@@ -1,5 +1,5 @@
 export type GithubOptions = {
-    storagePlatform: 'github';
+    platform: 'github';
     owner: string;
     repo: string;
 }
