@@ -6,11 +6,17 @@ import { RequestOptions } from "./request-options";
 export abstract class BaseRequest {
     protected readonly baseUrl: string;
     protected readonly accessToken: string;
+    public readonly useEncrypt: boolean;
+    public readonly encryptFn?: (data: string) => string;
+    public readonly decryptFn?: (data: string) => string;
     constructor(
         protected options: RequestOptions
     ) { 
         this.baseUrl = options.baseUrl ? options.baseUrl : this.getBaseUrl();
         this.accessToken = options.accessToken;
+        this.useEncrypt = options.useEncrypt || false;
+        this.encryptFn = options.encryptFn;
+        this.decryptFn = options.decryptFn;
     }
 
     protected abstract sendRequest<T>(method: RequestMethods, url: string, data?: any): Promise<T>;

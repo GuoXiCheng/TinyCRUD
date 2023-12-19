@@ -1,10 +1,13 @@
 import axios from 'axios';
 import 'dotenv/config';
 import { createRequest } from '../..';
+import CryptoJS from 'crypto-js';
 
 export class StartTest {
 
     static GITEE_NUMBER = process.env.TEST_GITEE_NUMBER as string;
+
+    static ENCRYPT_KEY = "MySecretPassphrase";
 
     constructor() {
         
@@ -17,7 +20,14 @@ export class StartTest {
             accessToken: process.env.TEST_GITEE_TOKEN as string,
             storagePlatform: 'gitee',
             owner: process.env.TEST_GITEE_OWNER as string,
-            repo: process.env.TEST_GITEE_REPO as string
+            repo: process.env.TEST_GITEE_REPO as string,
+            useEncrypt: false,
+            encryptFn: (data: string) => {
+                return CryptoJS.AES.encrypt(data, StartTest.ENCRYPT_KEY).toString();
+            },
+            decryptFn: (data: string) => {
+                return CryptoJS.AES.decrypt(data, StartTest.ENCRYPT_KEY).toString(CryptoJS.enc.Utf8);
+            }
         });
     }
 
