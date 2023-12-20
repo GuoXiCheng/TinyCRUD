@@ -1,6 +1,5 @@
-export interface BaseComment {
-    id: number;
+import { BaseModel } from "./base-model";
+
+export interface BaseComment extends BaseModel {
     body: string;
-    created_at: string;
-    updated_at: string;
 }

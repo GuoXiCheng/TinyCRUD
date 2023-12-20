@@ -3,6 +3,7 @@ import { BaseComment } from "../base/base-comment";
 import { BaseModel } from "../base/base-model";
 import { BaseOptions } from "../base/base-options";
 import { BaseStorage } from "../base/base-storage";
+import { PlainObject } from "../base/plain-object";
 
 export class GiteeStorage<T extends BaseModel> extends BaseStorage<T> {
     private endpoint: string;
@@ -46,9 +47,9 @@ export class GiteeStorage<T extends BaseModel> extends BaseStorage<T> {
      * @param data - The data for the new record, excluding the 'id', 'created_at', and 'updated_at' fields.
      * @returns A promise that resolves to the created record.
      */
-    async create(data: Omit<T, 'id' | 'created_at' | 'updated_at'>) {
+    async create(data: PlainObject<T>) {
         const url = `${this.endpoint}/issues/${this.issueNumber}/comments`;
-        const body = this.serialize<Omit<T, 'id' | 'created_at' | 'updated_at'>>(data);
+        const body = this.serialize<PlainObject<T>>(data);
         const response = await this.request.post<BaseComment>(url, body);
         return this.deserialize<T>(response);
     }
@@ -69,9 +70,9 @@ export class GiteeStorage<T extends BaseModel> extends BaseStorage<T> {
      * @param data - The updated data for the record, excluding the id, created_at, and updated_at fields.
      * @returns The updated record.
      */
-    async updateById(id: number, data: Omit<T, 'id' | 'created_at' | 'updated_at'>) {
+    async updateById(id: number, data: PlainObject<T>) {
         const url = `${this.endpoint}/issues/comments/${id}`;
-        const body = this.serialize<Omit<T, 'id' | 'created_at' | 'updated_at'>>(data);
+        const body = this.serialize<PlainObject<T>>(data);
         const response = await this.request.patch<BaseComment>(url, body);
         return this.deserialize<T>(response);
     }
