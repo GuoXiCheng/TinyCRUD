@@ -12,7 +12,7 @@ export class AxiosRequest extends BaseRequest {
         this.axios = options.request as AxiosInstance;
     }
 
-    async sendRequest<T>(method: RequestMethods, url: string, data?: any): Promise<T> {
+    async sendRequest<T>(method: RequestMethods, url: string, body?: string): Promise<T> {
         try {
             const response = await this.axios.request<T>({
                 url,
@@ -20,7 +20,7 @@ export class AxiosRequest extends BaseRequest {
                 headers: {
                     'Authorization': `Bearer ${this.accessToken}`
                 },
-                ...(data && { data: data })
+                ...(body && { data: { body } })
             });
 
             return response.data;

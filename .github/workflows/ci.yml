@@ -29,6 +29,9 @@ jobs:
           TEST_GITEE_REPO: ${{ secrets.TEST_GITEE_REPO }}
           TEST_GITEE_NUMBER: ${{ secrets.TEST_GITEE_NUMBER }}
           TEST_GITHUB_TOKEN: ${{ secrets.TEST_GITHUB_TOKEN }}
+          TEST_GITHUB_OWNER: ${{ secrets.TEST_GITHUB_OWNER }}
+          TEST_GITHUB_REPO: ${{ secrets.TEST_GITHUB_REPO }}
+          TEST_GITHUB_NUMBER: ${{ secrets.TEST_GITHUB_NUMBER }}
           TEST_GITLAB_TOKEN: ${{ secrets.TEST_GITLAB_TOKEN }}
 
 

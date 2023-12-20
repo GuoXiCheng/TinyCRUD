@@ -9,7 +9,7 @@ describe('Test User Storage', () => {
         expect(detail.length).toEqual(0);
     });
 
-    test('Test create & User & findById User', async () => {
+    test('Test create & findById User', async () => {
         await userStorage.create({
             name: 'test-user',
             age: 18
@@ -30,6 +30,9 @@ describe('Test User Storage', () => {
         const findByIdResult = await userStorage.findById(findResult[0].id);
         expect(updateResult.name).toEqual(findByIdResult.name);
         expect(updateResult.age).toEqual(findByIdResult.age);
+        expect(updateResult.id).toEqual(findByIdResult.id);
+        expect(updateResult.created_at).toEqual(findByIdResult.created_at);
+        expect(updateResult.updated_at).toEqual(findByIdResult.updated_at);
     });
 
     test('Test deleteById User failed', async () => {
