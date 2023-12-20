@@ -13,11 +13,22 @@ export class GiteeStorage<T extends BaseModel> extends BaseStorage<T> {
     constructor(baseOptions: BaseOptions) {
         super(baseOptions);
 
-        const {request, issueNumber} = baseOptions;
+        const { request, issueNumber } = baseOptions;
         this.request = request;
         this.issueNumber = issueNumber;
         this.endpoint = request.getEndpoint();
 
+    }
+
+
+    /**
+     * Retrieves a list of items from the Gitee storage.
+     * @returns A promise that resolves to an array of items.
+     */
+    async find(): Promise<T[]> {
+        const url = `${this.endpoint}/issues/${this.issueNumber}/comments`;
+        const response = await this.request.get<BaseComment[]>(url);
+        return response.map((item) => this.deserialize<T>(item));
     }
 
     /**
@@ -29,16 +40,6 @@ export class GiteeStorage<T extends BaseModel> extends BaseStorage<T> {
         const url = `${this.endpoint}/issues/comments/${id}`;
         const response = await this.request.get<BaseComment>(url);
         return this.deserialize<T>(response);
-    }
-
-    /**
-     * Retrieves a list of comments from the Gitee storage.
-     * @returns {Promise<T[]>} A promise that resolves to an array of deserialized comments.
-     */
-    async find(): Promise<T[]> {
-        const url = `${this.endpoint}/issues/${this.issueNumber}/comments`;
-        const response = await this.request.get<BaseComment[]>(url);
-        return response.map((item)=>this.deserialize<T>(item));
     }
 
     /**
@@ -55,16 +56,6 @@ export class GiteeStorage<T extends BaseModel> extends BaseStorage<T> {
     }
 
     /**
-     * Deletes a comment by its ID.
-     * @param id The ID of the comment to delete.
-     * @returns A Promise that resolves when the comment is successfully deleted.
-     */
-    async deleteById(id: number): Promise<void> {
-        const url = `${this.endpoint}/issues/comments/${id}`;
-        return await this.request.delete(url);
-    }
-
-    /**
      * Updates a record by its ID.
      * @param id - The ID of the record to update.
      * @param data - The updated data for the record, excluding the id, created_at, and updated_at fields.
@@ -77,10 +68,24 @@ export class GiteeStorage<T extends BaseModel> extends BaseStorage<T> {
         return this.deserialize<T>(response);
     }
 
-    async deleteAll() {
+    /**
+     * Deletes a comment by its ID.
+     * @param id The ID of the comment to delete.
+     * @returns A Promise that resolves when the comment is successfully deleted.
+     */
+    async deleteById(id: number): Promise<void> {
+        const url = `${this.endpoint}/issues/comments/${id}`;
+        await this.request.delete(url);
+    }
+
+    /**
+     * Deletes all comments associated with the issue.
+     * @returns {Promise<void>} A promise that resolves when all comments are deleted.
+     */
+    async deleteAll(): Promise<void> {
         const findUrl = `${this.endpoint}/issues/${this.issueNumber}/comments`;
         const findResult = await this.request.get<BaseComment[]>(findUrl);
-        await Promise.all(findResult.map((item)=>this.deleteById(item.id)));
+        await Promise.all(findResult.map((item) => this.deleteById(item.id)));
     }
 
 }

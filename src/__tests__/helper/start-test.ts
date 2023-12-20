@@ -7,6 +7,8 @@ export class StartTest {
 
     static GITEE_NUMBER = process.env.TEST_GITEE_NUMBER as string;
 
+    static GITHUB_NUMBER = process.env.TEST_GITHUB_NUMBER as string;
+
     static ENCRYPT_KEY = "MySecretPassphrase";
 
     constructor() {
@@ -37,8 +39,8 @@ export class StartTest {
             request: axios,
             accessToken: process.env.TEST_GITHUB_TOKEN as string,
             platform: 'github',
-            owner: '',
-            repo: ''
+            owner: process.env.TEST_GITHUB_OWNER as string,
+            repo: process.env.TEST_GITHUB_REPO as string
         });
     }
 

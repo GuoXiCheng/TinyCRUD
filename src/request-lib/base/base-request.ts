@@ -70,7 +70,7 @@ export abstract class BaseRequest {
             case StoragePlatform.gitee:
                 return `${this.baseUrl}/api/v5/repos/${this.options.owner}/${this.options.repo}`;
             case StoragePlatform.github:
-                return `${this.baseUrl}/user`;
+                return `${this.baseUrl}/repos/${this.options.owner}/${this.options.repo}`;
             case StoragePlatform.gitlab:
                 return `${this.baseUrl}/api/v4/user`;
             default:
