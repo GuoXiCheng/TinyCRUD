@@ -21,22 +21,22 @@ export abstract class BaseRequest {
         this.decryptFn = options.decryptFn;
     }
 
-    protected abstract sendRequest<T>(method: RequestMethods, url: string, data?: any): Promise<T>;
+    protected abstract sendRequest<T>(method: RequestMethods, url: string, body?: string): Promise<T>;
 
     get<T>(url: string): Promise<T> {
         return this.sendRequest<T>('GET', url);
     }
 
-    post<T>(url: string, data: any): Promise<T> {
-        return this.sendRequest<T>('POST', url, data);
+    post<T>(url: string, body: string): Promise<T> {
+        return this.sendRequest<T>('POST', url, body);
     }
 
     delete(url: string): Promise<void> {
         return this.sendRequest<void>('DELETE', url);
     }
 
-    patch<T>(url: string, data: any): Promise<T> {
-        return this.sendRequest<T>('PATCH', url, data);
+    patch<T>(url: string, body: string): Promise<T> {
+        return this.sendRequest<T>('PATCH', url, body);
     }
 
     async authenticate() {

@@ -12,12 +12,12 @@ export class WxRequest extends BaseRequest {
         this.wx = options.request as WxInstance;
     }
 
-    async sendRequest<T>(method: RequestMethods, url: string, data?: any): Promise<T> {
+    async sendRequest<T>(method: RequestMethods, url: string, body?: string): Promise<T> {
         return new Promise((resolve, reject) => {
             const options: WxRequestOptions = {
                 url,
                 method,
-                data,
+                ...(body && { data: { body } }),
                 header: {
                     'Authorization': `Bearer ${this.accessToken}`
                 },

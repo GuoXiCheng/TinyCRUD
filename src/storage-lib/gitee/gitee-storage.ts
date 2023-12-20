@@ -48,7 +48,8 @@ export class GiteeStorage<T extends BaseModel> extends BaseStorage<T> {
      */
     async create(data: Omit<T, 'id' | 'created_at' | 'updated_at'>) {
         const url = `${this.endpoint}/issues/${this.issueNumber}/comments`;
-        const response = await this.request.post<BaseComment>(url, {body: this.serialize<Omit<T, 'id' | 'created_at' | 'updated_at'>>(data)});
+        const body = this.serialize<Omit<T, 'id' | 'created_at' | 'updated_at'>>(data);
+        const response = await this.request.post<BaseComment>(url, body);
         return this.deserialize<T>(response);
     }
 
@@ -70,7 +71,8 @@ export class GiteeStorage<T extends BaseModel> extends BaseStorage<T> {
      */
     async updateById(id: number, data: Omit<T, 'id' | 'created_at' | 'updated_at'>) {
         const url = `${this.endpoint}/issues/comments/${id}`;
-        const response = await this.request.patch<BaseComment>(url, {body: this.serialize<Omit<T, 'id' | 'created_at' | 'updated_at'>>(data)});
+        const body = this.serialize<Omit<T, 'id' | 'created_at' | 'updated_at'>>(data);
+        const response = await this.request.patch<BaseComment>(url, body);
         return this.deserialize<T>(response);
     }
 
