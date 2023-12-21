@@ -9,6 +9,8 @@ export class StartTest {
 
     static GITHUB_NUMBER = process.env.TEST_GITHUB_NUMBER as string;
 
+    static GITLAB_NUMBER = process.env.TEST_GITLAB_NUMBER as string;
+
     static ENCRYPT_KEY = "MySecretPassphrase";
 
     constructor() {
@@ -50,7 +52,7 @@ export class StartTest {
             request: axios,
             accessToken: process.env.TEST_GITLAB_TOKEN as string,
             platform: 'gitlab',
-            projectId: ''
+            projectId: process.env.TEST_GITLAB_PROJECT_ID as string
         });
     }
 }
