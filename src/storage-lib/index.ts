@@ -10,3 +10,4 @@ export { GithubStorage } from './github/github-storage';
 /** Gitlab */
 export { GitlabUser } from './gitlab/gitlab-user';
 export { GitlabOptions } from './gitlab/gitlab-options';
+export { GitlabStorage } from './gitlab/gitlab-storage';

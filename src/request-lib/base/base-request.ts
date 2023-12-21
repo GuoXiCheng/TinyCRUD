@@ -39,6 +39,10 @@ export abstract class BaseRequest {
         return this.sendRequest<T>('PATCH', url, body);
     }
 
+    put<T>(url: string, body: string): Promise<T> {
+        return this.sendRequest<T>('PUT', url, body);
+    }
+
     async authenticate() {
         switch(this.options.platform) {
             case StoragePlatform.gitee:
@@ -72,7 +76,7 @@ export abstract class BaseRequest {
             case StoragePlatform.github:
                 return `${this.baseUrl}/repos/${this.options.owner}/${this.options.repo}`;
             case StoragePlatform.gitlab:
-                return `${this.baseUrl}/api/v4/user`;
+                return `${this.baseUrl}/api/v4/projects/${this.options.projectId}`;
             default:
                 throw new Error('Unsupported Platform');
         }
