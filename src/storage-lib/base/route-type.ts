@@ -1,0 +1,1 @@
+export type RouteType = 'find' | 'findById' | 'create' | 'updateById' | 'deleteById';
