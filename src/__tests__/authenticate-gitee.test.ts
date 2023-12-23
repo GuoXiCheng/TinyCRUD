@@ -1,9 +1,8 @@
-import { StartTest } from "./helper/start-test";
+import { giteeRequest } from "./helper/helper";
 
 describe('Test Authenticate Gitee', () => {
     test('Test Authenticate Gitee', async () => {
-        const request = StartTest.createGiteeRequest();
-        const res = await request.authenticate();
+        const res = await giteeRequest.authenticate();
         expect(Object.keys(res)).toEqual([
             'id', 'login',
             'name', 'avatar_url',
