@@ -1,9 +1,8 @@
-import { StartTest } from "./helper/start-test";
+import { githubRequest } from "./helper/helper";
 
 describe('Test Authenticate Github', () => {
     test('Test Authenticate Github', async () => {
-        const request = StartTest.createGithubRequest();
-        const res = await request.authenticate();
+        const res = await githubRequest.authenticate();
         expect(Object.keys(res)).toEqual([
             'login', 'id',
             'node_id', 'avatar_url',

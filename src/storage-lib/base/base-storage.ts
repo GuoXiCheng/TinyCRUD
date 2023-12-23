@@ -1,7 +1,6 @@
 import { BaseRequest } from "../../request-lib";
 import { BaseComment } from "./base-comment";
 import { BaseModel } from "./base-model";
-import { BaseOptions } from "./base-options";
 import { PlainObject } from "./plain-object";
 import { RouteType } from "./route-type";
 
@@ -11,12 +10,7 @@ export abstract class BaseStorage<T extends BaseModel> {
     public readonly decryptFn?: (data: string) => string;
 
     protected endpoint: string;
-    protected request: BaseRequest;
-    protected issueNumber: string;
-    constructor(baseOptions: BaseOptions) {
-        const { request, issueNumber } = baseOptions;
-        this.request = request;
-        this.issueNumber = issueNumber;
+    constructor(protected request: BaseRequest, protected issueNumber: string) {
         this.endpoint = request.getEndpoint();
 
         this.useEncrypt = request.useEncrypt || false;

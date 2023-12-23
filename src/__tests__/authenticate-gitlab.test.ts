@@ -1,9 +1,8 @@
-import { StartTest } from "./helper/start-test";
+import { gitlabRequest } from "./helper/helper";
 
 describe('Test Authenticate Gitlab', () => {
     test('Test Authenticate Gitlab', async () => {
-        const request = StartTest.createGitlabRequest();
-        const res = await request.authenticate();
+        const res = await gitlabRequest.authenticate();
         expect(Object.keys(res)).toEqual([
             'id',
             'username',

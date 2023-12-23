@@ -1,14 +1,14 @@
+import { BaseRequest } from "../../request-lib";
 import { BaseComment } from "../base/base-comment";
 import { BaseModel } from "../base/base-model";
-import { BaseOptions } from "../base/base-options";
 import { BaseStorage } from "../base/base-storage";
 import { PlainObject } from "../base/plain-object";
 import { RouteType } from "../base/route-type";
 
 export class GitlabStorage<T extends BaseModel> extends BaseStorage<T> {
 
-    constructor(baseOptions: BaseOptions) {
-        super(baseOptions);
+    constructor(protected request: BaseRequest, protected issueNumber: string) {
+        super(request, issueNumber);
     }
     
     protected getRoute(routeType: RouteType, id?: number): string {
