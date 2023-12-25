@@ -1,1 +1,7 @@
-export type RouteType = 'find' | 'findById' | 'create' | 'updateById' | 'deleteById';
+export enum RouteType {
+    find = 'find',
+    findById = 'findById',
+    create = 'create',
+    updateById = 'updateById',
+    deleteById = 'deleteById'
+}

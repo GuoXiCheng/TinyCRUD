@@ -18,14 +18,14 @@ export abstract class BaseStorage<T extends BaseModel> {
         this.decryptFn = request.decryptFn;
     }
 
-    protected getRoute(routeType: RouteType, id?: number): string {
+    protected getRoute(routeType: keyof typeof RouteType, id?: number): string {
         switch (routeType) {
-            case 'find':
-            case 'create':
+            case RouteType.find:
+            case RouteType.create:
                 return `${this.endpoint}/issues/${this.issueNumber}/comments`;
-            case 'findById':
-            case 'updateById':
-            case 'deleteById':
+            case RouteType.findById:
+            case RouteType.updateById:
+            case RouteType.deleteById:
                 return `${this.endpoint}/issues/comments/${id}`;
             default:
                 throw new Error(`routeType ${routeType} is not supported`);
@@ -37,7 +37,7 @@ export abstract class BaseStorage<T extends BaseModel> {
      * @returns A promise that resolves to an array of items.
      */
     async find(): Promise<T[]> {
-        const url = this.getRoute('find');
+        const url = this.getRoute(RouteType.find);
         const response = await this.request.get<BaseComment[]>(url);
         return response.map((item) => this.deserialize<T>(item));
     }
@@ -48,7 +48,7 @@ export abstract class BaseStorage<T extends BaseModel> {
     * @returns Matches the record
     */
     async findById(id: number) {
-        const url = this.getRoute('findById', id);
+        const url = this.getRoute(RouteType.findById, id);
         const response = await this.request.get<BaseComment>(url);
         return this.deserialize<T>(response);
     }
@@ -60,7 +60,7 @@ export abstract class BaseStorage<T extends BaseModel> {
      * @returns A promise that resolves to the created record.
      */
     async create(data: PlainObject<T>): Promise<T> {
-        const url = this.getRoute('create');
+        const url = this.getRoute(RouteType.create);
         const body = this.serialize<PlainObject<T>>(data);
         const response = await this.request.post<BaseComment>(url, body);
         return this.deserialize<T>(response);
@@ -73,7 +73,7 @@ export abstract class BaseStorage<T extends BaseModel> {
      * @returns A promise that resolves to the updated record.
      */
     async updateById(id: number, data: PlainObject<T>): Promise<T> {
-        const url = this.getRoute('updateById', id);
+        const url = this.getRoute(RouteType.updateById, id);
         const body = this.serialize<PlainObject<T>>(data);
         const response = await this.request.patch<BaseComment>(url, body);
         return this.deserialize<T>(response);
@@ -85,7 +85,7 @@ export abstract class BaseStorage<T extends BaseModel> {
      * @returns A Promise that resolves when the item is successfully deleted.
      */
     async deleteById(id: number): Promise<void> {
-        const url = this.getRoute('deleteById', id);
+        const url = this.getRoute(RouteType.deleteById, id);
         await this.request.delete(url);
     }
 
@@ -94,7 +94,7 @@ export abstract class BaseStorage<T extends BaseModel> {
      * @returns A Promise that resolves when all items are deleted.
      */
     async deleteAll(): Promise<void> {
-        const findUrl = this.getRoute('find');
+        const findUrl = this.getRoute(RouteType.find);
         const findResult = await this.request.get<BaseComment[]>(findUrl);
         await Promise.all(findResult.map((item) => this.deleteById(item.id)));
     }

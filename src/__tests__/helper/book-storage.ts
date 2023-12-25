@@ -2,8 +2,18 @@ import { GithubStorage } from "../../storage-lib";
 import { BookModel } from "./book-model";
 import { GITHUB_NUMBER, githubRequest } from "./helper";
 
-export class BookStorage extends GithubStorage<BookModel> {
-    constructor() {
+class BookStorage extends GithubStorage<BookModel> {
+    private static instance: BookStorage;
+    private constructor() {
         super(githubRequest, GITHUB_NUMBER);
     }
+
+    public static getInstance(): BookStorage {
+        if (!BookStorage.instance) {
+            BookStorage.instance = new BookStorage();
+        }
+        return BookStorage.instance;
+    }
 }
+
+export const Book = BookStorage.getInstance();
