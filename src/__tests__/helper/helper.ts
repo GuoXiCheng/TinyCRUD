@@ -18,7 +18,7 @@ export const giteeRequest = createRequest({
     platform: 'gitee',
     owner: process.env.TEST_GITEE_OWNER as string,
     repo: process.env.TEST_GITEE_REPO as string,
-    useEncrypt: false,
+    useEncrypt: true,
     encryptFn: (data: string) => {
         return CryptoJS.AES.encrypt(data, ENCRYPT_KEY).toString();
     },

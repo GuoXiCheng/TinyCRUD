@@ -1,33 +1,32 @@
-import { UserStorage } from "./helper/user-storage";
+import { User } from "./helper/user-storage";
 
 describe('Test User Storage', () => {
-    const userStorage = new UserStorage();
 
     test('Test deleteAll User', async () => {
-        await userStorage.deleteAll();
-        const detail = await userStorage.find();
+        await User.deleteAll();
+        const detail = await User.find();
         expect(detail.length).toEqual(0);
     });
 
     test('Test create & findById User', async () => {
-        await userStorage.create({
+        await User.create({
             name: 'test-user',
             age: 18
         });
-        const findResult = await userStorage.find();
+        const findResult = await User.find();
         expect(findResult.length).toEqual(1);
 
-        const findByIdResult = await userStorage.findById(findResult[0].id);
+        const findByIdResult = await User.findById(findResult[0].id);
         expect(findByIdResult).toEqual(findResult[0]);
     });
 
     test('Test updateById User', async () => {
-        const findResult = await userStorage.find();
-        const updateResult = await userStorage.updateById(findResult[0].id, {
+        const findResult = await User.find();
+        const updateResult = await User.updateById(findResult[0].id, {
             name: 'test-user-update',
             age: 20
         });
-        const findByIdResult = await userStorage.findById(findResult[0].id);
+        const findByIdResult = await User.findById(findResult[0].id);
         expect(updateResult.name).toEqual(findByIdResult.name);
         expect(updateResult.age).toEqual(findByIdResult.age);
         expect(updateResult.id).toEqual(findByIdResult.id);
@@ -37,7 +36,7 @@ describe('Test User Storage', () => {
 
     test('Test deleteById User failed', async () => {
         try {
-            await userStorage.deleteById(123);
+            await User.deleteById(123);
         } catch (error: any) {
             expect(error.response.data).toEqual({ message: '404 Not Found' });
         }
@@ -45,7 +44,7 @@ describe('Test User Storage', () => {
 
     test('Test updateById User failed', async () => {
         try {
-            await userStorage.updateById(123, {
+            await User.updateById(123, {
                 name: 'test-user-update',
                 age: 20
             });
@@ -56,7 +55,7 @@ describe('Test User Storage', () => {
 
     test('Test findById User failed', async () => {
         try {
-            await userStorage.findById(123);
+            await User.findById(123);
         } catch (error: any) {
             expect(error.response.data).toEqual({ message: '404 Not Found' });
         }

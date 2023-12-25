@@ -11,14 +11,14 @@ export class GitlabStorage<T extends BaseModel> extends BaseStorage<T> {
         super(request, issueNumber);
     }
     
-    protected getRoute(routeType: RouteType, id?: number): string {
+    protected getRoute(routeType: keyof typeof RouteType, id?: number): string {
         switch (routeType) {
-            case 'find':
-            case 'create':
+            case RouteType.find:
+            case RouteType.create:
                 return `${this.endpoint}/issues/${this.issueNumber}/notes`;
-            case 'findById':
-            case 'updateById':
-            case 'deleteById':
+            case RouteType.findById:
+            case RouteType.updateById:
+            case RouteType.deleteById:
                 return `${this.endpoint}/issues/${this.issueNumber}/notes/${id}`;
             default:
                 throw new Error(`routeType ${routeType} is not supported`);
@@ -33,7 +33,7 @@ export class GitlabStorage<T extends BaseModel> extends BaseStorage<T> {
      * @returns A promise that resolves to the updated record.
      */
     async updateById(id: number, data: PlainObject<T>): Promise<T> {
-        const url = this.getRoute('updateById', id);
+        const url = this.getRoute(RouteType.updateById, id);
         const body = this.serialize<PlainObject<T>>(data);
         const response = await this.request.put<BaseComment>(url, body);
         return this.deserialize<T>(response);
