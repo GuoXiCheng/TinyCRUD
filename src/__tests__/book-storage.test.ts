@@ -2,8 +2,11 @@ import { Book } from "./helper/book-storage";
 
 describe('Test Book Storage', () => {
 
-    test('Test deleteAll Book', async () => {
+    beforeAll(async () => {
         await Book.deleteAll();
+    });
+
+    test('Test find Book', async () => {
         const detail = await Book.find();
         expect(detail.length).toEqual(0);
     });
@@ -72,5 +75,62 @@ describe('Test Book Storage', () => {
                 "documentation_url": "https://docs.github.com/rest/issues/comments#get-an-issue-comment"
             });
         }
+    });
+
+    test('Test createAll Book', async () => {
+        await Book.deleteAll();
+        const result = await Book.createAll([
+            {
+                book_name: 'test-book-1',
+                book_author: 'test-author-1',
+                book_price: 100
+            },
+            {
+                book_name: 'test-book-2',
+                book_author: 'test-author-2',
+                book_price: 200
+            },
+            {
+                book_name: 'test-book-3',
+                book_author: 'test-author-3',
+                book_price: 300
+            },
+            {
+                book_name: 'test-book-4',
+                book_author: 'test-author-4',
+                book_price: 400
+            },
+            {
+                book_name: 'test-book-5',
+                book_author: 'test-author-5',
+                book_price: 500
+            },
+            {
+                book_name: 'test-book-6',
+                book_author: 'test-author-6',
+                book_price: 600
+            },
+            {
+                book_name: 'test-book-7',
+                book_author: 'test-author-7',
+                book_price: 700
+            },
+            {
+                book_name: 'test-book-8',
+                book_author: 'test-author-8',
+                book_price: 800
+            },
+            {
+                book_name: 'test-book-9',
+                book_author: 'test-author-9',
+                book_price: 900
+            },
+            {
+                book_name: 'test-book-10',
+                book_author: 'test-author-10',
+                book_price: 1000
+            }
+        ]);
+        expect(result.length).toEqual(10);
     });
 });

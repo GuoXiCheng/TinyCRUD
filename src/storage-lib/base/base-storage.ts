@@ -67,6 +67,15 @@ export abstract class BaseStorage<T extends BaseModel> {
     }
 
     /**
+     * Creates multiple items in the storage.
+     * @param data An array of objects representing the items to be created.
+     * @returns A promise that resolves to an array of created items.
+     */
+    async createAll(data: PlainObject<T>[]): Promise<T[]> {
+        return Promise.all(data.map((item) => this.create(item)));
+    }
+
+    /**
      * Updates a record by its ID.
      * @param id - The ID of the record to update.
      * @param data - The updated data for the record.
