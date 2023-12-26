@@ -2,8 +2,11 @@ import { User } from "./helper/user-storage";
 
 describe('Test User Storage', () => {
 
-    test('Test deleteAll User', async () => {
+    beforeAll(async () => {
         await User.deleteAll();
+    });
+
+    test('Test find User', async () => {
         const detail = await User.find();
         expect(detail.length).toEqual(0);
     });
@@ -59,5 +62,51 @@ describe('Test User Storage', () => {
         } catch (error: any) {
             expect(error.response.data).toEqual({ message: '404 Not Found' });
         }
+    });
+
+    test('Test createAll User', async () => {
+        const result = await User.createAll([
+            {
+                name: 'test-user-1',
+                age: 18
+            },
+            {
+                name: 'test-user-2',
+                age: 20
+            },
+            {
+                name: 'test-user-3',
+                age: 22
+            },
+            {
+                name: 'test-user-4',
+                age: 24
+            },
+            {
+                name: 'test-user-5',
+                age: 26
+            },
+            {
+                name: 'test-user-6',
+                age: 28
+            },
+            {
+                name: 'test-user-7',
+                age: 30
+            },
+            {
+                name: 'test-user-8',
+                age: 32
+            },
+            {
+                name: 'test-user-9',
+                age: 34
+            },
+            {
+                name: 'test-user-10',
+                age: 36
+            }
+        ]);
+        expect(result.length).toEqual(10);
     });
 });
