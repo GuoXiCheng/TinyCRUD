@@ -1,6 +1,61 @@
+import { PlainObject } from "../storage-lib/base/plain-object";
+import { BookModel } from "./helper/book-model";
 import { Book } from "./helper/book-storage";
 
 describe('Test Book Storage', () => {
+
+    const bookList: PlainObject<BookModel>[] = [
+        {
+            book_name: 'test-book-1',
+            book_author: 'test-author-1',
+            book_price: 100
+        },
+        {
+            book_name: 'test-book-2',
+            book_author: 'test-author-2',
+            book_price: 200
+        },
+        {
+            book_name: 'test-book-3',
+            book_author: 'test-author-3',
+            book_price: 300
+        },
+        {
+            book_name: 'test-book-4',
+            book_author: 'test-author-4',
+            book_price: 400
+        },
+        {
+            book_name: 'test-book-5',
+            book_author: 'test-author-5',
+            book_price: 500
+        },
+        {
+            book_name: 'test-book-6',
+            book_author: 'test-author-6',
+            book_price: 600
+        },
+        {
+            book_name: 'test-book-7',
+            book_author: 'test-author-7',
+            book_price: 700
+        },
+        {
+            book_name: 'test-book-8',
+            book_author: 'test-author-8',
+            book_price: 800
+        },
+        {
+            book_name: 'test-book-9',
+            book_author: 'test-author-9',
+            book_price: 900
+        },
+        {
+            book_name: 'test-book-10',
+            book_author: 'test-author-10',
+            book_price: 1000
+        }
+    ];
 
     beforeAll(async () => {
         await Book.deleteAll();
@@ -79,58 +134,19 @@ describe('Test Book Storage', () => {
 
     test('Test createAll Book', async () => {
         await Book.deleteAll();
-        const result = await Book.createAll([
-            {
-                book_name: 'test-book-1',
-                book_author: 'test-author-1',
-                book_price: 100
-            },
-            {
-                book_name: 'test-book-2',
-                book_author: 'test-author-2',
-                book_price: 200
-            },
-            {
-                book_name: 'test-book-3',
-                book_author: 'test-author-3',
-                book_price: 300
-            },
-            {
-                book_name: 'test-book-4',
-                book_author: 'test-author-4',
-                book_price: 400
-            },
-            {
-                book_name: 'test-book-5',
-                book_author: 'test-author-5',
-                book_price: 500
-            },
-            {
-                book_name: 'test-book-6',
-                book_author: 'test-author-6',
-                book_price: 600
-            },
-            {
-                book_name: 'test-book-7',
-                book_author: 'test-author-7',
-                book_price: 700
-            },
-            {
-                book_name: 'test-book-8',
-                book_author: 'test-author-8',
-                book_price: 800
-            },
-            {
-                book_name: 'test-book-9',
-                book_author: 'test-author-9',
-                book_price: 900
-            },
-            {
-                book_name: 'test-book-10',
-                book_author: 'test-author-10',
-                book_price: 1000
-            }
-        ]);
+        const result = await Book.createAll(bookList);
         expect(result.length).toEqual(10);
+
+        // 因为是并行创建，所以批量新增的数据是无序的
+        expect((await Book.find()).map(item=>item.book_name)).not.toEqual(bookList.map(item=>item.book_name));
+    });
+
+    test('Test createAll Book orderly', async () => {
+        await Book.deleteAll();
+        const result = await Book.createAll(bookList, true);
+        expect(result.length).toEqual(10);
+
+        // 因为是顺序创建，所以批量新增的数据是有序的
+        expect((await Book.find()).map(item=>item.book_name)).toEqual(bookList.map(item=>item.book_name));
     });
 });

@@ -16,4 +16,7 @@ class BookStorage extends GithubStorage<BookModel> {
     }
 }
 
+/**
+ * test github api with a book storage instance.
+ */
 export const Book = BookStorage.getInstance();

@@ -1,6 +1,112 @@
+import { PlainObject } from "../storage-lib/base/plain-object";
+import { ChatModel } from "./helper/chat-model";
 import { Chat } from "./helper/chat-storage";
 
 describe('Use Gitlab Test Chat Storage', () => {
+
+    const chatList: PlainObject<ChatModel>[] = [
+        {
+            participants: ['from-user-1', 'to-user-1'],
+            messages: [
+                {
+                    from: 'from-user-1',
+                    to: 'to-user-1',
+                    message: 'hello'
+                }
+            ]
+        },
+        {
+            participants: ['from-user-2', 'to-user-2'],
+            messages: [
+                {
+                    from: 'from-user-2',
+                    to: 'to-user-2',
+                    message: 'hello'
+                }
+            ]
+        },
+        {
+            participants: ['from-user-3', 'to-user-3'],
+            messages: [
+                {
+                    from: 'from-user-3',
+                    to: 'to-user-3',
+                    message: 'hello'
+                }
+            ]
+        },
+        {
+            participants: ['from-user-4', 'to-user-4'],
+            messages: [
+                {
+                    from: 'from-user-4',
+                    to: 'to-user-4',
+                    message: 'hello'
+                }
+            ]
+        },
+        {
+            participants: ['from-user-5', 'to-user-5'],
+            messages: [
+                {
+                    from: 'from-user-5',
+                    to: 'to-user-5',
+                    message: 'hello'
+                }
+            ]
+        },
+        {
+            participants: ['from-user-6', 'to-user-6'],
+            messages: [
+                {
+                    from: 'from-user-6',
+                    to: 'to-user-6',
+                    message: 'hello'
+                }
+            ]
+        },
+        {
+            participants: ['from-user-7', 'to-user-7'],
+            messages: [
+                {
+                    from: 'from-user-7',
+                    to: 'to-user-7',
+                    message: 'hello'
+                }
+            ]
+        },
+        {
+            participants: ['from-user-8', 'to-user-8'],
+            messages: [
+                {
+                    from: 'from-user-8',
+                    to: 'to-user-8',
+                    message: 'hello'
+                }
+            ]
+        },
+        {
+            participants: ['from-user-9', 'to-user-9'],
+            messages: [
+                {
+                    from: 'from-user-9',
+                    to: 'to-user-9',
+                    message: 'hello'
+                }
+            ]
+        },
+        {
+            participants: ['from-user-10', 'to-user-10'],
+            messages: [
+                {
+                    from: 'from-user-10',
+                    to: 'to-user-10',
+                    message: 'hello'
+                }
+            ]
+        }
+    ];
+
 
     beforeAll(async () => {
         await Chat.deleteAll();
@@ -90,108 +196,19 @@ describe('Use Gitlab Test Chat Storage', () => {
 
     test('Test createAll Chat', async () => {
         await Chat.deleteAll();
-        const result = await Chat.createAll([
-            {
-                participants: ['from-user-1', 'to-user-1'],
-                messages: [
-                    {
-                        from: 'from-user-1',
-                        to: 'to-user-1',
-                        message: 'hello'
-                    }
-                ]
-            },
-            {
-                participants: ['from-user-2', 'to-user-2'],
-                messages: [
-                    {
-                        from: 'from-user-2',
-                        to: 'to-user-2',
-                        message: 'hello'
-                    }
-                ]
-            },
-            {
-                participants: ['from-user-3', 'to-user-3'],
-                messages: [
-                    {
-                        from: 'from-user-3',
-                        to: 'to-user-3',
-                        message: 'hello'
-                    }
-                ]
-            },
-            {
-                participants: ['from-user-4', 'to-user-4'],
-                messages: [
-                    {
-                        from: 'from-user-4',
-                        to: 'to-user-4',
-                        message: 'hello'
-                    }
-                ]
-            },
-            {
-                participants: ['from-user-5', 'to-user-5'],
-                messages: [
-                    {
-                        from: 'from-user-5',
-                        to: 'to-user-5',
-                        message: 'hello'
-                    }
-                ]
-            },
-            {
-                participants: ['from-user-6', 'to-user-6'],
-                messages: [
-                    {
-                        from: 'from-user-6',
-                        to: 'to-user-6',
-                        message: 'hello'
-                    }
-                ]
-            },
-            {
-                participants: ['from-user-7', 'to-user-7'],
-                messages: [
-                    {
-                        from: 'from-user-7',
-                        to: 'to-user-7',
-                        message: 'hello'
-                    }
-                ]
-            },
-            {
-                participants: ['from-user-8', 'to-user-8'],
-                messages: [
-                    {
-                        from: 'from-user-8',
-                        to: 'to-user-8',
-                        message: 'hello'
-                    }
-                ]
-            },
-            {
-                participants: ['from-user-9', 'to-user-9'],
-                messages: [
-                    {
-                        from: 'from-user-9',
-                        to: 'to-user-9',
-                        message: 'hello'
-                    }
-                ]
-            },
-            {
-                participants: ['from-user-10', 'to-user-10'],
-                messages: [
-                    {
-                        from: 'from-user-10',
-                        to: 'to-user-10',
-                        message: 'hello'
-                    }
-                ]
-            }
-        ]);
+        const result = await Chat.createAll(chatList);
         expect(result.length).toEqual(10);
+
+        // 因为是并行创建，所以批量新增的数据是无序的
+        expect((await Chat.find()).map(item=>item.participants)).not.toEqual(chatList.map(item=>item.participants).reverse());
     });
+
+    test('Test createAll Chat orderly', async ()=>{
+        await Chat.deleteAll();
+        const result = await Chat.createAll(chatList, true);
+        expect(result.length).toEqual(10);
+
+        // 因为是顺序创建，所以批量新增的数据是有序的
+        expect((await Chat.find()).map(item=>item.participants)).toEqual(chatList.map(item=>item.participants).reverse());
+    })
 });

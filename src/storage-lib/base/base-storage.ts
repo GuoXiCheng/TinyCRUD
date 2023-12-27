@@ -66,13 +66,24 @@ export abstract class BaseStorage<T extends BaseModel> {
         return this.deserialize<T>(response);
     }
 
+
     /**
-     * Creates multiple items in the storage.
-     * @param data An array of objects representing the items to be created.
-     * @returns A promise that resolves to an array of created items.
+     * Creates multiple records in the storage.
+     * 
+     * @param data - An array of objects representing the records to be created.
+     * @param order - Specifies whether the records should be created in the order they appear in the array. Default is false.
+     * @returns A promise that resolves to an array of created records.
      */
-    async createAll(data: PlainObject<T>[]): Promise<T[]> {
-        return Promise.all(data.map((item) => this.create(item)));
+    async createAll(data: PlainObject<T>[], order = false): Promise<T[]> {
+        if (order === false) {
+            return Promise.all(data.map((item) => this.create(item)));
+        }
+        
+        const result: T[] = [];
+        for (const item of data) {
+            result.push(await this.create(item));
+        }
+        return result;
     }
 
     /**
