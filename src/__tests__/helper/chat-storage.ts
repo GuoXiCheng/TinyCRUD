@@ -16,4 +16,7 @@ class ChatStorage extends GitlabStorage<ChatModel> {
     }
 }
 
+/**
+ * test gitlab api with a chat storage instance.
+ */
 export const Chat = ChatStorage.getInstance();

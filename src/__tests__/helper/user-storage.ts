@@ -17,4 +17,7 @@ export class UserStorage extends GiteeStorage<UserModel> {
     
 }
 
+/**
+ * test gitee api with a user storage instance.
+ */
 export const User = UserStorage.getInstance();
