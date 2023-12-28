@@ -1,6 +1,12 @@
 import { PlainObject } from "../storage-lib/base/plain-object";
 import { UserModel } from "./helper/user-model";
 import { User } from "./helper/user-storage";
+import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
+import timezone from 'dayjs/plugin/timezone';
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 describe('Test User Storage', () => {
 
@@ -113,7 +119,7 @@ describe('Test User Storage', () => {
         expect(result.length).toEqual(10);
 
         // 因为是并行创建，所以批量新增的数据是无序的
-        expect((await User.find()).map(item=>item.name)).not.toEqual(userList.map(item=>item.name));
+        expect((await User.find()).map(item => item.name)).not.toEqual(userList.map(item => item.name));
     });
 
     test('Test createAll User orderly', async () => {
@@ -122,6 +128,14 @@ describe('Test User Storage', () => {
         expect(result.length).toEqual(10);
 
         // 因为是顺序创建，所以批量新增的数据是有序的
-        expect((await User.find()).map(item=>item.name)).toEqual(userList.map(item=>item.name));
+        expect((await User.find()).map(item => item.name)).toEqual(userList.map(item => item.name));
+    });
+
+    test('Test find user with params since', async () => {
+        const time = dayjs().tz('Asia/Shanghai').subtract(1, 'second').format();
+        const result = await User.find({ since: time });
+        result.forEach(item => {
+            expect(dayjs(item.created_at).isAfter(time)).toBeTruthy();
+        });
     });
 });
