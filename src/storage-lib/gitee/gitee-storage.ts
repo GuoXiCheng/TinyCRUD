@@ -1,6 +1,7 @@
 import { BaseRequest } from "../../request-lib";
 import { BaseModel } from "../base/base-model";
 import { BaseStorage } from "../base/base-storage";
+import { GiteeParams } from "./gitee-params";
 
 export class GiteeStorage<T extends BaseModel> extends BaseStorage<T> {
     
@@ -8,4 +9,7 @@ export class GiteeStorage<T extends BaseModel> extends BaseStorage<T> {
         super(request, issueNumber);
     }
 
+    async find(params?: GiteeParams): Promise<T[]> {
+        return super.find(params);
+    }
 }

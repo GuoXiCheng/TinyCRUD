@@ -1,6 +1,7 @@
 import { BaseRequest } from "../../request-lib";
 import { BaseComment } from "./base-comment";
 import { BaseModel } from "./base-model";
+import { BaseParams } from "./base-params";
 import { PlainObject } from "./plain-object";
 import { RouteType } from "./route-type";
 
@@ -36,9 +37,9 @@ export abstract class BaseStorage<T extends BaseModel> {
      * Retrieves a list of items from the storage.
      * @returns A promise that resolves to an array of items.
      */
-    async find(): Promise<T[]> {
+    async find(params?: BaseParams): Promise<T[]> {
         const url = this.getRoute(RouteType.find);
-        const response = await this.request.get<BaseComment[]>(url);
+        const response = await this.request.get<BaseComment[]>(url, params);
         return response.map((item) => this.deserialize<T>(item));
     }
 

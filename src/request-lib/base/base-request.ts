@@ -21,10 +21,10 @@ export abstract class BaseRequest {
         this.decryptFn = options.decryptFn;
     }
 
-    protected abstract sendRequest<T>(method: RequestMethods, url: string, body?: string): Promise<T>;
+    protected abstract sendRequest<T>(method: RequestMethods, url: string, body?: string, params?: any): Promise<T>;
 
-    get<T>(url: string): Promise<T> {
-        return this.sendRequest<T>('GET', url);
+    get<T>(url: string, params?: any): Promise<T> {
+        return this.sendRequest<T>('GET', url, undefined, params);
     }
 
     post<T>(url: string, body: string): Promise<T> {
