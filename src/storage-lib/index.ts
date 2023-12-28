@@ -1,4 +1,5 @@
 export { BaseModel } from './base/base-model';
+export { PlainObject } from './base/plain-object';
 /** Gitee */
 export { GiteeUser } from './gitee/gitee-user';
 export { GiteeOptions } from './gitee/gitee-options';

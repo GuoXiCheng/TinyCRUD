@@ -1,12 +1,7 @@
-import { PlainObject } from "../storage-lib/base/plain-object";
+import { PlainObject } from "../storage-lib";
 import { UserModel } from "./helper/user-model";
 import { User } from "./helper/user-storage";
 import dayjs from 'dayjs';
-import utc from 'dayjs/plugin/utc';
-import timezone from 'dayjs/plugin/timezone';
-
-dayjs.extend(utc);
-dayjs.extend(timezone);
 
 describe('Test User Storage', () => {
 
@@ -132,10 +127,27 @@ describe('Test User Storage', () => {
     });
 
     test('Test find user with params since', async () => {
-        const time = dayjs().tz('Asia/Shanghai').subtract(1, 'second').format();
+        const time = dayjs().subtract(1, 'second').format();
         const result = await User.find({ since: time });
+        expect(result.length).toBeGreaterThan(0);
         result.forEach(item => {
             expect(dayjs(item.created_at).isAfter(time)).toBeTruthy();
         });
+    });
+
+    test('Test find user with params order', async () => {
+        const resultDesc = await User.find({ order: 'desc' });
+        expect(resultDesc.map(item => item.name)).toEqual(userList.map(item => item.name).reverse());
+
+        const resultAsc = await User.find({ order: 'asc' });
+        expect(resultAsc.map(item => item.name)).toEqual(userList.map(item => item.name));
+    });
+
+    test('Test find user with params page & per_page', async () => {
+        const firstPage = await User.find({ page: 1, per_page: 3 });
+        expect(firstPage.length).toEqual(3);
+
+        const lastPage = await User.find({ page: 4, per_page: 3 });
+        expect(lastPage.length).toEqual(1);
     });
 });

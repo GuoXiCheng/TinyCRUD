@@ -1,4 +1,4 @@
-import { PlainObject } from "../storage-lib/base/plain-object";
+import { PlainObject } from "../storage-lib";
 import { ChatModel } from "./helper/chat-model";
 import { Chat } from "./helper/chat-storage";
 
@@ -200,15 +200,27 @@ describe('Use Gitlab Test Chat Storage', () => {
         expect(result.length).toEqual(10);
 
         // 因为是并行创建，所以批量新增的数据是无序的
-        expect((await Chat.find()).map(item=>item.participants)).not.toEqual(chatList.map(item=>item.participants).reverse());
+        expect((await Chat.find()).map(item => item.participants)).not.toEqual(chatList.map(item => item.participants).reverse());
     });
 
-    test('Test createAll Chat orderly', async ()=>{
+    test('Test createAll Chat orderly', async () => {
         await Chat.deleteAll();
         const result = await Chat.createAll(chatList, true);
         expect(result.length).toEqual(10);
 
         // 因为是顺序创建，所以批量新增的数据是有序的
-        expect((await Chat.find()).map(item=>item.participants)).toEqual(chatList.map(item=>item.participants).reverse());
-    })
+        expect((await Chat.find()).map(item => item.participants)).toEqual(chatList.map(item => item.participants).reverse());
+    });
+
+    test('Test find Chat with params sort & order_by', async () => {
+        const findAsc = await Chat.find({
+            sort: 'asc',
+            order_by: 'created_at'
+        });
+        const findDesc = await Chat.find({
+            sort: 'desc',
+            order_by: 'created_at'
+        });
+        expect(findAsc.map(item => item.id)).toEqual(findDesc.map(item => item.id).reverse());
+    });
 });

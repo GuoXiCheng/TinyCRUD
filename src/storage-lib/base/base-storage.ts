@@ -34,8 +34,9 @@ export abstract class BaseStorage<T extends BaseModel> {
     }
 
     /**
-     * Retrieves a list of items from the storage.
-     * @returns A promise that resolves to an array of items.
+     * Finds items in the storage based on the provided parameters.
+     * @param params - The parameters used for filtering the items.
+     * @returns A promise that resolves to an array of items found in the storage.
      */
     async find(params?: BaseParams): Promise<T[]> {
         const url = this.getRoute(RouteType.find);
