@@ -127,7 +127,7 @@ describe('Test User Storage', () => {
     });
 
     test('Test find user with params since', async () => {
-        const time = dayjs().subtract(1, 'second').format();
+        const time = dayjs().subtract(3, 'second').format();
         const result = await User.find({ since: time });
         expect(result.length).toBeGreaterThan(0);
         result.forEach(item => {
