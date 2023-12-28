@@ -4,6 +4,7 @@ import { BaseModel } from "../base/base-model";
 import { BaseStorage } from "../base/base-storage";
 import { PlainObject } from "../base/plain-object";
 import { RouteType } from "../base/route-type";
+import { GitlabParams } from "./gitlab-params";
 
 export class GitlabStorage<T extends BaseModel> extends BaseStorage<T> {
 
@@ -23,6 +24,10 @@ export class GitlabStorage<T extends BaseModel> extends BaseStorage<T> {
             default:
                 throw new Error(`routeType ${routeType} is not supported`);
         }
+    }
+
+    async find(params?: GitlabParams): Promise<T[]> {
+        return super.find(params);
     }
     
     /**

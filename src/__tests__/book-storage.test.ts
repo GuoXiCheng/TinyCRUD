@@ -1,6 +1,7 @@
-import { PlainObject } from "../storage-lib/base/plain-object";
+import dayjs from "dayjs";
 import { BookModel } from "./helper/book-model";
 import { Book } from "./helper/book-storage";
+import { PlainObject } from "../storage-lib";
 
 describe('Test Book Storage', () => {
 
@@ -138,7 +139,7 @@ describe('Test Book Storage', () => {
         expect(result.length).toEqual(10);
 
         // 因为是并行创建，所以批量新增的数据是无序的
-        expect((await Book.find()).map(item=>item.book_name)).not.toEqual(bookList.map(item=>item.book_name));
+        expect((await Book.find()).map(item => item.book_name)).not.toEqual(bookList.map(item => item.book_name));
     });
 
     test('Test createAll Book orderly', async () => {
@@ -147,6 +148,23 @@ describe('Test Book Storage', () => {
         expect(result.length).toEqual(10);
 
         // 因为是顺序创建，所以批量新增的数据是有序的
-        expect((await Book.find()).map(item=>item.book_name)).toEqual(bookList.map(item=>item.book_name));
+        expect((await Book.find()).map(item => item.book_name)).toEqual(bookList.map(item => item.book_name));
+    });
+
+    test('Test find Book with params since', async () => {
+        const time = dayjs().subtract(3, 'second').toISOString();
+        const result = await Book.find({ since: time });
+        expect(result.length).toBeGreaterThan(0);
+        result.forEach(item => {
+            expect(dayjs(item.created_at).isAfter(time)).toBeTruthy();
+        });
+    });
+
+    test('Test find Book with params page & per_page', async () => {
+        const firstPage = await Book.find({ page: 1, per_page: 3 });
+        expect(firstPage.length).toEqual(3);
+
+        const lastPage = await Book.find({ page: 4, per_page: 3 });
+        expect(lastPage.length).toEqual(1);
     });
 });

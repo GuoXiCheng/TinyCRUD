@@ -2,6 +2,15 @@ import 'dotenv/config';
 import axios from 'axios';
 import CryptoJS from 'crypto-js';
 import { createRequest } from '../../request-lib';
+import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
+import timezone from 'dayjs/plugin/timezone';
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
+
+// 设置默认时区
+dayjs.tz.setDefault('Asia/Shanghai');
 
 export const GITEE_NUMBER = process.env.TEST_GITEE_NUMBER as string;
 
