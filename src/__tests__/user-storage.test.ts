@@ -1,34 +1,153 @@
-import { UserStorage } from "./helper/user-storage";
+import { PlainObject } from "../storage-lib";
+import { UserModel } from "./helper/user-model";
+import { User } from "./helper/user-storage";
+import dayjs from 'dayjs';
 
 describe('Test User Storage', () => {
-    const userStorage = new UserStorage();
 
-    test('Test deleteAll User', async () => {
-        await userStorage.deleteAll();
-        const detail = await userStorage.find();
+    const userList: PlainObject<UserModel>[] = [{
+        name: 'test-user-1',
+        age: 18
+    },
+    {
+        name: 'test-user-2',
+        age: 20
+    },
+    {
+        name: 'test-user-3',
+        age: 22
+    },
+    {
+        name: 'test-user-4',
+        age: 24
+    },
+    {
+        name: 'test-user-5',
+        age: 26
+    },
+    {
+        name: 'test-user-6',
+        age: 28
+    },
+    {
+        name: 'test-user-7',
+        age: 30
+    },
+    {
+        name: 'test-user-8',
+        age: 32
+    },
+    {
+        name: 'test-user-9',
+        age: 34
+    },
+    {
+        name: 'test-user-10',
+        age: 36
+    }];
+
+    beforeAll(async () => {
+        await User.deleteAll();
+    });
+
+    test('Test find User', async () => {
+        const detail = await User.find();
         expect(detail.length).toEqual(0);
     });
 
-    test('Test create & User & findById User', async () => {
-        await userStorage.create({
+    test('Test create & findById User', async () => {
+        await User.create({
             name: 'test-user',
             age: 18
         });
-        const findResult = await userStorage.find();
+        const findResult = await User.find();
         expect(findResult.length).toEqual(1);
 
-        const findByIdResult = await userStorage.findById(findResult[0].id);
+        const findByIdResult = await User.findById(findResult[0].id);
         expect(findByIdResult).toEqual(findResult[0]);
     });
 
     test('Test updateById User', async () => {
-        const findResult = await userStorage.find();
-        const updateResult = await userStorage.updateById(findResult[0].id, {
+        const findResult = await User.find();
+        const updateResult = await User.updateById(findResult[0].id, {
             name: 'test-user-update',
             age: 20
         });
-        const findByIdResult = await userStorage.findById(findResult[0].id);
+        const findByIdResult = await User.findById(findResult[0].id);
         expect(updateResult.name).toEqual(findByIdResult.name);
         expect(updateResult.age).toEqual(findByIdResult.age);
+        expect(updateResult.id).toEqual(findByIdResult.id);
+        expect(updateResult.created_at).toEqual(findByIdResult.created_at);
+        expect(updateResult.updated_at).toEqual(findByIdResult.updated_at);
+    });
+
+    test('Test deleteById User failed', async () => {
+        try {
+            await User.deleteById(123);
+        } catch (error: any) {
+            expect(error.response.data).toEqual({ message: '404 Not Found' });
+        }
+    });
+
+    test('Test updateById User failed', async () => {
+        try {
+            await User.updateById(123, {
+                name: 'test-user-update',
+                age: 20
+            });
+        } catch (error: any) {
+            expect(error.response.data).toEqual({ message: '404 Not Found' });
+        }
+    });
+
+    test('Test findById User failed', async () => {
+        try {
+            await User.findById(123);
+        } catch (error: any) {
+            expect(error.response.data).toEqual({ message: '404 Not Found' });
+        }
+    });
+
+    test('Test createAll User', async () => {
+        await User.deleteAll();
+        const result = await User.createAll(userList);
+        expect(result.length).toEqual(10);
+
+        // 因为是并行创建，所以批量新增的数据是无序的
+        expect((await User.find()).map(item => item.name)).not.toEqual(userList.map(item => item.name));
+    });
+
+    test('Test createAll User orderly', async () => {
+        await User.deleteAll();
+        const result = await User.createAll(userList, true);
+        expect(result.length).toEqual(10);
+
+        // 因为是顺序创建，所以批量新增的数据是有序的
+        expect((await User.find()).map(item => item.name)).toEqual(userList.map(item => item.name));
+    });
+
+    test('Test find user with params since', async () => {
+        const time = dayjs().subtract(3, 'second').format();
+        const result = await User.find({ since: time });
+        expect(result.length).toBeGreaterThan(0);
+        result.forEach(item => {
+            expect(dayjs(item.created_at).isAfter(time)).toBeTruthy();
+        });
+    });
+
+    test('Test find user with params order', async () => {
+        const resultDesc = await User.find({ order: 'desc' });
+        expect(resultDesc.map(item => item.name)).toEqual(userList.map(item => item.name).reverse());
+
+        const resultAsc = await User.find({ order: 'asc' });
+        expect(resultAsc.map(item => item.name)).toEqual(userList.map(item => item.name));
+    });
+
+    test('Test find user with params page & per_page', async () => {
+        const firstPage = await User.find({ page: 1, per_page: 3 });
+        expect(firstPage.length).toEqual(3);
+
+        const lastPage = await User.find({ page: 4, per_page: 3 });
+        expect(lastPage.length).toEqual(1);
     });
 });

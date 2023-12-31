@@ -1,11 +1,14 @@
-export {BaseModel} from './base/base-model';
+export { BaseModel } from './base/base-model';
+export { PlainObject } from './base/plain-object';
 /** Gitee */
-export {GiteeUser} from './gitee/gitee-user';
-export {GiteeOptions} from './gitee/gitee-options';
-export {GiteeStorage} from './gitee/gitee-storage';
+export { GiteeUser } from './gitee/gitee-user';
+export { GiteeOptions } from './gitee/gitee-options';
+export { GiteeStorage } from './gitee/gitee-storage';
 /** Github */
-export {GithubUser} from './github/github-user';
-export {GithubOptions} from './github/github-options';
+export { GithubUser } from './github/github-user';
+export { GithubOptions } from './github/github-options';
+export { GithubStorage } from './github/github-storage';
 /** Gitlab */
-export {GitlabUser} from './gitlab/gitlab-user';
-export {GitlabOptions} from './gitlab/gitlab-options';
+export { GitlabUser } from './gitlab/gitlab-user';
+export { GitlabOptions } from './gitlab/gitlab-options';
+export { GitlabStorage } from './gitlab/gitlab-storage';

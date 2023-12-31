@@ -7,4 +7,17 @@ export type RequestOptions = {
     accessToken: string;
 }
     & (GiteeOptions | GithubOptions | GitlabOptions)
-    & (AxiosOptions | WxOptions);
+    & (AxiosOptions | WxOptions)
+    & (RequestWithEncrypt | RequestWithoutEncrypt);
+
+type RequestWithEncrypt = {
+    useEncrypt: true;
+    encryptFn: (data: string) => string;
+    decryptFn: (data: string) => string;
+}
+
+type RequestWithoutEncrypt = {
+    useEncrypt?: false;
+    encryptFn?: (data: string) => string;
+    decryptFn?: (data: string) => string;
+}

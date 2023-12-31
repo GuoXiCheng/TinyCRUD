@@ -1,9 +1,15 @@
 import { GiteeStorage } from '../..';
-import { StartTest } from './start-test';
+import { SingletonFactory } from '../../utils';
+import { GITEE_NUMBER, giteeRequest } from './helper';
 import { UserModel } from './user-model';
 
 export class UserStorage extends GiteeStorage<UserModel> {
     constructor() {
-        super(StartTest.createGiteeRequest(), StartTest.getGiteeIssueNumber());
+        super(giteeRequest, GITEE_NUMBER);
     }
 }
+
+/**
+ * test gitee api with a user storage instance.
+ */
+export const User = SingletonFactory.createInstance(UserStorage);

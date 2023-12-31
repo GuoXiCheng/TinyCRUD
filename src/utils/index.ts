@@ -1,0 +1,1 @@
+export { SingletonFactory } from './singleton-factory';

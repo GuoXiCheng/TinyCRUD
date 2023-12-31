@@ -1,5 +1,5 @@
 export type GiteeOptions = {
-    storagePlatform: 'gitee';
+    platform: 'gitee';
     owner: string;
     repo: string;
 }
