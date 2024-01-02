@@ -65,6 +65,7 @@ describe('Test User Storage', () => {
 
         const findByIdResult = await User.findById(findResult[0].id);
         expect(findByIdResult).toEqual(findResult[0]);
+        expect(findByIdResult.user).not.toBeNull();
     });
 
     test('Test updateById User', async () => {

@@ -1,10 +1,13 @@
 import { BaseRequest } from "../../request-lib";
+import { BaseComment } from "../base/base-comment";
 import { BaseModel } from "../base/base-model";
 import { BaseStorage } from "../base/base-storage";
 import { IssueDetail } from "../base/issue-detail";
 import { RouteType } from "../base/route-type";
+import { User } from "../base/user";
 import { GiteeDetail } from "./gitee-detail";
 import { GiteeParams } from "./gitee-params";
+import { GiteeUser } from "./gitee-user";
 
 export class GiteeStorage<T extends BaseModel> extends BaseStorage<T> {
     
@@ -33,4 +36,14 @@ export class GiteeStorage<T extends BaseModel> extends BaseStorage<T> {
         };
         return result;
     }
+
+    protected extractUser(comment: BaseComment): User | null {
+        const { user } = comment;
+        if (user) {
+            const { id, name, avatar_url } = user as GiteeUser;
+            return { id, name, avatar_url };
+        }
+        return null;
+    }
+    
 }

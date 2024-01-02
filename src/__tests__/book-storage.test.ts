@@ -77,7 +77,13 @@ describe('Test Book Storage', () => {
         expect(findResult.length).toEqual(1);
 
         const findByIdResult = await Book.findById(findResult[0].id);
-        expect(findByIdResult).toEqual(findResult[0]);
+        expect(findByIdResult.id).toEqual(findResult[0].id);
+        expect(findByIdResult.book_name).toEqual(findResult[0].book_name);
+        expect(findByIdResult.book_author).toEqual(findResult[0].book_author);
+        expect(findByIdResult.book_price).toEqual(findResult[0].book_price);
+        expect(findByIdResult.created_at).toEqual(findResult[0].created_at);
+        expect(findByIdResult.updated_at).toEqual(findResult[0].updated_at);
+        expect(findByIdResult.user).not.toBeNull();
     });
 
     test('Test updateById Book', async () => {

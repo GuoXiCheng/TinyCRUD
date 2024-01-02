@@ -133,6 +133,7 @@ describe('Use Gitlab Test Chat Storage', () => {
 
         const findByIdResult = await Chat.findById(findResult[0].id);
         expect(findByIdResult).toEqual(findResult[0]);
+        expect(findByIdResult.user).not.toBeNull();
     });
 
     test('Test updateById Chat', async () => {

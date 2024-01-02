@@ -5,8 +5,10 @@ import { BaseStorage } from "../base/base-storage";
 import { IssueDetail } from "../base/issue-detail";
 import { PlainObject } from "../base/plain-object";
 import { RouteType } from "../base/route-type";
+import { User } from "../base/user";
 import { GitlabDetail } from "./gitlab-detail";
 import { GitlabParams } from "./gitlab-params";
+import { GitlabUser } from "./gitlab-user";
 
 export class GitlabStorage<T extends BaseModel> extends BaseStorage<T> {
 
@@ -64,6 +66,15 @@ export class GitlabStorage<T extends BaseModel> extends BaseStorage<T> {
             updated_at: updated_at
         };
         return result;
+    }
+
+    protected extractUser(comment: BaseComment): User | null {
+        const { author } = comment;
+        if (author) {
+            const { id, name, avatar_url } = author as GitlabUser;
+            return { id, name, avatar_url };
+        }
+        return null;
     }
     
 }
