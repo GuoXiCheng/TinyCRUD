@@ -2,8 +2,10 @@ import { BaseRequest } from "../../request-lib";
 import { BaseComment } from "../base/base-comment";
 import { BaseModel } from "../base/base-model";
 import { BaseStorage } from "../base/base-storage";
+import { IssueDetail } from "../base/issue-detail";
 import { PlainObject } from "../base/plain-object";
 import { RouteType } from "../base/route-type";
+import { GitlabDetail } from "./gitlab-detail";
 import { GitlabParams } from "./gitlab-params";
 
 export class GitlabStorage<T extends BaseModel> extends BaseStorage<T> {
@@ -21,6 +23,8 @@ export class GitlabStorage<T extends BaseModel> extends BaseStorage<T> {
             case RouteType.updateById:
             case RouteType.deleteById:
                 return `${this.endpoint}/issues/${this.issueNumber}/notes/${id}`;
+            case RouteType.detail:
+                return `${this.endpoint}/issues/${this.issueNumber}`;
             default:
                 throw new Error(`routeType ${routeType} is not supported`);
         }
@@ -42,6 +46,24 @@ export class GitlabStorage<T extends BaseModel> extends BaseStorage<T> {
         const body = this.serialize<PlainObject<T>>(data);
         const response = await this.request.put<BaseComment>(url, body);
         return this.deserialize<T>(response);
+    }
+
+    /**
+     * Retrieves the detailed information of an issue from Gitee.
+     * @returns A promise that resolves to an object containing the issue details.
+     */
+    async detail(): Promise<IssueDetail> {
+        const url = this.getRoute(RouteType.detail);
+        const response = await this.request.get<GitlabDetail>(url);
+        const {id, iid, user_notes_count, created_at, updated_at} = response;
+        const result: IssueDetail = {
+            id: id,
+            issue_number: iid.toString(),
+            comments: user_notes_count,
+            created_at: created_at,
+            updated_at: updated_at
+        };
+        return result;
     }
     
 }
