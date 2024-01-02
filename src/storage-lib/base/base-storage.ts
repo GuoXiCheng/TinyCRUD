@@ -28,6 +28,8 @@ export abstract class BaseStorage<T extends BaseModel> {
             case RouteType.updateById:
             case RouteType.deleteById:
                 return `${this.endpoint}/issues/comments/${id}`;
+            case RouteType.detail:
+                return `${this.endpoint}/issues/${this.issueNumber}`
             default:
                 throw new Error(`routeType ${routeType} is not supported`);
         }

@@ -223,4 +223,14 @@ describe('Use Gitlab Test Chat Storage', () => {
         });
         expect(findAsc.map(item => item.id)).toEqual(findDesc.map(item => item.id).reverse());
     });
+
+    test('Test get Chat Detail', async()=>{
+        const result = await Chat.detail();
+        const {id, issue_number, comments, created_at, updated_at} = result;
+        expect(id).not.toBeNull();
+        expect(issue_number).not.toBeNull();
+        expect(comments).not.toBeNull();
+        expect(created_at).not.toBeNull();
+        expect(updated_at).not.toBeNull();
+    });
 });

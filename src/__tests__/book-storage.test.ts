@@ -167,4 +167,14 @@ describe('Test Book Storage', () => {
         const lastPage = await Book.find({ page: 4, per_page: 3 });
         expect(lastPage.length).toEqual(1);
     });
+
+    test('Test get Book Detail', async()=>{
+        const result = await Book.detail();
+        const {id, issue_number, comments, created_at, updated_at} = result;
+        expect(id).not.toBeNull();
+        expect(issue_number).not.toBeNull();
+        expect(comments).not.toBeNull();
+        expect(created_at).not.toBeNull();
+        expect(updated_at).not.toBeNull();
+    });
 });

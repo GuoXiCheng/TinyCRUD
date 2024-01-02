@@ -150,4 +150,14 @@ describe('Test User Storage', () => {
         const lastPage = await User.find({ page: 4, per_page: 3 });
         expect(lastPage.length).toEqual(1);
     });
+
+    test('Test get User Detail', async()=>{
+        const result = await User.detail();
+        const {id, issue_number, comments, created_at, updated_at} = result;
+        expect(id).not.toBeNull();
+        expect(issue_number).not.toBeNull();
+        expect(comments).not.toBeNull();
+        expect(created_at).not.toBeNull();
+        expect(updated_at).not.toBeNull();
+    });
 });
