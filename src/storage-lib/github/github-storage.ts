@@ -1,10 +1,13 @@
 import { BaseRequest } from "../../request-lib";
+import { BaseComment } from "../base/base-comment";
 import { BaseModel } from "../base/base-model";
 import { BaseStorage } from "../base/base-storage";
 import { IssueDetail } from "../base/issue-detail";
 import { RouteType } from "../base/route-type";
+import { User } from "../base/user";
 import { GithubDetail } from "./github-detail";
 import { GithubParams } from "./github-params";
+import { GithubUser } from "./github-user";
 
 export class GithubStorage<T extends BaseModel> extends BaseStorage<T> {
 
@@ -32,5 +35,14 @@ export class GithubStorage<T extends BaseModel> extends BaseStorage<T> {
             updated_at: updated_at
         };
         return result;
+    }
+
+    protected extractUser(comment: BaseComment): User | null {
+        const { user } = comment;
+        if (user) {
+            const { id, login, avatar_url } = user as GithubUser;
+            return { id, name: login, avatar_url };
+        }
+        return null;
     }
 }
