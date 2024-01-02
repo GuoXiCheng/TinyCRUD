@@ -133,6 +133,7 @@ describe('Use Gitlab Test Chat Storage', () => {
 
         const findByIdResult = await Chat.findById(findResult[0].id);
         expect(findByIdResult).toEqual(findResult[0]);
+        expect(findByIdResult.user).not.toBeNull();
     });
 
     test('Test updateById Chat', async () => {
@@ -222,5 +223,15 @@ describe('Use Gitlab Test Chat Storage', () => {
             order_by: 'created_at'
         });
         expect(findAsc.map(item => item.id)).toEqual(findDesc.map(item => item.id).reverse());
+    });
+
+    test('Test get Chat Detail', async()=>{
+        const result = await Chat.detail();
+        const {id, issue_number, comments, created_at, updated_at} = result;
+        expect(id).not.toBeNull();
+        expect(issue_number).not.toBeNull();
+        expect(comments).not.toBeNull();
+        expect(created_at).not.toBeNull();
+        expect(updated_at).not.toBeNull();
     });
 });

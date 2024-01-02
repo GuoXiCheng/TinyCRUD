@@ -4,6 +4,7 @@ import { BaseModel } from "./base-model";
 import { BaseParams } from "./base-params";
 import { PlainObject } from "./plain-object";
 import { RouteType } from "./route-type";
+import { User } from "./user";
 
 export abstract class BaseStorage<T extends BaseModel> {
     public readonly useEncrypt: boolean;
@@ -19,6 +20,8 @@ export abstract class BaseStorage<T extends BaseModel> {
         this.decryptFn = request.decryptFn;
     }
 
+    protected abstract extractUser(comment: BaseComment): User | null;
+
     protected getRoute(routeType: keyof typeof RouteType, id?: number): string {
         switch (routeType) {
             case RouteType.find:
@@ -28,6 +31,8 @@ export abstract class BaseStorage<T extends BaseModel> {
             case RouteType.updateById:
             case RouteType.deleteById:
                 return `${this.endpoint}/issues/comments/${id}`;
+            case RouteType.detail:
+                return `${this.endpoint}/issues/${this.issueNumber}`
             default:
                 throw new Error(`routeType ${routeType} is not supported`);
         }
@@ -145,7 +150,8 @@ export abstract class BaseStorage<T extends BaseModel> {
             } else {
                 obj = JSON.parse(body);
             }
-            return {id, ...obj, created_at, updated_at}
+            const user = this.extractUser(comment);
+            return {id, ...obj, created_at, updated_at, user}
         } catch (error) {
             console.error(error);
             throw new Error(`can not deserialize ${comment}`);

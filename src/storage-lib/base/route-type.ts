@@ -3,5 +3,6 @@ export enum RouteType {
     findById = 'findById',
     create = 'create',
     updateById = 'updateById',
-    deleteById = 'deleteById'
+    deleteById = 'deleteById',
+    detail = 'detail'
 }

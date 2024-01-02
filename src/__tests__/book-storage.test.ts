@@ -77,7 +77,13 @@ describe('Test Book Storage', () => {
         expect(findResult.length).toEqual(1);
 
         const findByIdResult = await Book.findById(findResult[0].id);
-        expect(findByIdResult).toEqual(findResult[0]);
+        expect(findByIdResult.id).toEqual(findResult[0].id);
+        expect(findByIdResult.book_name).toEqual(findResult[0].book_name);
+        expect(findByIdResult.book_author).toEqual(findResult[0].book_author);
+        expect(findByIdResult.book_price).toEqual(findResult[0].book_price);
+        expect(findByIdResult.created_at).toEqual(findResult[0].created_at);
+        expect(findByIdResult.updated_at).toEqual(findResult[0].updated_at);
+        expect(findByIdResult.user).not.toBeNull();
     });
 
     test('Test updateById Book', async () => {
@@ -166,5 +172,15 @@ describe('Test Book Storage', () => {
 
         const lastPage = await Book.find({ page: 4, per_page: 3 });
         expect(lastPage.length).toEqual(1);
+    });
+
+    test('Test get Book Detail', async()=>{
+        const result = await Book.detail();
+        const {id, issue_number, comments, created_at, updated_at} = result;
+        expect(id).not.toBeNull();
+        expect(issue_number).not.toBeNull();
+        expect(comments).not.toBeNull();
+        expect(created_at).not.toBeNull();
+        expect(updated_at).not.toBeNull();
     });
 });
