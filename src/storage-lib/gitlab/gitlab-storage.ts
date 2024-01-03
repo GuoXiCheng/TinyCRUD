@@ -15,7 +15,7 @@ export class GitlabStorage<T extends BaseModel> extends BaseStorage<T> {
     constructor(protected request: BaseRequest, protected issueNumber: string) {
         super(request, issueNumber);
     }
-    
+
     protected getRoute(routeType: keyof typeof RouteType, id?: number): string {
         switch (routeType) {
             case RouteType.find:
@@ -32,10 +32,17 @@ export class GitlabStorage<T extends BaseModel> extends BaseStorage<T> {
         }
     }
 
+    /**
+     * Finds items in the Gitlab storage based on the provided parameters.
+     * @param params - Optional parameters for the find operation.
+     * @returns A promise that resolves to an array of items found in the Gitlab storage.
+     */
     async find(params?: GitlabParams): Promise<T[]> {
-        return super.find(params);
+        const url = this.getRoute(RouteType.find);
+        const response = await this.request.get<BaseComment[]>(url, params);
+        return response.filter(item => item['system'] === false).map((item) => this.deserialize<T>(item));
     }
-    
+
     /**
      * Updates a record by its ID.
      * 
@@ -51,13 +58,23 @@ export class GitlabStorage<T extends BaseModel> extends BaseStorage<T> {
     }
 
     /**
+     * Deletes all items from the storage.
+     * @returns A Promise that resolves when all items are deleted.
+     */
+    async deleteAll(): Promise<void> {
+        const findUrl = this.getRoute(RouteType.find);
+        const findResult = await this.request.get<BaseComment[]>(findUrl);
+        await Promise.all(findResult.filter(item => item['system'] === false).map((item) => this.deleteById(item.id)));
+    }
+
+    /**
      * Retrieves the detailed information of an issue from Gitee.
      * @returns A promise that resolves to an object containing the issue details.
      */
     async detail(): Promise<IssueDetail> {
         const url = this.getRoute(RouteType.detail);
         const response = await this.request.get<GitlabDetail>(url);
-        const {id, iid, user_notes_count, created_at, updated_at} = response;
+        const { id, iid, user_notes_count, created_at, updated_at } = response;
         const result: IssueDetail = {
             id: id,
             issue_number: iid.toString(),
@@ -76,5 +93,5 @@ export class GitlabStorage<T extends BaseModel> extends BaseStorage<T> {
         }
         return null;
     }
-    
+
 }
