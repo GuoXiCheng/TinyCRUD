@@ -12,13 +12,13 @@ export class WxRequest extends BaseRequest {
         this.wx = options.request as WxInstance;
     }
 
-    async sendRequest<T>(method: RequestMethods, url: string, body?: string, params?: any): Promise<T> {
+    protected async sendRequest<T>(method: RequestMethods, url: string, body?: string, params?: any): Promise<T> {
         return new Promise((resolve, reject) => {
             const options: WxRequestOptions = {
                 url,
                 method,
                 ...(body && { data: { body } }),
-                ...(params && { data: { params } }),
+                ...(params && { data: { ...params } }),
                 header: {
                     'Authorization': `Bearer ${this.accessToken}`
                 },
@@ -26,8 +26,7 @@ export class WxRequest extends BaseRequest {
                     resolve(res.data);
                 },
                 fail: (errMsg: string) => {
-                    console.error(errMsg);
-                    reject(new Error(errMsg));
+                    reject(errMsg);
                 }
             };
 
