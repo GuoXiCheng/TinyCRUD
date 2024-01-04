@@ -7,14 +7,14 @@ import { RequestOptions } from "./base/request-options";
 
 
 export function createRequest(options: RequestOptions) {
-    const { requestType, request } = options;
-    switch (requestType) {
+    const { httpLib, httpClient } = options;
+    switch (httpLib) {
         case RequestType.axios:
-            if (isAxiosInstance(request)) {
+            if (isAxiosInstance(httpClient)) {
                 return new AxiosRequest(options);
             }
         case RequestType.wx:
-            if (isWxInstance(request)) {
+            if (isWxInstance(httpClient)) {
                 return new WxRequest(options);
             }
         default:

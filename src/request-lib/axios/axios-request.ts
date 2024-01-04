@@ -9,7 +9,7 @@ export class AxiosRequest extends BaseRequest {
         protected options: RequestOptions
     ) {
         super(options);
-        this.axios = options.request as AxiosInstance;
+        this.axios = options.httpClient as AxiosInstance;
     }
 
     protected async sendRequest<T>(method: RequestMethods, url: string, body?: string, params?: any): Promise<T> {
