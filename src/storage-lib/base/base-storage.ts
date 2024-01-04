@@ -12,12 +12,21 @@ export abstract class BaseStorage<T extends BaseModel> {
     public readonly decryptFn?: (data: string) => string;
 
     protected endpoint: string;
-    constructor(protected request: BaseRequest, protected issueNumber: string) {
+    protected issueNumber: string;
+    constructor(protected request: BaseRequest, issueNumber?: string) {
         this.endpoint = request.getEndpoint();
 
         this.useEncrypt = request.useEncrypt || false;
         this.encryptFn = request.encryptFn;
         this.decryptFn = request.decryptFn;
+
+        if (request.issueNumber != null) {
+            this.issueNumber = request.issueNumber;
+        } else if (issueNumber != null) {
+            this.issueNumber = issueNumber;
+        } else {
+            throw new Error('issueNumber is required');
+        }
     }
 
     protected abstract extractUser(comment: BaseComment): User | null;
@@ -85,7 +94,7 @@ export abstract class BaseStorage<T extends BaseModel> {
         if (order === false) {
             return Promise.all(data.map((item) => this.create(item)));
         }
-        
+
         const result: T[] = [];
         for (const item of data) {
             result.push(await this.create(item));
@@ -127,34 +136,21 @@ export abstract class BaseStorage<T extends BaseModel> {
     }
 
     // 序列化: 将对象转换为字符串
-    serialize<T>(obj: T): string {
-        try {
-            if (this.useEncrypt && this.encryptFn) {
-                return this.encryptFn(JSON.stringify(obj));
-            }
-            return JSON.stringify(obj);
-        } catch (error) {
-            console.error(error);
-            throw new Error(`can not serialize ${obj}`);
-        }
+    protected serialize<T>(obj: T): string {
+        return (this.useEncrypt && this.encryptFn)
+            ? this.encryptFn(JSON.stringify(obj))
+            : JSON.stringify(obj);
     }
 
     // 反序列化: 将字符串转换为对象
-    deserialize<T>(comment: BaseComment): T {
-        try {
-            const {id, body, created_at, updated_at} = comment;
-            let obj;
-            if (this.useEncrypt && this.decryptFn) {
-                const decryptedBody = this.decryptFn(body);
-                obj = JSON.parse(decryptedBody);
-            } else {
-                obj = JSON.parse(body);
-            }
-            const user = this.extractUser(comment);
-            return {id, ...obj, created_at, updated_at, user}
-        } catch (error) {
-            console.error(error);
-            throw new Error(`can not deserialize ${comment}`);
-        }
+    protected deserialize<T>(comment: BaseComment): T {
+        const { id, body, created_at, updated_at } = comment;
+
+        const parsedBody = this.useEncrypt && this.decryptFn
+            ? JSON.parse(this.decryptFn(body))
+            : JSON.parse(body);
+        const user = this.extractUser(comment);
+
+        return { id, ...parsedBody, created_at, updated_at, user };
     }
 }

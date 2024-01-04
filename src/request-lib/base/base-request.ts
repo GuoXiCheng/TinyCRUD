@@ -10,6 +10,7 @@ export abstract class BaseRequest {
     public readonly useEncrypt: boolean;
     public readonly encryptFn?: (data: string) => string;
     public readonly decryptFn?: (data: string) => string;
+    public readonly issueNumber?: string;
     constructor(
         protected options: RequestOptions
     ) { 
@@ -19,6 +20,8 @@ export abstract class BaseRequest {
         this.useEncrypt = options.useEncrypt || false;
         this.encryptFn = options.encryptFn;
         this.decryptFn = options.decryptFn;
+
+        this.issueNumber = options.issueNumber;
     }
 
     protected abstract sendRequest<T>(method: RequestMethods, url: string, body?: string, params?: any): Promise<T>;

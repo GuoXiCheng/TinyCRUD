@@ -11,7 +11,7 @@ import { GithubUser } from "./github-user";
 
 export class GithubStorage<T extends BaseModel> extends BaseStorage<T> {
 
-    constructor(protected request: BaseRequest, protected issueNumber: string) {
+    constructor(protected request: BaseRequest, issueNumber?: string) {
         super(request, issueNumber);
     }
 
