@@ -12,21 +12,17 @@ export class AxiosRequest extends BaseRequest {
         this.axios = options.request as AxiosInstance;
     }
 
-    async sendRequest<T>(method: RequestMethods, url: string, body?: string, params?: any): Promise<T> {
-        try {
-            const response = await this.axios.request<T>({
-                url,
-                method,
-                headers: {
-                    'Authorization': `Bearer ${this.accessToken}`
-                },
-                ...(body && { data: { body } }),
-                ...(params && { params })
-            });
-            
-            return response.data;
-        } catch (error: any) {
-            throw error;
-        }
+    protected async sendRequest<T>(method: RequestMethods, url: string, body?: string, params?: any): Promise<T> {
+        const response = await this.axios.request<T>({
+            url,
+            method,
+            headers: {
+                'Authorization': `Bearer ${this.accessToken}`
+            },
+            ...(body && { data: { body } }),
+            ...(params && { params })
+        });
+        
+        return response.data;
     }
 }
