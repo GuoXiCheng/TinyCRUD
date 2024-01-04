@@ -5,8 +5,8 @@ const wx = {
 };
 
 const request = createRequest({
-    requestType: 'wx',
-    request: wx,
+    httpLib: 'wx',
+    httpClient: wx,
     platform: 'gitee',
     owner: 'test-owner',
     repo: 'test-repo',

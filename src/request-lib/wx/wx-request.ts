@@ -9,7 +9,7 @@ export class WxRequest extends BaseRequest {
         protected options: RequestOptions
     ) {
         super(options);
-        this.wx = options.request as WxInstance;
+        this.wx = options.httpClient as WxInstance;
     }
 
     protected async sendRequest<T>(method: RequestMethods, url: string, body?: string, params?: any): Promise<T> {

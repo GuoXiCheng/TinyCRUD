@@ -21,8 +21,8 @@ export const GITLAB_NUMBER = process.env.TEST_GITLAB_NUMBER as string;
 export const ENCRYPT_KEY = "MySecretPassphrase";
 
 export const giteeRequest = createRequest({
-    requestType: 'axios',
-    request: axios,
+    httpLib: 'axios',
+    httpClient: axios,
     accessToken: process.env.TEST_GITEE_TOKEN as string,
     platform: 'gitee',
     owner: process.env.TEST_GITEE_OWNER as string,
@@ -37,17 +37,18 @@ export const giteeRequest = createRequest({
 });
 
 export const githubRequest = createRequest({
-    requestType: 'axios',
-    request: axios,
+    httpLib: 'axios',
+    httpClient: axios,
     accessToken: process.env.TEST_GITHUB_TOKEN as string,
     platform: 'github',
     owner: process.env.TEST_GITHUB_OWNER as string,
-    repo: process.env.TEST_GITHUB_REPO as string
+    repo: process.env.TEST_GITHUB_REPO as string,
+    issueNumber: process.env.TEST_GITHUB_NUMBER as string
 });
 
 export const gitlabRequest = createRequest({
-    requestType: 'axios',
-    request: axios,
+    httpLib: 'axios',
+    httpClient: axios,
     accessToken: process.env.TEST_GITLAB_TOKEN as string,
     platform: 'gitlab',
     projectId: process.env.TEST_GITLAB_PROJECT_ID as string
