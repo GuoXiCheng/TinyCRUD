@@ -12,12 +12,21 @@ export abstract class BaseStorage<T extends BaseModel> {
     public readonly decryptFn?: (data: string) => string;
 
     protected endpoint: string;
-    constructor(protected request: BaseRequest, protected issueNumber: string) {
+    protected issueNumber: string;
+    constructor(protected request: BaseRequest, issueNumber?: string) {
         this.endpoint = request.getEndpoint();
 
         this.useEncrypt = request.useEncrypt || false;
         this.encryptFn = request.encryptFn;
         this.decryptFn = request.decryptFn;
+
+        if (request.issueNumber != null) {
+            this.issueNumber = request.issueNumber;
+        } else if (issueNumber != null) {
+            this.issueNumber = issueNumber;
+        } else {
+            throw new Error('issueNumber is required');
+        }
     }
 
     protected abstract extractUser(comment: BaseComment): User | null;

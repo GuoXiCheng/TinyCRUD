@@ -42,7 +42,8 @@ export const githubRequest = createRequest({
     accessToken: process.env.TEST_GITHUB_TOKEN as string,
     platform: 'github',
     owner: process.env.TEST_GITHUB_OWNER as string,
-    repo: process.env.TEST_GITHUB_REPO as string
+    repo: process.env.TEST_GITHUB_REPO as string,
+    issueNumber: process.env.TEST_GITHUB_NUMBER as string
 });
 
 export const gitlabRequest = createRequest({

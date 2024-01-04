@@ -4,6 +4,7 @@ import { WxOptions } from "../wx/wx-options";
 
 export type RequestOptions = {
     baseUrl?: string;
+    issueNumber?: string;
     accessToken: string;
 }
     & (GiteeOptions | GithubOptions | GitlabOptions)
