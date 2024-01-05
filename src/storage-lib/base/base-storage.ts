@@ -7,21 +7,22 @@ import { RouteType } from "./route-type";
 import { User } from "./user";
 
 export abstract class BaseStorage<T extends BaseModel> {
-    public readonly useEncrypt: boolean;
-    public readonly encryptFn?: (data: string) => string;
-    public readonly decryptFn?: (data: string) => string;
-
     protected endpoint: string;
     protected issueNumber: string;
+    protected readonly useEncrypt: boolean;
+    protected readonly encryptFn?: (data: string) => string;
+    protected readonly decryptFn?: (data: string) => string;
+
     constructor(protected request: BaseRequest, issueNumber?: string) {
         this.endpoint = request.getEndpoint();
 
-        this.useEncrypt = request.useEncrypt || false;
-        this.encryptFn = request.encryptFn;
-        this.decryptFn = request.decryptFn;
+        const { useEncrypt, encryptFn, decryptFn } = request.options;
+        this.useEncrypt = useEncrypt || false;
+        this.encryptFn = encryptFn;
+        this.decryptFn = decryptFn;
 
-        if (request.issueNumber != null) {
-            this.issueNumber = request.issueNumber;
+        if (request.options.issueNumber != null) {
+            this.issueNumber = request.options.issueNumber;
         } else if (issueNumber != null) {
             this.issueNumber = issueNumber;
         } else {
