@@ -1,10 +1,10 @@
 import { BaseRequest } from "../../request-lib";
+import { Author } from "./author";
 import { BaseComment } from "./base-comment";
 import { BaseModel } from "./base-model";
 import { BaseParams } from "./base-params";
 import { PlainObject } from "./plain-object";
 import { RouteType } from "./route-type";
-import { User } from "./user";
 
 export abstract class BaseStorage<T extends BaseModel> {
     protected endpoint: string;
@@ -30,7 +30,7 @@ export abstract class BaseStorage<T extends BaseModel> {
         }
     }
 
-    protected abstract extractUser(comment: BaseComment): User | null;
+    protected abstract extractUser(comment: BaseComment): Author | null;
 
     protected getRoute(routeType: keyof typeof RouteType, id?: number): string {
         switch (routeType) {
@@ -150,8 +150,16 @@ export abstract class BaseStorage<T extends BaseModel> {
         const parsedBody = this.useEncrypt && this.decryptFn
             ? JSON.parse(this.decryptFn(body))
             : JSON.parse(body);
-        const user = this.extractUser(comment);
+        const created_by = this.extractUser(comment);
 
-        return { id, ...parsedBody, created_at, updated_at, user };
+        const result: T = {
+            id,
+            ...parsedBody,
+            updated_at,
+            created_at,
+            created_by
+        }
+
+        return result;
     }
 }

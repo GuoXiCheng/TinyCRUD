@@ -3,7 +3,7 @@ import { AxiosOptions } from "../axios/axios-options";
 import { WxOptions } from "../wx/wx-options";
 
 export type RequestOptions = {
-    baseUrl?: string;
+    baseURL?: string;
     issueNumber?: string;
     accessToken: string;
 }

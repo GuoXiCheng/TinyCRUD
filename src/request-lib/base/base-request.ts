@@ -4,13 +4,13 @@ import { RequestMethods } from "./request-methods";
 import { RequestOptions } from "./request-options";
 
 export abstract class BaseRequest {
-    protected readonly baseUrl: string;
+    protected readonly baseURL: string;
     protected readonly accessToken: string;
 
     constructor(
         public options: RequestOptions
     ) { 
-        this.baseUrl = options.baseUrl ? options.baseUrl : this.getBaseUrl();
+        this.baseURL = options.baseURL ? options.baseURL : this.getBaseUrl();
         this.accessToken = options.accessToken;
     }
 
@@ -39,11 +39,11 @@ export abstract class BaseRequest {
     async authenticate() {
         switch(this.options.platform) {
             case StoragePlatform.gitee:
-                return this.get<GiteeUser>(`${this.baseUrl}/api/v5/user`);
+                return this.get<GiteeUser>(`${this.baseURL}/api/v5/user`);
             case StoragePlatform.github:
-                return this.get<GithubUser>(`${this.baseUrl}/user`);
+                return this.get<GithubUser>(`${this.baseURL}/user`);
             case StoragePlatform.gitlab:
-                return this.get<GitlabUser>(`${this.baseUrl}/api/v4/user`);
+                return this.get<GitlabUser>(`${this.baseURL}/api/v4/user`);
             default:
                 throw new Error('Unsupported Platform');
         }
@@ -65,11 +65,11 @@ export abstract class BaseRequest {
     getEndpoint() {
         switch(this.options.platform) {
             case StoragePlatform.gitee:
-                return `${this.baseUrl}/api/v5/repos/${this.options.owner}/${this.options.repo}`;
+                return `${this.baseURL}/api/v5/repos/${this.options.owner}/${this.options.repo}`;
             case StoragePlatform.github:
-                return `${this.baseUrl}/repos/${this.options.owner}/${this.options.repo}`;
+                return `${this.baseURL}/repos/${this.options.owner}/${this.options.repo}`;
             case StoragePlatform.gitlab:
-                return `${this.baseUrl}/api/v4/projects/${this.options.projectId}`;
+                return `${this.baseURL}/api/v4/projects/${this.options.projectId}`;
             default:
                 throw new Error('Unsupported Platform');
         }
