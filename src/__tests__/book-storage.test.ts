@@ -83,7 +83,10 @@ describe('Test Book Storage', () => {
         expect(findByIdResult.book_price).toEqual(findResult[0].book_price);
         expect(findByIdResult.created_at).toEqual(findResult[0].created_at);
         expect(findByIdResult.updated_at).toEqual(findResult[0].updated_at);
-        expect(findByIdResult.user).not.toBeNull();
+        expect(findByIdResult.created_by).not.toBeNull();
+        expect(typeof findByIdResult.created_by.user_id).toBe('number');
+        expect(typeof findByIdResult.created_by.username).toBe('string');
+        expect(typeof findByIdResult.created_by.avatar_url).toBe('string');
     });
 
     test('Test updateById Book', async () => {

@@ -1,27 +1,28 @@
 import { BaseRequest } from "../../request-lib";
+import { Author } from "./author";
 import { BaseComment } from "./base-comment";
 import { BaseModel } from "./base-model";
 import { BaseParams } from "./base-params";
 import { PlainObject } from "./plain-object";
 import { RouteType } from "./route-type";
-import { User } from "./user";
 
 export abstract class BaseStorage<T extends BaseModel> {
-    public readonly useEncrypt: boolean;
-    public readonly encryptFn?: (data: string) => string;
-    public readonly decryptFn?: (data: string) => string;
-
     protected endpoint: string;
     protected issueNumber: string;
+    protected readonly useEncrypt: boolean;
+    protected readonly encryptFn?: (data: string) => string;
+    protected readonly decryptFn?: (data: string) => string;
+
     constructor(protected request: BaseRequest, issueNumber?: string) {
         this.endpoint = request.getEndpoint();
 
-        this.useEncrypt = request.useEncrypt || false;
-        this.encryptFn = request.encryptFn;
-        this.decryptFn = request.decryptFn;
+        const { useEncrypt, encryptFn, decryptFn } = request.options;
+        this.useEncrypt = useEncrypt || false;
+        this.encryptFn = encryptFn;
+        this.decryptFn = decryptFn;
 
-        if (request.issueNumber != null) {
-            this.issueNumber = request.issueNumber;
+        if (request.options.issueNumber != null) {
+            this.issueNumber = request.options.issueNumber;
         } else if (issueNumber != null) {
             this.issueNumber = issueNumber;
         } else {
@@ -29,7 +30,7 @@ export abstract class BaseStorage<T extends BaseModel> {
         }
     }
 
-    protected abstract extractUser(comment: BaseComment): User | null;
+    protected abstract extractUser(comment: BaseComment): Author | null;
 
     protected getRoute(routeType: keyof typeof RouteType, id?: number): string {
         switch (routeType) {
@@ -149,8 +150,16 @@ export abstract class BaseStorage<T extends BaseModel> {
         const parsedBody = this.useEncrypt && this.decryptFn
             ? JSON.parse(this.decryptFn(body))
             : JSON.parse(body);
-        const user = this.extractUser(comment);
+        const created_by = this.extractUser(comment);
 
-        return { id, ...parsedBody, created_at, updated_at, user };
+        const result: T = {
+            id,
+            ...parsedBody,
+            updated_at,
+            created_at,
+            created_by
+        }
+
+        return result;
     }
 }

@@ -65,7 +65,10 @@ describe('Test User Storage', () => {
 
         const findByIdResult = await User.findById(findResult[0].id);
         expect(findByIdResult).toEqual(findResult[0]);
-        expect(findByIdResult.user).not.toBeNull();
+        expect(findByIdResult.created_by).not.toBeNull();
+        expect(typeof findByIdResult.created_by.user_id).toBe('number');
+        expect(typeof findByIdResult.created_by.username).toBe('string');
+        expect(typeof findByIdResult.created_by.avatar_url).toBe('string');
     });
 
     test('Test updateById User', async () => {
