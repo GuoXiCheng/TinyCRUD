@@ -35,6 +35,7 @@ jobs:
           TEST_GITLAB_TOKEN: ${{ secrets.TEST_GITLAB_TOKEN }}
           TEST_GITLAB_PROJECT_ID: ${{ secrets.TEST_GITLAB_PROJECT_ID }}
           TEST_GITLAB_NUMBER: ${{ secrets.TEST_GITLAB_NUMBER }}
+          TEST_ENCRYPT_KEY: ${{ secrets.TEST_ENCRYPT_KEY }}
 
 
       - name: Upload coverage reports to Codecov
