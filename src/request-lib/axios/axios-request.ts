@@ -6,7 +6,7 @@ import { RequestMethods } from '../base/request-methods';
 export class AxiosRequest extends BaseRequest {
     private axios: AxiosInstance;
     constructor(
-        protected options: RequestOptions
+        public options: RequestOptions
     ) {
         super(options);
         this.axios = options.httpClient as AxiosInstance;

@@ -1,8 +1,7 @@
-import { User } from "./user";
-
+import { Author } from "./author";
 export interface BaseModel {
     id: number;
-    created_at: string;
     updated_at: string;
-    user: User;
+    created_at: string;
+    created_by: Author;
 }

@@ -18,7 +18,7 @@ export const GITHUB_NUMBER = process.env.TEST_GITHUB_NUMBER as string;
 
 export const GITLAB_NUMBER = process.env.TEST_GITLAB_NUMBER as string;
 
-export const ENCRYPT_KEY = "MySecretPassphrase";
+export const TEST_ENCRYPT_KEY = process.env.TEST_ENCRYPT_KEY as string;
 
 export const giteeRequest = createRequest({
     httpLib: 'axios',
@@ -29,10 +29,10 @@ export const giteeRequest = createRequest({
     repo: process.env.TEST_GITEE_REPO as string,
     useEncrypt: true,
     encryptFn: (data: string) => {
-        return CryptoJS.AES.encrypt(data, ENCRYPT_KEY).toString();
+        return CryptoJS.AES.encrypt(data, TEST_ENCRYPT_KEY).toString();
     },
     decryptFn: (data: string) => {
-        return CryptoJS.AES.decrypt(data, ENCRYPT_KEY).toString(CryptoJS.enc.Utf8);
+        return CryptoJS.AES.decrypt(data, TEST_ENCRYPT_KEY).toString(CryptoJS.enc.Utf8);
     }
 });
 

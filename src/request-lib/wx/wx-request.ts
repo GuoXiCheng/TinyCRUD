@@ -6,7 +6,7 @@ import { WxInstance, WxRequestOptions } from './wx-interface';
 export class WxRequest extends BaseRequest {
     private wx: WxInstance;
     constructor(
-        protected options: RequestOptions
+        public options: RequestOptions
     ) {
         super(options);
         this.wx = options.httpClient as WxInstance;
