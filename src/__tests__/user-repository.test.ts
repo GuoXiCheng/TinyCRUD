@@ -46,9 +46,9 @@ describe('Test User Storage', () => {
         age: 36
     }];
 
-    // beforeAll(async () => {
-    //     await User.deleteAll();
-    // });
+    beforeAll(async () => {
+        await User.deleteAll();
+    });
 
     test('Test find User', async () => {
         const detail = await User.find();
