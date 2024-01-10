@@ -1,9 +1,9 @@
-import { GitlabStorage } from "../../storage-lib";
+import { GitlabRepository } from "../../repository-lib";
 import { ChatModel } from "./chat-model";
 import { GITLAB_NUMBER, gitlabRequest } from "./helper";
 import { SingletonFactory } from "../../utils";
 
-class ChatStorage extends GitlabStorage<ChatModel> {
+class ChatRepository extends GitlabRepository<ChatModel> {
     constructor() {
         super(gitlabRequest, GITLAB_NUMBER);
     }
@@ -12,4 +12,4 @@ class ChatStorage extends GitlabStorage<ChatModel> {
 /**
  * test gitlab api with a chat storage instance.
  */
-export const Chat = SingletonFactory.createInstance(ChatStorage);
+export const Chat = SingletonFactory.createInstance(ChatRepository);

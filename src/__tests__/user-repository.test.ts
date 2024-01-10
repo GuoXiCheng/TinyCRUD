@@ -1,6 +1,6 @@
-import { PlainObject } from "../storage-lib";
+import { PlainObject } from "../repository-lib";
 import { UserModel } from "./helper/user-model";
-import { User } from "./helper/user-storage";
+import { User } from "./helper/user-repository";
 import dayjs from 'dayjs';
 
 describe('Test User Storage', () => {
@@ -46,9 +46,9 @@ describe('Test User Storage', () => {
         age: 36
     }];
 
-    beforeAll(async () => {
-        await User.deleteAll();
-    });
+    // beforeAll(async () => {
+    //     await User.deleteAll();
+    // });
 
     test('Test find User', async () => {
         const detail = await User.find();
