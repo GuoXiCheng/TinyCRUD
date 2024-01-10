@@ -1,8 +1,8 @@
 import { createRequest } from "./request-lib/create-request";
-import { BaseModel, GiteeStorage, GithubStorage, GitlabStorage, PlainObject } from "./storage-lib";
+import { BaseModel, GiteeRepository, GitlabRepository, GithubRepository, PlainObject } from "./repository-lib";
 import { SingletonFactory } from "./utils"
 export {
     createRequest, BaseModel, PlainObject,
-    GiteeStorage, GithubStorage, GitlabStorage, SingletonFactory
+    GiteeRepository, GitlabRepository, GithubRepository, SingletonFactory
 };
 

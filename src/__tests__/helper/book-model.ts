@@ -1,5 +1,4 @@
-import { BaseModel } from "../../storage-lib";
-
+import { BaseModel } from '../../repository-lib/';
 export interface BookModel extends BaseModel {
     book_name: string;
     book_author: string;

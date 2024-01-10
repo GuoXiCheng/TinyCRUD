@@ -1,7 +1,7 @@
 import { BaseRequest } from "../../request-lib";
 import { BaseComment } from "../base/base-comment";
 import { BaseModel } from "../base/base-model";
-import { BaseStorage } from "../base/base-storage";
+import { BaseRepository } from "../base/base-repository";
 import { IssueDetail } from "../base/issue-detail";
 import { PlainObject } from "../base/plain-object";
 import { RouteType } from "../base/route-type";
@@ -10,7 +10,7 @@ import { GitlabDetail } from "./gitlab-detail";
 import { GitlabParams } from "./gitlab-params";
 import { GitlabUser } from "./gitlab-user";
 
-export class GitlabStorage<T extends BaseModel> extends BaseStorage<T> {
+export class GitlabRepository<T extends BaseModel> extends BaseRepository<T> {
 
     constructor(protected request: BaseRequest, issueNumber?: string) {
         super(request, issueNumber);

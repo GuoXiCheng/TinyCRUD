@@ -1,7 +1,7 @@
 import dayjs from "dayjs";
 import { BookModel } from "./helper/book-model";
-import { Book } from "./helper/book-storage";
-import { PlainObject } from "../storage-lib";
+import { Book } from "./helper/book-repository";
+import { PlainObject } from "../repository-lib";
 
 describe('Test Book Storage', () => {
 

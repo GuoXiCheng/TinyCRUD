@@ -1,6 +1,6 @@
-import { PlainObject } from "../storage-lib";
+import { PlainObject } from "../repository-lib";
 import { ChatModel } from "./helper/chat-model";
-import { Chat } from "./helper/chat-storage";
+import { Chat } from "./helper/chat-repository";
 
 describe('Use Gitlab Test Chat Storage', () => {
 
