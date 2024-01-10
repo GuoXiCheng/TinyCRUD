@@ -1,4 +1,4 @@
-import { GiteeOptions, GithubOptions, GitlabOptions } from "../../storage-lib";
+import { GiteeOptions, GithubOptions, GitlabOptions } from "../../repository-lib";
 import { AxiosOptions } from "../axios/axios-options";
 import { WxOptions } from "../wx/wx-options";
 

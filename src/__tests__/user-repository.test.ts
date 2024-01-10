@@ -1,6 +1,6 @@
-import { PlainObject } from "../storage-lib";
+import { PlainObject } from "../repository-lib";
 import { UserModel } from "./helper/user-model";
-import { User } from "./helper/user-storage";
+import { User } from "./helper/user-repository";
 import dayjs from 'dayjs';
 
 describe('Test User Storage', () => {
