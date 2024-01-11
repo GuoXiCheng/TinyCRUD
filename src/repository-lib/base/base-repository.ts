@@ -145,6 +145,9 @@ export abstract class BaseRepository<T extends BaseModel> {
 
     // 反序列化: 将字符串转换为对象
     protected deserialize<T>(comment: BaseComment): T {
+        if (comment.body == null) { 
+            console.error(comment);
+        }
         const { id, body, created_at, updated_at } = comment;
 
         const parsedBody = this.useEncrypt && this.decryptFn
