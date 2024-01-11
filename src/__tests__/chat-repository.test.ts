@@ -2,7 +2,7 @@ import { PlainObject } from "../repository-lib";
 import { ChatModel } from "./helper/chat-model";
 import { Chat } from "./helper/chat-repository";
 
-xdescribe('Use Gitlab Test Chat Storage', () => {
+describe('Use Gitlab Test Chat Storage', () => {
 
     const chatList: PlainObject<ChatModel>[] = [
         {

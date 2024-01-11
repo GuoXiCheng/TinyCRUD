@@ -3,7 +3,7 @@ import { BookModel } from "./helper/book-model";
 import { Book } from "./helper/book-repository";
 import { PlainObject } from "../repository-lib";
 
-xdescribe('Test Book Storage', () => {
+describe('Test Book Storage', () => {
 
     const bookList: PlainObject<BookModel>[] = [
         {
