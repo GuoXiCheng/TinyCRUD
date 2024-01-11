@@ -133,12 +133,7 @@ export abstract class BaseRepository<T extends BaseModel> {
     async deleteAll(): Promise<void> {
         const findUrl = this.getRoute(RouteType.find);
         const findResult = await this.request.get<BaseComment[]>(findUrl);
-        console.log(findResult);
-        for (const item of findResult) {
-            const deleteResult = await this.deleteById(item.id);
-            console.log(deleteResult);
-        }
-        // await Promise.all(findResult.map((item) => this.deleteById(item.id)));
+        await Promise.all(findResult.map((item) => this.deleteById(item.id)));
     }
 
     // 序列化: 将对象转换为字符串
