@@ -6,7 +6,8 @@
   "module": "dist/bundle.esm.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "test": "jest --coverage",
+    "test:fake": "jest --coverage --config=jest.config.fake.js",
+    "test:real": "jest --coverage --config=jest.config.real.js",
     "prebuild": "rimraf ./dist",
     "build": "rollup --config"
   },
@@ -27,11 +28,11 @@
     "@types/jest": "^29.5.9",
     "@types/wechat-miniprogram": "^3.4.7",
     "axios": "^1.6.2",
+    "axios-mock-adapter": "^1.22.0",
     "crypto-js": "^4.2.0",
     "dayjs": "^1.11.10",
     "dotenv": "^16.3.1",
     "jest": "^29.7.0",
-    "json-server": "^1.0.0-alpha.16",
     "nyc": "^15.1.0",
     "rimraf": "^5.0.5",
     "rollup": "^4.3.0",
