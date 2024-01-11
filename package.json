@@ -6,7 +6,7 @@
   "module": "dist/bundle.esm.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "test:fake": "jest --coverage --config=jest.config.fake.js",
+    "test": "jest --coverage",
     "test:real": "jest --coverage --config=jest.config.real.js",
     "prebuild": "rimraf ./dist",
     "build": "rollup --config"
