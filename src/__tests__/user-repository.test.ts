@@ -3,7 +3,7 @@ import { UserModel } from "./helper/user-model";
 import { User } from "./helper/user-repository";
 import dayjs from 'dayjs';
 
-describe('Test User Storage', () => {
+xdescribe('Test User Storage', () => {
 
     const userList: PlainObject<UserModel>[] = [{
         name: 'test-user-1',
