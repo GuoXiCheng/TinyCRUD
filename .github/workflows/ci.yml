@@ -22,7 +22,7 @@ jobs:
         run: npm install
 
       - name: Run Jest tests
-        run: npm run test:real
+        run: npm run test
         env:
           TEST_GITEE_TOKEN: ${{ secrets.TEST_GITEE_TOKEN }}
           TEST_GITEE_OWNER: ${{ secrets.TEST_GITEE_OWNER }}
