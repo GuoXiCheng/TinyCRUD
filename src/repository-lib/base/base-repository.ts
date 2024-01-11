@@ -133,12 +133,16 @@ export abstract class BaseRepository<T extends BaseModel> {
     async deleteAll(): Promise<void> {
         const findUrl = this.getRoute(RouteType.find);
         const findResult = await this.request.get<BaseComment[]>(findUrl);
-        await Promise.all(findResult.map((item) => this.deleteById(item.id)));
+        console.log(findResult);
+        for (const item of findResult) {
+            const deleteResult = await this.deleteById(item.id);
+            console.log(deleteResult);
+        }
+        // await Promise.all(findResult.map((item) => this.deleteById(item.id)));
     }
 
     // 序列化: 将对象转换为字符串
     protected serialize<T>(obj: T): string {
-        console.log(obj);
         return (this.useEncrypt && this.encryptFn)
             ? this.encryptFn(JSON.stringify(obj))
             : JSON.stringify(obj);
@@ -146,10 +150,6 @@ export abstract class BaseRepository<T extends BaseModel> {
 
     // 反序列化: 将字符串转换为对象
     protected deserialize<T>(comment: BaseComment): T {
-        console.log(comment);
-        if (comment.body == null) { 
-            console.error(comment);
-        }
         const { id, body, created_at, updated_at } = comment;
 
         const parsedBody = this.useEncrypt && this.decryptFn
