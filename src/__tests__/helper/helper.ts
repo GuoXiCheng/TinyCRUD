@@ -15,13 +15,17 @@ dayjs.extend(timezone);
 // 设置默认时区
 dayjs.tz.setDefault('Asia/Shanghai');
 
-export const GITEE_NUMBER = process.env.TEST_GITEE_NUMBER as string;
+export const GITEE_NUMBER = process.env.TEST_GITEE_NUMBER || '1';
 
 export const GITHUB_NUMBER = process.env.TEST_GITHUB_NUMBER as string;
 
 export const GITLAB_NUMBER = process.env.TEST_GITLAB_NUMBER as string;
 
-export const TEST_ENCRYPT_KEY = process.env.TEST_ENCRYPT_KEY as string;
+export const ENCRYPT_KEY = process.env.TEST_ENCRYPT_KEY || 'test-encrypt-key';
+
+export const GITEE_OWNER = process.env.TEST_GITEE_OWNER || 'test-owner';
+
+export const GITEE_REPO = process.env.TEST_GITEE_REPO || 'test-repo';
 
 export const giteeRequest = createRequest({
     httpLib: 'axios',
@@ -30,15 +34,15 @@ export const giteeRequest = createRequest({
     accessToken: process.env.TEST_GITEE_TOKEN as string,
 
     platform: 'gitee',
-    owner: process.env.TEST_GITEE_OWNER as string,
-    repo: process.env.TEST_GITEE_REPO as string,
+    owner: GITEE_OWNER,
+    repo: GITEE_REPO,
 
     useEncrypt: true,
     encryptFn: (data: string) => {
-        return CryptoJS.AES.encrypt(data, TEST_ENCRYPT_KEY).toString();
+        return CryptoJS.AES.encrypt(data, ENCRYPT_KEY).toString();
     },
     decryptFn: (data: string) => {
-        return CryptoJS.AES.decrypt(data, TEST_ENCRYPT_KEY).toString(CryptoJS.enc.Utf8);
+        return CryptoJS.AES.decrypt(data, ENCRYPT_KEY).toString(CryptoJS.enc.Utf8);
     }
 });
 
