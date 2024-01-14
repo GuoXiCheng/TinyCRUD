@@ -4,6 +4,7 @@ import { UserModel } from "../helper/user-model";
 import { User } from "../helper/user-repository";
 import { initGiteeJSONFile, mockGiteeCreate, mockGiteeDeleteById, mockGiteeDetail, mockGiteeFind, mockGiteeFindById, mockGiteeUpdateById } from "../mock/mock-gitee-api";
 
+
 describe('Test Fake User Repository', () => {
     const userList: PlainObject<UserModel>[] = [{
         name: 'test-user-1',
@@ -46,28 +47,30 @@ describe('Test Fake User Repository', () => {
         age: 36
     }];
     
-    beforeAll(async ()=>{
+    beforeAll(async ()=>{        
         await initGiteeJSONFile();
+        await mockGiteeFind();
+        await mockGiteeCreate();
+        await mockGiteeFindById();
+        await mockGiteeUpdateById();
+        await mockGiteeDeleteById();
+        await mockGiteeDetail();
     });
 
     test('Test find User', async () => {
-        await mockGiteeFind();
         const detail = await User.find();
         expect(detail.length).toEqual(0);
     });
 
     test('Test create & findById User', async () => {
-        await mockGiteeCreate();
         await User.create({
             name: 'test-user',
             age: 18
         });
 
-        await mockGiteeFind();
         const findResult = await User.find();
         expect(findResult.length).toEqual(1);
 
-        await mockGiteeFindById();
         const findByIdResult = await User.findById(findResult[0].id);
         expect(findByIdResult).toEqual(findResult[0]);
         expect(findByIdResult.created_by).not.toBeNull();
@@ -77,16 +80,12 @@ describe('Test Fake User Repository', () => {
     });
 
     test('Test updateById User', async () => {
-        await mockGiteeFind();
         const findResult = await User.find();
-
-        await mockGiteeUpdateById();
         const updateResult = await User.updateById(findResult[0].id, {
             name: 'test-user-update',
             age: 20
         });
 
-        await mockGiteeFindById();
         const findByIdResult = await User.findById(findResult[0].id);
         expect(updateResult.name).toEqual(findByIdResult.name);
         expect(updateResult.age).toEqual(findByIdResult.age);
@@ -97,7 +96,6 @@ describe('Test Fake User Repository', () => {
 
     test('Test deleteById User failed', async () => {
         try {
-            await mockGiteeDeleteById();
             await User.deleteById(123);
         } catch (error: any) {
             expect(error.response.data).toEqual({ message: '404 Not Found' });
@@ -118,7 +116,6 @@ describe('Test Fake User Repository', () => {
 
     test('Test findById User failed', async () => {
         try {
-            await mockGiteeFindById();
             await User.findById(123);
         } catch (error: any) {
             expect(error.response.data).toEqual({ message: '404 Not Found' });
@@ -126,10 +123,6 @@ describe('Test Fake User Repository', () => {
     });
 
     test('Test createAll User orderly', async () => {
-        await mockGiteeFind();
-        await mockGiteeDeleteById();
-        await mockGiteeCreate();
-
         await User.deleteAll();
         const result = await User.createAll(userList, true);
         expect(result.length).toEqual(10);
@@ -140,7 +133,6 @@ describe('Test Fake User Repository', () => {
 
     test('Test find user with params since', async () => {
         const time = dayjs().subtract(3, 'second').format();
-        await mockGiteeFind();
         const result = await User.find({ since: time });
         expect(result.length).toBeGreaterThan(0);
         result.forEach(item => {
@@ -149,7 +141,6 @@ describe('Test Fake User Repository', () => {
     });
 
     test('Test find user with params order', async () => {
-        await mockGiteeFind();
         const resultDesc = await User.find({ order: 'desc' });
         expect(resultDesc.map(item => item.name)).toEqual(userList.map(item => item.name).reverse());
 
@@ -158,7 +149,6 @@ describe('Test Fake User Repository', () => {
     });
 
     test('Test find user with params page & per_page', async () => {
-        await mockGiteeFind();
         const firstPage = await User.find({ page: 1, per_page: 3 });
         expect(firstPage.length).toEqual(3);
 
@@ -167,7 +157,6 @@ describe('Test Fake User Repository', () => {
     });
 
     test('Test get User Detail', async()=>{
-        await mockGiteeDetail();
         const result = await User.detail();
         const {id, issue_number, comments, created_at, updated_at} = result;
         expect(id).not.toBeNull();

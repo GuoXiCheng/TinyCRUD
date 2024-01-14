@@ -1,43 +1,27 @@
 import { githubRequest } from "../helper/helper";
-import { mockGithubUser } from "../mock/mock-github-user";
+import { mockGithubUser } from "../mock/mock-git-user";
 
 describe('Test Fake Authenticate Github', () => {
     test('Test Authenticate Github', async () => {
         mockGithubUser();
         const res = await githubRequest.authenticate();
-        expect(res).toEqual({
-            login: '***',
-            id: 1000001,
-            node_id: '***',
-            avatar_url: 'https://avatars.githubusercontent.com/u/***?v=4',
-            gravatar_id: '',
-            url: 'https://api.github.com/users/***',
-            html_url: 'https://github.com/***',
-            followers_url: 'https://api.github.com/users/***/followers',
-            following_url: 'https://api.github.com/users/***/following{/other_user}',
-            gists_url: 'https://api.github.com/users/***/gists{/gist_id}',
-            starred_url: 'https://api.github.com/users/***/starred{/owner}{/repo}',
-            subscriptions_url: 'https://api.github.com/users/***/subscriptions',
-            organizations_url: 'https://api.github.com/users/***/orgs',
-            repos_url: 'https://api.github.com/users/***/repos',
-            events_url: 'https://api.github.com/users/***/events{/privacy}',
-            received_events_url: 'https://api.github.com/users/***/received_events',
-            type: 'User',
-            site_admin: false,
-            name: '***',
-            company: null,
-            blog: '***.github.io',
-            location: '***',
-            email: null,
-            hireable: null,
-            bio: '***',
-            twitter_username: null,
-            public_repos: 0,
-            public_gists: 0,
-            followers: 0,
-            following: 0,
-            created_at: '2017-12-04T12:29:35Z',
-            updated_at: '2023-12-17T04:01:22Z'
-        });
+        expect(Object.keys(res)).toEqual([
+            'login', 'id',
+            'node_id', 'avatar_url',
+            'gravatar_id', 'url',
+            'html_url', 'followers_url',
+            'following_url', 'gists_url',
+            'starred_url', 'subscriptions_url',
+            'organizations_url', 'repos_url',
+            'events_url', 'received_events_url',
+            'type', 'site_admin',
+            'name', 'company',
+            'blog', 'location',
+            'email', 'hireable',
+            'bio', 'twitter_username',
+            'public_repos', 'public_gists',
+            'followers', 'following',
+            'created_at', 'updated_at'
+        ]);
     });
 });

@@ -6,6 +6,7 @@ import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
 import MockAdapter from 'axios-mock-adapter';
+import jsonfile from 'jsonfile';
 
 export const mock = new MockAdapter(axios);
 
@@ -63,3 +64,7 @@ export const gitlabRequest = createRequest({
     platform: 'gitlab',
     projectId: process.env.TEST_GITLAB_PROJECT_ID as string
 });
+
+export function readJSONSync(filename: string) {
+    return jsonfile.readFileSync(`src/__tests__/mock/json/${filename}`);
+}
