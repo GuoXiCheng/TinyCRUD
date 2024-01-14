@@ -131,3 +131,4 @@ dist
 
 lib
 src/__tests__/mock/json/*.json
+!src/__tests__/mock/json/mock*.json
