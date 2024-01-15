@@ -26,7 +26,7 @@ export const GITEE_OWNER = process.env.TEST_GITEE_OWNER || 'test-owner';
 
 export const GITEE_REPO = process.env.TEST_GITEE_REPO || 'test-repo';
 
-export const USE_API = process.env.USE_API || false;
+export const USE_API = process.env.USE_API === 'true' || false;
 
 export let mock: MockAdapter | null = null;
 if (!USE_API) {

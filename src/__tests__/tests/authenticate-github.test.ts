@@ -10,7 +10,6 @@ describe('Test Authenticate Github', () => {
 
     test('Test Authenticate Github', async () => {
         const res = await githubRequest.authenticate();
-        console.log(res)
         expect(Object.keys(res)).toEqual([
             'login', 'id',
             'node_id', 'avatar_url',

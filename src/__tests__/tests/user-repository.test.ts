@@ -3,9 +3,10 @@ import { PlainObject } from "../../repository-lib";
 import { UserModel } from "../helper/user-model";
 import { User } from "../helper/user-repository";
 import { initGiteeJSONFile, mockGiteeCreate, mockGiteeDeleteById, mockGiteeDetail, mockGiteeFind, mockGiteeFindById, mockGiteeUpdateById } from "../mock/mock-gitee-api";
+import { USE_API } from "../helper/helper";
 
 
-describe('Test Fake User Repository', () => {
+describe('Test User Repository', () => {
     const userList: PlainObject<UserModel>[] = [{
         name: 'test-user-1',
         age: 18
@@ -48,13 +49,17 @@ describe('Test Fake User Repository', () => {
     }];
     
     beforeAll(async ()=>{        
-        await initGiteeJSONFile();
-        await mockGiteeFind();
-        await mockGiteeCreate();
-        await mockGiteeFindById();
-        await mockGiteeUpdateById();
-        await mockGiteeDeleteById();
-        await mockGiteeDetail();
+        if (!USE_API) {
+            await initGiteeJSONFile();
+            await mockGiteeFind();
+            await mockGiteeCreate();
+            await mockGiteeFindById();
+            await mockGiteeUpdateById();
+            await mockGiteeDeleteById();
+            await mockGiteeDetail();
+        } else {
+            await User.deleteAll();
+        }
     });
 
     test('Test find User', async () => {
@@ -104,7 +109,6 @@ describe('Test Fake User Repository', () => {
 
     test('Test updateById User failed', async () => {
         try {
-            await mockGiteeUpdateById();
             await User.updateById(123, {
                 name: 'test-user-update',
                 age: 20
@@ -120,6 +124,15 @@ describe('Test Fake User Repository', () => {
         } catch (error: any) {
             expect(error.response.data).toEqual({ message: '404 Not Found' });
         }
+    });
+
+    (USE_API ? test: test.skip)('Test createAll User', async () => {
+        await User.deleteAll();
+        const result = await User.createAll(userList);
+        expect(result.length).toEqual(10);
+
+        // 因为是并行创建，所以批量新增的数据是无序的
+        expect((await User.find()).map(item => item.name)).not.toEqual(userList.map(item => item.name));
     });
 
     test('Test createAll User orderly', async () => {
