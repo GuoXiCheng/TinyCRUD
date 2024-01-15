@@ -1,3 +1,4 @@
+import { GithubUser } from "../../repository-lib";
 import { USE_API, githubRequest } from "../helper/helper";
 import { mockGithubUser } from "../mock/mock-git-user";
 
@@ -9,7 +10,8 @@ describe('Test Authenticate Github', () => {
     });
 
     test('Test Authenticate Github', async () => {
-        const res = await githubRequest.authenticate();
+        const res = await githubRequest.authenticate() as GithubUser;
+        console.log(res.blog);
         expect(Object.keys(res)).toEqual([
             'login', 'id',
             'node_id', 'avatar_url',

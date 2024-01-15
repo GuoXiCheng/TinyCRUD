@@ -73,3 +73,7 @@ export const gitlabRequest = createRequest({
 export function readJSONSync(filename: string) {
     return jsonfile.readFileSync(`src/__tests__/mock/json/${filename}`);
 }
+
+export function writeJSONSync(filename: string, data: any) {
+    return jsonfile.writeFileSync(`src/__tests__/mock/json/${filename}`, data, { spaces: 2 });
+}
