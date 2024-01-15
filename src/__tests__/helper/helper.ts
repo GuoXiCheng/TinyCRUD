@@ -16,7 +16,7 @@ dayjs.tz.setDefault('Asia/Shanghai');
 
 export const GITEE_NUMBER = process.env.TEST_GITEE_NUMBER || '1';
 
-export const GITHUB_NUMBER = process.env.TEST_GITHUB_NUMBER as string;
+export const GITHUB_NUMBER = process.env.TEST_GITHUB_NUMBER || '1';
 
 export const GITLAB_NUMBER = process.env.TEST_GITLAB_NUMBER as string;
 
@@ -27,6 +27,10 @@ export const GITEE_OWNER = process.env.TEST_GITEE_OWNER || 'test-owner';
 export const GITEE_REPO = process.env.TEST_GITEE_REPO || 'test-repo';
 
 export const USE_API = process.env.USE_API === 'true' || false;
+
+export const GITHUB_OWNER = process.env.TEST_GITHUB_OWNER || 'test-owner';
+
+export const GITHUB_REPO = process.env.TEST_GITHUB_REPO || 'test-repo';
 
 export let mock: MockAdapter | null = null;
 if (!USE_API) {
@@ -55,11 +59,13 @@ export const giteeRequest = createRequest({
 export const githubRequest = createRequest({
     httpLib: 'axios',
     httpClient: axios,
+
     accessToken: process.env.TEST_GITHUB_TOKEN as string,
+
     platform: 'github',
-    owner: process.env.TEST_GITHUB_OWNER as string,
-    repo: process.env.TEST_GITHUB_REPO as string,
-    issueNumber: process.env.TEST_GITHUB_NUMBER as string
+    owner: GITHUB_OWNER,
+    repo: GITHUB_REPO,
+    issueNumber: GITHUB_NUMBER
 });
 
 export const gitlabRequest = createRequest({
