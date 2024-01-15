@@ -7,7 +7,6 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "test": "jest --coverage",
-    "test:real": "jest --coverage --config=jest.config.real.js",
     "prebuild": "rimraf ./dist",
     "build": "rollup --config"
   },

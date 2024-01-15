@@ -1,9 +1,14 @@
-import { giteeRequest } from '../helper/helper';
+import { USE_API, giteeRequest } from '../helper/helper';
 import { mockGiteeUser } from '../mock/mock-git-user';
 
-describe('Test Fake Authenticate Gitee', () => {
+describe('Test Authenticate Gitee', () => {
+  beforeAll(()=>{
+    if (!USE_API) {
+      mockGiteeUser();
+    }
+  });
+
   test('Test Authenticate Gitee', async () => {
-    mockGiteeUser();
     const res = await giteeRequest.authenticate();
     expect(Object.keys(res)).toEqual([
       'id', 'login',

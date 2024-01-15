@@ -8,12 +8,10 @@ import timezone from 'dayjs/plugin/timezone';
 import MockAdapter from 'axios-mock-adapter';
 import jsonfile from 'jsonfile';
 
-export const mock = new MockAdapter(axios);
+// export const mock = new MockAdapter(axios);
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
-
-// 设置默认时区
 dayjs.tz.setDefault('Asia/Shanghai');
 
 export const GITEE_NUMBER = process.env.TEST_GITEE_NUMBER || '1';
@@ -27,6 +25,13 @@ export const ENCRYPT_KEY = process.env.TEST_ENCRYPT_KEY || 'test-encrypt-key';
 export const GITEE_OWNER = process.env.TEST_GITEE_OWNER || 'test-owner';
 
 export const GITEE_REPO = process.env.TEST_GITEE_REPO || 'test-repo';
+
+export const USE_API = process.env.USE_API || false;
+
+export let mock: MockAdapter | null = null;
+if (!USE_API) {
+    mock = new MockAdapter(axios);
+}
 
 export const giteeRequest = createRequest({
     httpLib: 'axios',
