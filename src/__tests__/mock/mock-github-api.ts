@@ -1,20 +1,17 @@
 import dayjs from "dayjs";
-import { GITEE_NUMBER, GITEE_OWNER, GITEE_REPO, mock, readJSONSync, writeJSONSync } from "../helper/helper";
+import { GITHUB_NUMBER, GITHUB_OWNER, GITHUB_REPO, mock, readJSONSync, writeJSONSync } from "../helper/helper";
 
-const filename = "temp-gitee.json";
+const filename = "temp-github.json";
 
-export async function initGiteeJSONFile() {
+export async function initGithubJSONFile() {
     writeJSONSync(filename, []);
 }
 
-export async function mockGiteeFind() {
-    mock?.onGet(`https://gitee.com/api/v5/repos/${GITEE_OWNER}/${GITEE_REPO}/issues/${GITEE_NUMBER}/comments`).reply(async (config) => {
+export async function mockGithubFind() {
+    mock?.onGet(`https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/issues/${GITHUB_NUMBER}/comments`).reply(async (config) => {
         const result = readJSONSync(filename);
         if (config.params?.since) {
             return [200, result.filter((item: any) => dayjs(item.created_at).isAfter(dayjs(config.params.since)))];
-        }
-        if (config.params?.order) {
-            return [200, config.params.order == 'desc' ? result.reverse() : result];
         }
         if (config.params?.page && config.params?.per_page) {
             const start = (config.params.page - 1) * config.params.per_page;
@@ -25,20 +22,23 @@ export async function mockGiteeFind() {
     });
 }
 
-export async function mockGiteeFindById() {
-    mock?.onGet(new RegExp(`https://gitee.com/api/v5/repos/${GITEE_OWNER}/${GITEE_REPO}/issues/comments/\\d+`)).reply(async (config) => {
+export async function mockGithubFindById() {
+    mock?.onGet(new RegExp(`https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/issues/comments/\\d+`)).reply(async (config) => {
         const result = readJSONSync(filename);
         const id = config.url?.match(/\/issues\/comments\/(\d+)/)?.[1];
         const target = result.find((item: any) => item.id == id);
         if (!target) {
-            return [404, { message: '404 Not Found' }];
+            return [404, {
+                "message": "Not Found",
+                "documentation_url": "https://docs.github.com/rest/issues/comments#get-an-issue-comment"
+            }];
         }
         return [200, target];
     });
 }
 
-export async function mockGiteeCreate() {
-    mock?.onPost(`https://gitee.com/api/v5/repos/${GITEE_OWNER}/${GITEE_REPO}/issues/${GITEE_NUMBER}/comments`).reply(async (config) => {
+export async function mockGithubCreate() {
+    mock?.onPost(`https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/issues/${GITHUB_NUMBER}/comments`).reply(async (config) => {
         const result = readJSONSync(filename);
         const data = {
             id: Math.round(Math.random() * 1000000),
@@ -47,7 +47,7 @@ export async function mockGiteeCreate() {
                 id: 100001,
                 login: "***",
                 name: "***",
-                avatar_url: "https://foruda.gitee.com/avatar/***/***.png",
+                avatar_url: "https://foruda.github.com/avatar/***/***.png",
             },
             created_at: dayjs().format(),
             updated_at: dayjs().format()
@@ -59,12 +59,15 @@ export async function mockGiteeCreate() {
 }
 
 export async function mockGiteeUpdateById() {
-    mock?.onPatch(new RegExp(`https://gitee.com/api/v5/repos/${GITEE_OWNER}/${GITEE_REPO}/issues/comments/\\d+`)).reply(async (config) => {
+    mock?.onPatch(new RegExp(`https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/issues/comments/\\d+`)).reply(async (config) => {
         const raw = readJSONSync(filename);
         const id = config.url?.match(/\/issues\/comments\/(\d+)/)?.[1];
         const target = raw.find((item: any) => item.id == id);
         if (!target) {
-            return [404, { message: '404 Not Found' }];
+            return [404, {
+                "message": "Not Found",
+                "documentation_url": "https://docs.github.com/rest/issues/comments#update-an-issue-comment"
+            }];
         }
         raw.forEach((item: any) => {
             if (item.id == id) {
@@ -79,12 +82,15 @@ export async function mockGiteeUpdateById() {
 }
 
 export async function mockGiteeDeleteById() {
-    mock?.onDelete(new RegExp(`https://gitee.com/api/v5/repos/${GITEE_OWNER}/${GITEE_REPO}/issues/comments/\\d+`)).reply(async (config) => {
+    mock?.onDelete(new RegExp(`https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/issues/comments/\\d+`)).reply(async (config) => {
         const raw = readJSONSync(filename);
         const id = config.url?.match(/\/issues\/comments\/(\d+)/)?.[1];
         const target = raw.find((item: any) => item.id == id);
         if (!target) {
-            return [404, { message: '404 Not Found' }];
+            return [404, {
+                "message": "Not Found",
+                "documentation_url": "https://docs.github.com/rest/issues/comments#delete-an-issue-comment"
+            }];
         }
         const remain = raw.find((item: any) => item.id != id);
         writeJSONSync(filename, remain ? remain : []);
@@ -93,7 +99,7 @@ export async function mockGiteeDeleteById() {
 }
 
 export async function mockGiteeDetail() {
-    mock?.onGet(new RegExp(`https://gitee.com/api/v5/repos/${GITEE_OWNER}/${GITEE_REPO}/issues/${GITEE_NUMBER}`)).reply(async (config) => {
-        return [200, readJSONSync('mock-gitee-detail.json')];
+    mock?.onGet(new RegExp(`https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/issues/${GITHUB_NUMBER}`)).reply(async (config) => {
+        return [200, readJSONSync('mock-github-detail.json')];
     });
 }

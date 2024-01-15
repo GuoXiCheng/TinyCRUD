@@ -1,0 +1,64 @@
+{
+    "id": 100001,
+    "iid": 2,
+    "project_id": 100001,
+    "title": "For *** Test New",
+    "description": "test",
+    "state": "opened",
+    "created_at": "2024-01-02T02:27:57.658Z",
+    "updated_at": "2024-01-15T08:06:48.811Z",
+    "closed_at": null,
+    "closed_by": null,
+    "labels": [],
+    "milestone": null,
+    "assignees": [],
+    "author": {
+        "id": 100001,
+        "username": "***",
+        "name": "***",
+        "state": "active",
+        "locked": false,
+        "avatar_url": "https://gitlab.com/uploads/-/system/user/avatar/***/avatar.png",
+        "web_url": "https://gitlab.com/***"
+    },
+    "type": "ISSUE",
+    "assignee": null,
+    "user_notes_count": 1,
+    "merge_requests_count": 0,
+    "upvotes": 0,
+    "downvotes": 0,
+    "due_date": null,
+    "confidential": false,
+    "discussion_locked": null,
+    "issue_type": "issue",
+    "web_url": "https://gitlab.com/***/***/-/issues/2",
+    "time_stats": {
+        "time_estimate": 0,
+        "total_time_spent": 0,
+        "human_time_estimate": null,
+        "human_total_time_spent": null
+    },
+    "task_completion_status": {
+        "count": 0,
+        "completed_count": 0
+    },
+    "blocking_issues_count": 0,
+    "has_tasks": true,
+    "task_status": "0 of 0 checklist items completed",
+    "_links": {
+        "self": "https://gitlab.com/api/v4/projects/***/issues/2",
+        "notes": "https://gitlab.com/api/v4/projects/***/issues/2/notes",
+        "award_emoji": "https://gitlab.com/api/v4/projects/***/issues/2/award_emoji",
+        "project": "https://gitlab.com/api/v4/projects/***",
+        "closed_as_duplicate_of": null
+    },
+    "references": {
+        "short": "#2",
+        "relative": "#2",
+        "full": "***/***#2"
+    },
+    "severity": "UNKNOWN",
+    "subscribed": true,
+    "moved_to_id": null,
+    "service_desk_reply_to": null
+}

@@ -1,7 +1,10 @@
 import dayjs from "dayjs";
-import { BookModel } from "./helper/book-model";
-import { Book } from "./helper/book-repository";
-import { PlainObject } from "../repository-lib";
+import { PlainObject } from "../../repository-lib";
+import { BookModel } from "../helper/book-model";
+import { USE_API } from "../helper/helper";
+import { Book } from "../helper/book-repository";
+import { initGithubJSONFile, mockGiteeDeleteById, mockGiteeDetail, mockGiteeUpdateById, mockGithubCreate, mockGithubFind, mockGithubFindById } from "../mock/mock-github-api";
+
 
 describe('Test Book Storage', () => {
 
@@ -59,7 +62,17 @@ describe('Test Book Storage', () => {
     ];
 
     beforeAll(async () => {
-        await Book.deleteAll();
+        if (USE_API) {
+            await Book.deleteAll();
+        } else {
+            await initGithubJSONFile();
+            await mockGithubFind();
+            await mockGithubCreate();
+            await mockGithubFindById();
+            await mockGiteeUpdateById();
+            await mockGiteeDeleteById();
+            await mockGiteeDetail();
+        }
     });
 
     test('Test find Book', async () => {
@@ -142,7 +155,7 @@ describe('Test Book Storage', () => {
         }
     });
 
-    test('Test createAll Book', async () => {
+    (USE_API ? test: test.skip)('Test createAll Book', async () => {
         await Book.deleteAll();
         const result = await Book.createAll(bookList);
         expect(result.length).toEqual(10);

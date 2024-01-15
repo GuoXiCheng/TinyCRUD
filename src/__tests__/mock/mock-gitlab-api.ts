@@ -1,20 +1,17 @@
 import dayjs from "dayjs";
-import { GITEE_NUMBER, GITEE_OWNER, GITEE_REPO, mock, readJSONSync, writeJSONSync } from "../helper/helper";
+import { GITLAB_NUMBER, GITLAB_PROJECT_ID, mock, readJSONSync, writeJSONSync } from "../helper/helper";
 
-const filename = "temp-gitee.json";
+const filename = "temp-gitlab.json";
 
-export async function initGiteeJSONFile() {
+export async function initGitlabJSONFile() {
     writeJSONSync(filename, []);
 }
 
-export async function mockGiteeFind() {
-    mock?.onGet(`https://gitee.com/api/v5/repos/${GITEE_OWNER}/${GITEE_REPO}/issues/${GITEE_NUMBER}/comments`).reply(async (config) => {
+export async function mockGitlabFind() {
+    mock?.onGet(`https://gitlab.com/api/v4/projects/${GITLAB_PROJECT_ID}/issues/${GITLAB_NUMBER}/notes`).reply(async (config) => {
         const result = readJSONSync(filename);
         if (config.params?.since) {
             return [200, result.filter((item: any) => dayjs(item.created_at).isAfter(dayjs(config.params.since)))];
-        }
-        if (config.params?.order) {
-            return [200, config.params.order == 'desc' ? result.reverse() : result];
         }
         if (config.params?.page && config.params?.per_page) {
             const start = (config.params.page - 1) * config.params.per_page;
@@ -25,29 +22,32 @@ export async function mockGiteeFind() {
     });
 }
 
-export async function mockGiteeFindById() {
-    mock?.onGet(new RegExp(`https://gitee.com/api/v5/repos/${GITEE_OWNER}/${GITEE_REPO}/issues/comments/\\d+`)).reply(async (config) => {
+export async function mockGitlabFindById() {
+    mock?.onGet(new RegExp(`https://gitlab.com/api/v4/projects/${GITLAB_PROJECT_ID}/issues/${GITLAB_NUMBER}/notes/\\d+`)).reply(async (config) => {
         const result = readJSONSync(filename);
-        const id = config.url?.match(/\/issues\/comments\/(\d+)/)?.[1];
+        const id = config.url?.match(/\/notes\/(\d+)/)?.[1];
         const target = result.find((item: any) => item.id == id);
         if (!target) {
-            return [404, { message: '404 Not Found' }];
+            return [404, {
+                "message": "404 Not found"
+            }];
         }
         return [200, target];
     });
 }
 
-export async function mockGiteeCreate() {
-    mock?.onPost(`https://gitee.com/api/v5/repos/${GITEE_OWNER}/${GITEE_REPO}/issues/${GITEE_NUMBER}/comments`).reply(async (config) => {
+export async function mockGitlabCreate() {
+    mock?.onPost(`https://gitlab.com/api/v4/projects/${GITLAB_PROJECT_ID}/issues/${GITLAB_NUMBER}/notes`).reply(async (config) => {
         const result = readJSONSync(filename);
         const data = {
             id: Math.round(Math.random() * 1000000),
             body: JSON.parse(config.data).body,
-            user: {
+            system: false,
+            author: {
                 id: 100001,
-                login: "***",
+                username: "***",
                 name: "***",
-                avatar_url: "https://foruda.gitee.com/avatar/***/***.png",
+                avatar_url: "https://foruda.gitlab.com/avatar/***/***.png",
             },
             created_at: dayjs().format(),
             updated_at: dayjs().format()
@@ -58,13 +58,15 @@ export async function mockGiteeCreate() {
     });
 }
 
-export async function mockGiteeUpdateById() {
-    mock?.onPatch(new RegExp(`https://gitee.com/api/v5/repos/${GITEE_OWNER}/${GITEE_REPO}/issues/comments/\\d+`)).reply(async (config) => {
+export async function mockGitlabUpdateById() {
+    mock?.onPut(new RegExp(`https://gitlab.com/api/v4/projects/${GITLAB_PROJECT_ID}/issues/${GITLAB_NUMBER}/notes/\\d+`)).reply(async (config) => {
         const raw = readJSONSync(filename);
-        const id = config.url?.match(/\/issues\/comments\/(\d+)/)?.[1];
+        const id = config.url?.match(/\/notes\/(\d+)/)?.[1];
         const target = raw.find((item: any) => item.id == id);
         if (!target) {
-            return [404, { message: '404 Not Found' }];
+            return [404, {
+                "message": "404 Not found"
+            }];
         }
         raw.forEach((item: any) => {
             if (item.id == id) {
@@ -78,13 +80,15 @@ export async function mockGiteeUpdateById() {
     });
 }
 
-export async function mockGiteeDeleteById() {
-    mock?.onDelete(new RegExp(`https://gitee.com/api/v5/repos/${GITEE_OWNER}/${GITEE_REPO}/issues/comments/\\d+`)).reply(async (config) => {
+export async function mockGitlabDeleteById() {
+    mock?.onDelete(new RegExp(`https://gitlab.com/api/v4/projects/${GITLAB_PROJECT_ID}/issues/${GITLAB_NUMBER}/notes/\\d+`)).reply(async (config) => {
         const raw = readJSONSync(filename);
-        const id = config.url?.match(/\/issues\/comments\/(\d+)/)?.[1];
+        const id = config.url?.match(/\/notes\/(\d+)/)?.[1];
         const target = raw.find((item: any) => item.id == id);
         if (!target) {
-            return [404, { message: '404 Not Found' }];
+            return [404, {
+                "message": "404 Not found"
+            }];
         }
         const remain = raw.find((item: any) => item.id != id);
         writeJSONSync(filename, remain ? remain : []);
@@ -92,8 +96,8 @@ export async function mockGiteeDeleteById() {
     });
 }
 
-export async function mockGiteeDetail() {
-    mock?.onGet(new RegExp(`https://gitee.com/api/v5/repos/${GITEE_OWNER}/${GITEE_REPO}/issues/${GITEE_NUMBER}`)).reply(async (config) => {
-        return [200, readJSONSync('mock-gitee-detail.json')];
+export async function mockGitlabDetail() {
+    mock?.onGet(new RegExp(`https://gitlab.com/api/v4/projects/${GITLAB_PROJECT_ID}/issues/${GITLAB_NUMBER}`)).reply(async (config) => {
+        return [200, readJSONSync('mock-gitlab-detail.json')];
     });
 }
