@@ -4,9 +4,8 @@ import { mockGithubUser } from "./mock/mock-git-user";
 
 describe('Test Authenticate Github', () => {
     beforeAll(() => {
-        if (!USE_API) {
-            mockGithubUser();
-        }
+        if (USE_API) return;
+        mockGithubUser();
     });
 
     test('Test Authenticate Github', async () => {

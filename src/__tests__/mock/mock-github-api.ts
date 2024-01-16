@@ -3,11 +3,21 @@ import { GITHUB_NUMBER, GITHUB_OWNER, GITHUB_REPO, mock, readJSONSync, writeJSON
 
 const filename = "temp-github.json";
 
-export async function initGithubJSONFile() {
+export async function setupGithubMock() {
+    await initGithubJSONFile();
+    await mockGithubFind();
+    await mockGithubCreate();
+    await mockGithubFindById();
+    await mockGiteeUpdateById();
+    await mockGiteeDeleteById();
+    await mockGiteeDetail();
+};
+
+async function initGithubJSONFile() {
     writeJSONSync(filename, []);
 }
 
-export async function mockGithubFind() {
+async function mockGithubFind() {
     mock?.onGet(`https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/issues/${GITHUB_NUMBER}/comments`).reply(async (config) => {
         const result = readJSONSync(filename);
         if (config.params?.since) {
@@ -22,7 +32,7 @@ export async function mockGithubFind() {
     });
 }
 
-export async function mockGithubFindById() {
+async function mockGithubFindById() {
     mock?.onGet(new RegExp(`https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/issues/comments/\\d+`)).reply(async (config) => {
         const result = readJSONSync(filename);
         const id = config.url?.match(/\/issues\/comments\/(\d+)/)?.[1];
@@ -37,7 +47,7 @@ export async function mockGithubFindById() {
     });
 }
 
-export async function mockGithubCreate() {
+async function mockGithubCreate() {
     mock?.onPost(`https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/issues/${GITHUB_NUMBER}/comments`).reply(async (config) => {
         const result = readJSONSync(filename);
         const data = {
@@ -58,7 +68,7 @@ export async function mockGithubCreate() {
     });
 }
 
-export async function mockGiteeUpdateById() {
+async function mockGiteeUpdateById() {
     mock?.onPatch(new RegExp(`https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/issues/comments/\\d+`)).reply(async (config) => {
         const raw = readJSONSync(filename);
         const id = config.url?.match(/\/issues\/comments\/(\d+)/)?.[1];
@@ -81,7 +91,7 @@ export async function mockGiteeUpdateById() {
     });
 }
 
-export async function mockGiteeDeleteById() {
+async function mockGiteeDeleteById() {
     mock?.onDelete(new RegExp(`https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/issues/comments/\\d+`)).reply(async (config) => {
         const raw = readJSONSync(filename);
         const id = config.url?.match(/\/issues\/comments\/(\d+)/)?.[1];
@@ -98,7 +108,7 @@ export async function mockGiteeDeleteById() {
     });
 }
 
-export async function mockGiteeDetail() {
+async function mockGiteeDetail() {
     mock?.onGet(new RegExp(`https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/issues/${GITHUB_NUMBER}`)).reply(async (config) => {
         return [200, readJSONSync('mock-github-detail.json')];
     });

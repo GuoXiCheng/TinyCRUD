@@ -2,7 +2,7 @@ import dayjs from "dayjs";
 import { PlainObject } from "./../repository-lib";
 import { UserModel } from "./helper/user-model";
 import { User } from "./helper/user-repository";
-import { initGiteeJSONFile, mockGiteeCreate, mockGiteeDeleteById, mockGiteeDetail, mockGiteeFind, mockGiteeFindById, mockGiteeUpdateById } from "./mock/mock-gitee-api";
+import { setupGiteeMock } from "./mock/mock-gitee-api";
 import { USE_API } from "./helper/helper";
 
 
@@ -50,13 +50,7 @@ describe('Test User Repository', () => {
     
     beforeAll(async ()=>{        
         if (!USE_API) {
-            await initGiteeJSONFile();
-            await mockGiteeFind();
-            await mockGiteeCreate();
-            await mockGiteeFindById();
-            await mockGiteeUpdateById();
-            await mockGiteeDeleteById();
-            await mockGiteeDetail();
+            await setupGiteeMock();
         } else {
             await User.deleteAll();
         }

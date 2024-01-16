@@ -3,9 +3,8 @@ import { mockGitlabUser } from "./mock/mock-git-user";
 
 describe('Test Authenticate Gitlab', () => {
     beforeAll(() => {
-        if (!USE_API) {
-            mockGitlabUser();
-        }
+        if (USE_API) return;
+        mockGitlabUser();
     });
 
     test('Test Authenticate Gitlab', async () => {

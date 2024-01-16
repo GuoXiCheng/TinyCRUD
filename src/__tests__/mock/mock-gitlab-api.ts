@@ -3,11 +3,21 @@ import { GITLAB_NUMBER, GITLAB_PROJECT_ID, mock, readJSONSync, writeJSONSync } f
 
 const filename = "temp-gitlab.json";
 
-export async function initGitlabJSONFile() {
+export async function setupGitlabMock() {
+    await initGitlabJSONFile();
+    await mockGitlabFind();
+    await mockGitlabCreate();
+    await mockGitlabFindById();
+    await mockGitlabUpdateById();
+    await mockGitlabDeleteById();
+    await mockGitlabDetail();
+}
+
+async function initGitlabJSONFile() {
     writeJSONSync(filename, []);
 }
 
-export async function mockGitlabFind() {
+async function mockGitlabFind() {
     mock?.onGet(`https://gitlab.com/api/v4/projects/${GITLAB_PROJECT_ID}/issues/${GITLAB_NUMBER}/notes`).reply(async (config) => {
         const result = readJSONSync(filename);
         if (config.params?.sort) {
@@ -24,7 +34,7 @@ export async function mockGitlabFind() {
     });
 }
 
-export async function mockGitlabFindById() {
+async function mockGitlabFindById() {
     mock?.onGet(new RegExp(`https://gitlab.com/api/v4/projects/${GITLAB_PROJECT_ID}/issues/${GITLAB_NUMBER}/notes/\\d+`)).reply(async (config) => {
         const result = readJSONSync(filename);
         const id = config.url?.match(/\/notes\/(\d+)/)?.[1];
@@ -38,7 +48,7 @@ export async function mockGitlabFindById() {
     });
 }
 
-export async function mockGitlabCreate() {
+async function mockGitlabCreate() {
     mock?.onPost(`https://gitlab.com/api/v4/projects/${GITLAB_PROJECT_ID}/issues/${GITLAB_NUMBER}/notes`).reply(async (config) => {
         const result = readJSONSync(filename);
         const data = {
@@ -61,7 +71,7 @@ export async function mockGitlabCreate() {
     });
 }
 
-export async function mockGitlabUpdateById() {
+async function mockGitlabUpdateById() {
     mock?.onPut(new RegExp(`https://gitlab.com/api/v4/projects/${GITLAB_PROJECT_ID}/issues/${GITLAB_NUMBER}/notes/\\d+`)).reply(async (config) => {
         const raw = readJSONSync(filename);
         const id = config.url?.match(/\/notes\/(\d+)/)?.[1];
@@ -83,7 +93,7 @@ export async function mockGitlabUpdateById() {
     });
 }
 
-export async function mockGitlabDeleteById() {
+async function mockGitlabDeleteById() {
     mock?.onDelete(new RegExp(`https://gitlab.com/api/v4/projects/${GITLAB_PROJECT_ID}/issues/${GITLAB_NUMBER}/notes/\\d+`)).reply(async (config) => {
         const raw = readJSONSync(filename);
         const id = config.url?.match(/\/notes\/(\d+)/)?.[1];
@@ -99,7 +109,7 @@ export async function mockGitlabDeleteById() {
     });
 }
 
-export async function mockGitlabDetail() {
+async function mockGitlabDetail() {
     mock?.onGet(new RegExp(`https://gitlab.com/api/v4/projects/${GITLAB_PROJECT_ID}/issues/${GITLAB_NUMBER}`)).reply(async (config) => {
         return [200, readJSONSync('mock-gitlab-detail.json')];
     });
