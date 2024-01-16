@@ -1,9 +1,9 @@
 import dayjs from "dayjs";
-import { PlainObject } from "../../repository-lib";
-import { UserModel } from "../helper/user-model";
-import { User } from "../helper/user-repository";
-import { initGiteeJSONFile, mockGiteeCreate, mockGiteeDeleteById, mockGiteeDetail, mockGiteeFind, mockGiteeFindById, mockGiteeUpdateById } from "../mock/mock-gitee-api";
-import { USE_API } from "../helper/helper";
+import { PlainObject } from "./../repository-lib";
+import { UserModel } from "./helper/user-model";
+import { User } from "./helper/user-repository";
+import { initGiteeJSONFile, mockGiteeCreate, mockGiteeDeleteById, mockGiteeDetail, mockGiteeFind, mockGiteeFindById, mockGiteeUpdateById } from "./mock/mock-gitee-api";
+import { USE_API } from "./helper/helper";
 
 
 describe('Test User Repository', () => {

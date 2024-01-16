@@ -1,8 +1,8 @@
-import { PlainObject } from "../../repository-lib";
-import { ChatModel } from "../helper/chat-model";
-import { Chat } from "../helper/chat-repository";
-import { USE_API } from "../helper/helper";
-import { initGitlabJSONFile, mockGitlabCreate, mockGitlabDeleteById, mockGitlabDetail, mockGitlabFind, mockGitlabFindById, mockGitlabUpdateById} from "../mock/mock-gitlab-api";
+import { PlainObject } from "./../repository-lib";
+import { ChatModel } from "./helper/chat-model";
+import { Chat } from "./helper/chat-repository";
+import { USE_API } from "./helper/helper";
+import { initGitlabJSONFile, mockGitlabCreate, mockGitlabDeleteById, mockGitlabDetail, mockGitlabFind, mockGitlabFindById, mockGitlabUpdateById} from "./mock/mock-gitlab-api";
 
 
 describe('Use Gitlab Test Chat Storage', () => {

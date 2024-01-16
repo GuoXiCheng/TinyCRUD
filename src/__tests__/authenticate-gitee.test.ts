@@ -1,5 +1,5 @@
-import { USE_API, giteeRequest } from '../helper/helper';
-import { mockGiteeUser } from '../mock/mock-git-user';
+import { USE_API, giteeRequest } from './helper/helper';
+import { mockGiteeUser } from './mock/mock-git-user';
 
 describe('Test Authenticate Gitee', () => {
   beforeAll(()=>{

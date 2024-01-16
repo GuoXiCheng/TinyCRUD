@@ -1,6 +1,6 @@
-import { GithubUser } from "../../repository-lib";
-import { USE_API, githubRequest } from "../helper/helper";
-import { mockGithubUser } from "../mock/mock-git-user";
+import { GithubUser } from "./../repository-lib";
+import { USE_API, githubRequest } from "./helper/helper";
+import { mockGithubUser } from "./mock/mock-git-user";
 
 describe('Test Authenticate Github', () => {
     beforeAll(() => {

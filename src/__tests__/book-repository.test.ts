@@ -1,9 +1,9 @@
 import dayjs from "dayjs";
-import { PlainObject } from "../../repository-lib";
-import { BookModel } from "../helper/book-model";
-import { USE_API } from "../helper/helper";
-import { Book } from "../helper/book-repository";
-import { initGithubJSONFile, mockGiteeDeleteById, mockGiteeDetail, mockGiteeUpdateById, mockGithubCreate, mockGithubFind, mockGithubFindById } from "../mock/mock-github-api";
+import { PlainObject } from "./../repository-lib";
+import { BookModel } from "./helper/book-model";
+import { USE_API } from "./helper/helper";
+import { Book } from "./helper/book-repository";
+import { initGithubJSONFile, mockGiteeDeleteById, mockGiteeDetail, mockGiteeUpdateById, mockGithubCreate, mockGithubFind, mockGithubFindById } from "./mock/mock-github-api";
 
 
 describe('Test Book Storage', () => {
