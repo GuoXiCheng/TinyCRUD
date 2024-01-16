@@ -1,11 +1,10 @@
-import { USE_API, giteeRequest } from '../helper/helper';
-import { mockGiteeUser } from '../mock/mock-git-user';
+import { USE_API, giteeRequest } from './helper/helper';
+import { mockGiteeUser } from './mock/mock-git-user';
 
 describe('Test Authenticate Gitee', () => {
   beforeAll(()=>{
-    if (!USE_API) {
-      mockGiteeUser();
-    }
+    if (USE_API) return;
+    mockGiteeUser();
   });
 
   test('Test Authenticate Gitee', async () => {

@@ -1,6 +1,9 @@
-import { PlainObject } from "../repository-lib";
+import { PlainObject } from "./../repository-lib";
 import { ChatModel } from "./helper/chat-model";
 import { Chat } from "./helper/chat-repository";
+import { USE_API } from "./helper/helper";
+import { setupGitlabMock} from "./mock/mock-gitlab-api";
+
 
 describe('Use Gitlab Test Chat Storage', () => {
 
@@ -109,7 +112,11 @@ describe('Use Gitlab Test Chat Storage', () => {
 
 
     beforeAll(async () => {
-        await Chat.deleteAll();
+        if (USE_API) {
+            await Chat.deleteAll();
+        } else {
+            setupGitlabMock();
+        }
     });
 
     test('Test find Chat', async () => {
@@ -198,7 +205,7 @@ describe('Use Gitlab Test Chat Storage', () => {
         }
     });
 
-    test('Test createAll Chat', async () => {
+    (USE_API ? test: test.skip)('Test createAll Chat', async () => {
         await Chat.deleteAll();
         const result = await Chat.createAll(chatList);
         expect(result.length).toEqual(10);
@@ -210,8 +217,8 @@ describe('Use Gitlab Test Chat Storage', () => {
     test('Test createAll Chat orderly', async () => {
         await Chat.deleteAll();
         const result = await Chat.createAll(chatList, true);
+  
         expect(result.length).toEqual(10);
-
         // 因为是顺序创建，所以批量新增的数据是有序的
         expect((await Chat.find()).map(item => item.participants)).toEqual(chatList.map(item => item.participants).reverse());
     });

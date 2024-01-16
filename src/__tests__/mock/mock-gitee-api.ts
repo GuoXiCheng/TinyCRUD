@@ -3,11 +3,17 @@ import { GITEE_NUMBER, GITEE_OWNER, GITEE_REPO, mock, readJSONSync, writeJSONSyn
 
 const filename = "temp-gitee.json";
 
-export async function initGiteeJSONFile() {
+export function setupGiteeMock() {
     writeJSONSync(filename, []);
+    mockGiteeFind();
+    mockGiteeCreate();
+    mockGiteeFindById();
+    mockGiteeUpdateById();
+    mockGiteeDeleteById();
+    mockGiteeDetail();
 }
 
-export async function mockGiteeFind() {
+function mockGiteeFind() {
     mock?.onGet(`https://gitee.com/api/v5/repos/${GITEE_OWNER}/${GITEE_REPO}/issues/${GITEE_NUMBER}/comments`).reply(async (config) => {
         const result = readJSONSync(filename);
         if (config.params?.since) {
@@ -25,7 +31,7 @@ export async function mockGiteeFind() {
     });
 }
 
-export async function mockGiteeFindById() {
+function mockGiteeFindById() {
     mock?.onGet(new RegExp(`https://gitee.com/api/v5/repos/${GITEE_OWNER}/${GITEE_REPO}/issues/comments/\\d+`)).reply(async (config) => {
         const result = readJSONSync(filename);
         const id = config.url?.match(/\/issues\/comments\/(\d+)/)?.[1];
@@ -37,7 +43,7 @@ export async function mockGiteeFindById() {
     });
 }
 
-export async function mockGiteeCreate() {
+function mockGiteeCreate() {
     mock?.onPost(`https://gitee.com/api/v5/repos/${GITEE_OWNER}/${GITEE_REPO}/issues/${GITEE_NUMBER}/comments`).reply(async (config) => {
         const result = readJSONSync(filename);
         const data = {
@@ -58,7 +64,7 @@ export async function mockGiteeCreate() {
     });
 }
 
-export async function mockGiteeUpdateById() {
+function mockGiteeUpdateById() {
     mock?.onPatch(new RegExp(`https://gitee.com/api/v5/repos/${GITEE_OWNER}/${GITEE_REPO}/issues/comments/\\d+`)).reply(async (config) => {
         const raw = readJSONSync(filename);
         const id = config.url?.match(/\/issues\/comments\/(\d+)/)?.[1];
@@ -78,7 +84,7 @@ export async function mockGiteeUpdateById() {
     });
 }
 
-export async function mockGiteeDeleteById() {
+function mockGiteeDeleteById() {
     mock?.onDelete(new RegExp(`https://gitee.com/api/v5/repos/${GITEE_OWNER}/${GITEE_REPO}/issues/comments/\\d+`)).reply(async (config) => {
         const raw = readJSONSync(filename);
         const id = config.url?.match(/\/issues\/comments\/(\d+)/)?.[1];
@@ -92,7 +98,7 @@ export async function mockGiteeDeleteById() {
     });
 }
 
-export async function mockGiteeDetail() {
+function mockGiteeDetail() {
     mock?.onGet(new RegExp(`https://gitee.com/api/v5/repos/${GITEE_OWNER}/${GITEE_REPO}/issues/${GITEE_NUMBER}`)).reply(async (config) => {
         return [200, readJSONSync('mock-gitee-detail.json')];
     });

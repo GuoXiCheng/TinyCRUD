@@ -1,12 +1,11 @@
-import { GithubUser } from "../../repository-lib";
-import { USE_API, githubRequest } from "../helper/helper";
-import { mockGithubUser } from "../mock/mock-git-user";
+import { GithubUser } from "./../repository-lib";
+import { USE_API, githubRequest } from "./helper/helper";
+import { mockGithubUser } from "./mock/mock-git-user";
 
 describe('Test Authenticate Github', () => {
     beforeAll(() => {
-        if (!USE_API) {
-            mockGithubUser();
-        }
+        if (USE_API) return;
+        mockGithubUser();
     });
 
     test('Test Authenticate Github', async () => {

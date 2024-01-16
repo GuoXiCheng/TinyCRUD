@@ -7,6 +7,6 @@ module.exports = {
         "!src/**/*.d.ts", // 排除 TypeScript 声明文件
         "!src/__tests__/**/*.ts"
     ],
-    testMatch: ["<rootDir>/src/__tests__/tests/*.test.ts"],
+    testMatch: ["<rootDir>/src/__tests__/*.test.ts"],
     testPathIgnorePatterns: []
 };
