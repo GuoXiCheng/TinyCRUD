@@ -10,13 +10,15 @@ export async function initGitlabJSONFile() {
 export async function mockGitlabFind() {
     mock?.onGet(`https://gitlab.com/api/v4/projects/${GITLAB_PROJECT_ID}/issues/${GITLAB_NUMBER}/notes`).reply(async (config) => {
         const result = readJSONSync(filename);
-        if (config.params?.since) {
-            return [200, result.filter((item: any) => dayjs(item.created_at).isAfter(dayjs(config.params.since)))];
-        }
-        if (config.params?.page && config.params?.per_page) {
-            const start = (config.params.page - 1) * config.params.per_page;
-            const end = config.params.page * config.params.per_page;
-            return [200, result.slice(start, end)];
+        if (config.params?.sort) {
+            const sort = config.params?.sort;
+            result.sort((a: any, b: any) => {
+                if (sort == "asc") {
+                    return dayjs(a.created_at).isBefore(dayjs(b.created_at)) ? -1 : 1;
+                } else {
+                    return dayjs(a.created_at).isAfter(dayjs(b.created_at)) ? -1 : 1;
+                }
+            });
         }
         return [200, result];
     });
@@ -52,7 +54,8 @@ export async function mockGitlabCreate() {
             created_at: dayjs().format(),
             updated_at: dayjs().format()
         };
-        result.push(data);
+        result.unshift(data);
+        await new Promise(resolve => setTimeout(resolve, 1000));
         writeJSONSync(filename, result);
         return [200, data];
     });

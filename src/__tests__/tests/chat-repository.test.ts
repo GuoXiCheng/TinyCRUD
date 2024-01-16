@@ -211,35 +211,35 @@ describe('Use Gitlab Test Chat Storage', () => {
         }
     });
 
-    // test('Test createAll Chat', async () => {
-    //     await Chat.deleteAll();
-    //     const result = await Chat.createAll(chatList);
-    //     expect(result.length).toEqual(10);
+    (USE_API ? test: test.skip)('Test createAll Chat', async () => {
+        await Chat.deleteAll();
+        const result = await Chat.createAll(chatList);
+        expect(result.length).toEqual(10);
 
-    //     // 因为是并行创建，所以批量新增的数据是无序的
-    //     expect((await Chat.find()).map(item => item.participants)).not.toEqual(chatList.map(item => item.participants).reverse());
-    // });
+        // 因为是并行创建，所以批量新增的数据是无序的
+        expect((await Chat.find()).map(item => item.participants)).not.toEqual(chatList.map(item => item.participants).reverse());
+    });
 
-    // test('Test createAll Chat orderly', async () => {
-    //     await Chat.deleteAll();
-    //     const result = await Chat.createAll(chatList, true);
-    //     expect(result.length).toEqual(10);
+    test('Test createAll Chat orderly', async () => {
+        await Chat.deleteAll();
+        const result = await Chat.createAll(chatList, true);
+  
+        expect(result.length).toEqual(10);
+        // 因为是顺序创建，所以批量新增的数据是有序的
+        expect((await Chat.find()).map(item => item.participants)).toEqual(chatList.map(item => item.participants).reverse());
+    });
 
-    //     // 因为是顺序创建，所以批量新增的数据是有序的
-    //     expect((await Chat.find()).map(item => item.participants)).toEqual(chatList.map(item => item.participants).reverse());
-    // });
-
-    // test('Test find Chat with params sort & order_by', async () => {
-    //     const findAsc = await Chat.find({
-    //         sort: 'asc',
-    //         order_by: 'created_at'
-    //     });
-    //     const findDesc = await Chat.find({
-    //         sort: 'desc',
-    //         order_by: 'created_at'
-    //     });
-    //     expect(findAsc.map(item => item.id)).toEqual(findDesc.map(item => item.id).reverse());
-    // });
+    test('Test find Chat with params sort & order_by', async () => {
+        const findAsc = await Chat.find({
+            sort: 'asc',
+            order_by: 'created_at'
+        });
+        const findDesc = await Chat.find({
+            sort: 'desc',
+            order_by: 'created_at'
+        });
+        expect(findAsc.map(item => item.id)).toEqual(findDesc.map(item => item.id).reverse());
+    });
 
     test('Test get Chat Detail', async()=>{
         const result = await Chat.detail();
