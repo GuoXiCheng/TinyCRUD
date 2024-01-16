@@ -115,7 +115,7 @@ describe('Use Gitlab Test Chat Storage', () => {
         if (USE_API) {
             await Chat.deleteAll();
         } else {
-            await setupGitlabMock();
+            setupGitlabMock();
         }
     });
 

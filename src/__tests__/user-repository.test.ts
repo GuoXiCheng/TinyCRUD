@@ -48,11 +48,11 @@ describe('Test User Repository', () => {
         age: 36
     }];
     
-    beforeAll(async ()=>{        
-        if (!USE_API) {
-            await setupGiteeMock();
-        } else {
+    beforeAll(async ()=>{   
+        if (USE_API) {
             await User.deleteAll();
+        } else {
+            setupGiteeMock();
         }
     });
 
