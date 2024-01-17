@@ -1,5 +1,5 @@
 import dayjs from "dayjs";
-import { PlainObject } from "./../repository-lib";
+import { PlainObject } from "../index";
 import { UserModel } from "./helper/user-model";
 import { User } from "./helper/user-repository";
 import { setupGiteeMock } from "./mock/mock-gitee-api";

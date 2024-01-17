@@ -1,4 +1,4 @@
-import { createRequest } from './../request-lib';
+import { createRequest } from '../index';
 
 const wx = {
     request: jest.fn()

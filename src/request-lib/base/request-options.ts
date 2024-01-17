@@ -1,4 +1,6 @@
-import { GiteeOptions, GithubOptions, GitlabOptions } from "../../repository-lib";
+import { GiteeOptions } from "../../repository-lib/gitee/gitee-options";
+import { GithubOptions } from "../../repository-lib/github/github-options";
+import { GitlabOptions } from "../../repository-lib/gitlab/gitlab-options";
 import { AxiosOptions } from "../axios/axios-options";
 import { WxOptions } from "../wx/wx-options";
 

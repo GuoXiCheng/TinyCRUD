@@ -1,4 +1,4 @@
-import { PlainObject } from "./../repository-lib";
+import { PlainObject } from "../index";
 import { ChatModel } from "./helper/chat-model";
 import { Chat } from "./helper/chat-repository";
 import { USE_API } from "./helper/helper";
