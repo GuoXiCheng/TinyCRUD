@@ -1,5 +1,4 @@
-import { GithubRepository } from "../../repository-lib";
-import { SingletonFactory } from "../../utils";
+import { GithubRepository, SingletonFactory } from "../../index";
 import { BookModel } from "./book-model";
 import { githubRequest } from "./helper";
 

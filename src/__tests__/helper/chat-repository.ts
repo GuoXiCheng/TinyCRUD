@@ -1,7 +1,6 @@
-import { GitlabRepository } from "../../repository-lib";
+import { GitlabRepository, SingletonFactory } from "../../index";
 import { ChatModel } from "./chat-model";
 import { GITLAB_NUMBER, gitlabRequest } from "./helper";
-import { SingletonFactory } from "../../utils";
 
 class ChatRepository extends GitlabRepository<ChatModel> {
     constructor() {

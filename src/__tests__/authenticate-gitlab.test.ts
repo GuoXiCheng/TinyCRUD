@@ -1,6 +1,12 @@
-import { gitlabRequest } from "./helper/helper";
+import { USE_API, gitlabRequest } from "./helper/helper";
+import { mockGitlabUser } from "./mock/mock-git-user";
 
 describe('Test Authenticate Gitlab', () => {
+    beforeAll(() => {
+        if (USE_API) return;
+        mockGitlabUser();
+    });
+
     test('Test Authenticate Gitlab', async () => {
         const res = await gitlabRequest.authenticate();
         expect(Object.keys(res)).toEqual([

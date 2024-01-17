@@ -1,5 +1,7 @@
 import { StoragePlatform } from "../../enums";
-import { GiteeUser, GithubUser, GitlabUser } from "../../repository-lib";
+import { GiteeUser } from '../../repository-lib/gitee/gitee-user';
+import { GithubUser } from '../../repository-lib/github/github-user';
+import { GitlabUser } from '../../repository-lib/gitlab/gitlab-user';
 import { RequestMethods } from "./request-methods";
 import { RequestOptions } from "./request-options";
 

@@ -1,7 +1,7 @@
 {
   "name": "tiny-crud",
-  "version": "1.0.22",
-  "description": "",
+  "version": "1.0.23",
+  "description": "A tiny CRUD library based on Git Issue API",
   "main": "dist/bundle.cjs.js",
   "module": "dist/bundle.esm.js",
   "types": "dist/index.d.ts",
@@ -13,7 +13,9 @@
   "author": "Xicheng_Guo",
   "license": "MIT",
   "files": [
-    "dist"
+    "dist/bundle.cjs.js",
+    "dist/bundle.esm.js",
+    "dist/index.d.ts"
   ],
   "devDependencies": {
     "@babel/preset-env": "^7.23.3",
@@ -25,15 +27,19 @@
     "@rollup/plugin-typescript": "^11.1.5",
     "@types/crypto-js": "^4.2.1",
     "@types/jest": "^29.5.9",
+    "@types/jsonfile": "^6.1.4",
     "@types/wechat-miniprogram": "^3.4.7",
     "axios": "^1.6.2",
+    "axios-mock-adapter": "^1.22.0",
     "crypto-js": "^4.2.0",
     "dayjs": "^1.11.10",
     "dotenv": "^16.3.1",
     "jest": "^29.7.0",
+    "jsonfile": "^6.1.0",
     "nyc": "^15.1.0",
     "rimraf": "^5.0.5",
     "rollup": "^4.3.0",
+    "rollup-plugin-dts": "^6.1.0",
     "ts-jest": "^29.1.1",
     "tslib": "^2.6.2",
     "typescript": "^5.2.2"

@@ -1,10 +1,12 @@
-import { PlainObject } from "../repository-lib";
+import dayjs from "dayjs";
+import { PlainObject } from "../index";
 import { UserModel } from "./helper/user-model";
 import { User } from "./helper/user-repository";
-import dayjs from 'dayjs';
+import { setupGiteeMock } from "./mock/mock-gitee-api";
+import { USE_API } from "./helper/helper";
 
-describe('Test User Storage', () => {
 
+describe('Test User Repository', () => {
     const userList: PlainObject<UserModel>[] = [{
         name: 'test-user-1',
         age: 18
@@ -45,9 +47,13 @@ describe('Test User Storage', () => {
         name: 'test-user-10',
         age: 36
     }];
-
-    beforeAll(async () => {
-        await User.deleteAll();
+    
+    beforeAll(async ()=>{   
+        if (USE_API) {
+            await User.deleteAll();
+        } else {
+            setupGiteeMock();
+        }
     });
 
     test('Test find User', async () => {
@@ -60,6 +66,7 @@ describe('Test User Storage', () => {
             name: 'test-user',
             age: 18
         });
+
         const findResult = await User.find();
         expect(findResult.length).toEqual(1);
 
@@ -77,6 +84,7 @@ describe('Test User Storage', () => {
             name: 'test-user-update',
             age: 20
         });
+
         const findByIdResult = await User.findById(findResult[0].id);
         expect(updateResult.name).toEqual(findByIdResult.name);
         expect(updateResult.age).toEqual(findByIdResult.age);
@@ -112,7 +120,7 @@ describe('Test User Storage', () => {
         }
     });
 
-    test('Test createAll User', async () => {
+    (USE_API ? test: test.skip)('Test createAll User', async () => {
         await User.deleteAll();
         const result = await User.createAll(userList);
         expect(result.length).toEqual(10);

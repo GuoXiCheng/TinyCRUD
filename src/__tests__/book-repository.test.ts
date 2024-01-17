@@ -1,7 +1,10 @@
 import dayjs from "dayjs";
+import { PlainObject } from "../index";
 import { BookModel } from "./helper/book-model";
+import { USE_API } from "./helper/helper";
 import { Book } from "./helper/book-repository";
-import { PlainObject } from "../repository-lib";
+import { setupGithubMock } from "./mock/mock-github-api";
+
 
 describe('Test Book Storage', () => {
 
@@ -59,7 +62,11 @@ describe('Test Book Storage', () => {
     ];
 
     beforeAll(async () => {
-        await Book.deleteAll();
+        if (USE_API) {
+            await Book.deleteAll();
+        } else {
+            await setupGithubMock();
+        }
     });
 
     test('Test find Book', async () => {
@@ -142,7 +149,7 @@ describe('Test Book Storage', () => {
         }
     });
 
-    test('Test createAll Book', async () => {
+    (USE_API ? test: test.skip)('Test createAll Book', async () => {
         await Book.deleteAll();
         const result = await Book.createAll(bookList);
         expect(result.length).toEqual(10);
