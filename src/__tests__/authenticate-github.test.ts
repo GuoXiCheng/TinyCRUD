@@ -1,4 +1,4 @@
-import { GithubUser } from "./../repository-lib";
+import { GithubUser } from "../index";
 import { USE_API, githubRequest } from "./helper/helper";
 import { mockGithubUser } from "./mock/mock-git-user";
 

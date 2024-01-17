@@ -1,5 +1,5 @@
 import dayjs from "dayjs";
-import { PlainObject } from "./../repository-lib";
+import { PlainObject } from "../index";
 import { BookModel } from "./helper/book-model";
 import { USE_API } from "./helper/helper";
 import { Book } from "./helper/book-repository";

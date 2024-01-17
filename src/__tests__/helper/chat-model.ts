@@ -1,4 +1,4 @@
-import { BaseModel } from "../../repository-lib";
+import { BaseModel } from "../../index";
 
 export interface ChatModel extends BaseModel {
     participants: string[];

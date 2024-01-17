@@ -1,6 +1,5 @@
 
-import { GiteeRepository } from '../../repository-lib';
-import { SingletonFactory } from '../../utils';
+import { GiteeRepository, SingletonFactory } from '../../index';
 import { GITEE_NUMBER, giteeRequest } from './helper';
 import { UserModel } from './user-model';
 

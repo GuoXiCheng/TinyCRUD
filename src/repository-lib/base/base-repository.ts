@@ -1,4 +1,4 @@
-import { BaseRequest } from "../../request-lib";
+import { BaseRequest } from "../../request-lib/base/base-request";
 import { Author } from "./author";
 import { BaseComment } from "./base-comment";
 import { BaseModel } from "./base-model";
