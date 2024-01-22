@@ -3,6 +3,8 @@
 ![GitHub Workflow Status (with event)](https://img.shields.io/github/actions/workflow/status/GuoXiCheng/TinyCRUD/ci.yml)
 ![Codecov branch](https://img.shields.io/codecov/c/github/GuoXiCheng/TinyCRUD/main)
 
+## 介绍
+
 TinyCRUD 是一个基于代码托管平台 Issue API 的轻量级数据存储库，它可以将 Issue 作为数据库表，Issue 的评论作为数据表记录，通过 Issue API 将数据序列化/反序列化，实现数据的增删改查。
 
 ## 适用场景
