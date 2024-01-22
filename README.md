@@ -1,7 +1,6 @@
 # TinyCRUD
 
 ![GitHub Workflow Status (with event)](https://img.shields.io/github/actions/workflow/status/GuoXiCheng/TinyCRUD/ci.yml)
-
 ![Codecov branch](https://img.shields.io/codecov/c/github/GuoXiCheng/TinyCRUD/main)
 
 ## 介绍
@@ -14,7 +13,7 @@ TinyCRUD 适合用于满足小型团队或个人项目中需要简单、轻量�
 
 ## 支持的代码托管平台
 
-<table style="text-align:center">  
+<table>  
     <tr>
         <td>
             <p align="center">
@@ -47,7 +46,7 @@ TinyCRUD 适合用于满足小型团队或个人项目中需要简单、轻量�
 
 ## 支持的请求库
 
-<table style="text-align:center">
+<table>
     <tr>
         <td>
             <img src="https://axios-http.com/assets/logo.svg" />
@@ -60,7 +59,7 @@ TinyCRUD 适合用于满足小型团队或个人项目中需要简单、轻量�
     </tr>
     <tr>
         <td>
-            axios ✔
+            <p align="center">axios ✔</p>
         </td>
         <td>
             wx（微信小程序） ✔
