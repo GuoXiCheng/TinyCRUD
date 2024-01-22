@@ -15,6 +15,15 @@ export class GiteeRepository<T extends BaseModel> extends BaseRepository<T> {
         super(request, issueNumber);
     }
 
+    /**
+     * Finds items in the Gitee repository.
+     * @param params - Optional parameters for the search.
+     * @param params.since - Only issues updated at or after this time are returned.
+     * @param params.page - The page number to retrieve.
+     * @param params.per_page - The number of items to retrieve per page.default: 20, maximum: 100
+     * @param params.order - The sort order of the results.Either 'asc' or 'desc'.
+     * @returns A promise that resolves to an array of items.
+     */
     async find(params?: GiteeParams): Promise<T[]> {
         return super.find(params);
     }

@@ -15,12 +15,20 @@ export class GithubRepository<T extends BaseModel> extends BaseRepository<T> {
         super(request, issueNumber);
     }
 
+    /**
+     * Finds items in the GitHub repository.
+     * @param params - Optional parameters for the search.
+     * @param params.since - Only issues updated at or after this time are returned.
+     * @param params.page - The page number to retrieve.
+     * @param params.per_page - The number of items to retrieve per page.default: 30, maximum: 100
+     * @returns A promise that resolves to an array of items.
+     */
     async find(params?: GithubParams): Promise<T[]> {
         return super.find(params);
     }
 
     /**
-     * Retrieves the detailed information of an issue from Gitee.
+     * Retrieves the detailed information of an issue from Github.
      * @returns A promise that resolves to an object containing the issue details.
      */
     async detail(): Promise<IssueDetail> {

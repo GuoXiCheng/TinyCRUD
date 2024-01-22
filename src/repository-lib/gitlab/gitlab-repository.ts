@@ -35,7 +35,9 @@ export class GitlabRepository<T extends BaseModel> extends BaseRepository<T> {
     /**
      * Finds items in the Gitlab storage based on the provided parameters.
      * @param params - Optional parameters for the find operation.
-     * @returns A promise that resolves to an array of items found in the Gitlab storage.
+     * @param params.sort - Return requests sorted in asc or desc order. Default is desc.
+     * @param params.order_by - Return requests ordered by created_at or updated_at fields. Default is created_at.
+     * @returns A promise that resolves to an array of items.
      */
     async find(params?: GitlabParams): Promise<T[]> {
         const url = this.getRoute(RouteType.find);
@@ -68,7 +70,7 @@ export class GitlabRepository<T extends BaseModel> extends BaseRepository<T> {
     }
 
     /**
-     * Retrieves the detailed information of an issue from Gitee.
+     * Retrieves the detailed information of an issue from Gitlab.
      * @returns A promise that resolves to an object containing the issue details.
      */
     async detail(): Promise<IssueDetail> {
