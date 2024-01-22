@@ -118,7 +118,7 @@ export class UserRepository extends GithubRepository<UserModel> {
 }
 ```
 
-### 数据存储操作
+### 基本操作
 
 ```ts
 const userRepository = new UserRepository();
