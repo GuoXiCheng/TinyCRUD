@@ -68,7 +68,7 @@ export class GitlabRepository<T extends BaseModel> extends BaseRepository<T> {
     }
 
     /**
-     * Retrieves the detailed information of an issue from Gitee.
+     * Retrieves the detailed information of an issue from Gitlab.
      * @returns A promise that resolves to an object containing the issue details.
      */
     async detail(): Promise<IssueDetail> {
