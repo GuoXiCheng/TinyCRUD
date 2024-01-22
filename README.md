@@ -1,6 +1,7 @@
 # TinyCRUD
 
 ![GitHub Workflow Status (with event)](https://img.shields.io/github/actions/workflow/status/GuoXiCheng/TinyCRUD/ci.yml)
+
 ![Codecov branch](https://img.shields.io/codecov/c/github/GuoXiCheng/TinyCRUD/main)
 
 ## 介绍
@@ -14,6 +15,7 @@ TinyCRUD 适合用于满足小型团队或个人项目中需要简单、轻量�
 ## 支持的代码托管平台
 
 <table style="text-align:center">  
+
     <tr>
         <td>
             <img src="https://guoxicheng.top/assets/image/tiny-crud-docs/github.svg" />
@@ -36,17 +38,20 @@ TinyCRUD 适合用于满足小型团队或个人项目中需要简单、轻量�
             API v5 ✔
         </td>
     </tr>
+
 </table>
 
 ## 支持的请求库
 
-<table style="text-align:center">
+<table>
     <tr>
         <td>
             <img src="https://axios-http.com/assets/logo.svg" />
         </td>
         <td>
-            <img src="https://guoxicheng.top/assets/image/tiny-crud-docs/wechat.svg" />
+            <p align="center">
+                <img src="https://guoxicheng.top/assets/image/tiny-crud-docs/wechat.svg" />
+            </p>
         </td>
     </tr>
     <tr>
@@ -57,12 +62,14 @@ TinyCRUD 适合用于满足小型团队或个人项目中需要简单、轻量�
             wx（微信小程序） ✔
         </td>
     </tr>
+
 </table>
 
 ## 安装
 
 ```bash 
 npm install tiny-crud
+
 ```
 
 ## 使用
@@ -137,11 +144,9 @@ userRepository.deleteById(1);
 
 ## 说明
 
-- 更好的阅读体验以及详细的使用文档请戳 👉[TinyCRUD Docs](https://guoxicheng.top/projects/TinyCRUD-Docs/)
-- 如果对你有帮助的话可以给颗小星星，感谢支持！🌟
+* 更好的阅读体验以及详细的使用文档请戳 👉[TinyCRUD Docs](https://guoxicheng.top/projects/TinyCRUD-Docs/)
+* 如果对你有帮助的话可以给颗小星星，感谢支持！🌟
 
 ## License
 
 [MIT](https://github.com/GuoXiCheng/TinyCRUD/blob/main/LICENSE)
-
-
