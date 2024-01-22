@@ -17,17 +17,17 @@ TinyCRUD 适合用于满足小型团队或个人项目中需要简单、轻量�
     <tr>
         <td>
             <p align="center">
-                <img src="https://guoxicheng.top/assets/image/tiny-crud-docs/github.svg" />
+                <img src="https://guoxicheng.top/assets/image/tiny-crud-docs/github.svg" title="Github"/>
             </p>
         </td>
         <td>
             <p align="center">
-                <img src="https://guoxicheng.top/assets/image/tiny-crud-docs/gitlab.svg" />
+                <img src="https://guoxicheng.top/assets/image/tiny-crud-docs/gitlab.svg" title="Gitlab"/>
             </p>
         </td>
         <td>
             <p align="center">
-                <img src="https://guoxicheng.top/assets/image/tiny-crud-docs/gitee.svg" />
+                <img src="https://guoxicheng.top/assets/image/tiny-crud-docs/gitee.svg" title="Gitee"/>
             </p>
         </td>
     </tr>
