@@ -15,16 +15,21 @@ TinyCRUD 适合用于满足小型团队或个人项目中需要简单、轻量�
 ## 支持的代码托管平台
 
 <table style="text-align:center">  
-
     <tr>
         <td>
-            <img src="https://guoxicheng.top/assets/image/tiny-crud-docs/github.svg" />
+            <p align="center">
+                <img src="https://guoxicheng.top/assets/image/tiny-crud-docs/github.svg" />
+            </p>
         </td>
         <td>
-            <img src="https://guoxicheng.top/assets/image/tiny-crud-docs/gitlab.svg" />
+            <p align="center">
+                <img src="https://guoxicheng.top/assets/image/tiny-crud-docs/gitlab.svg" />
+            </p>
         </td>
         <td>
-            <img src="https://guoxicheng.top/assets/image/tiny-crud-docs/gitee.svg" />
+            <p align="center">
+                <img src="https://guoxicheng.top/assets/image/tiny-crud-docs/gitee.svg" />
+            </p>
         </td>
     </tr>
     <tr>
@@ -38,12 +43,11 @@ TinyCRUD 适合用于满足小型团队或个人项目中需要简单、轻量�
             API v5 ✔
         </td>
     </tr>
-
 </table>
 
 ## 支持的请求库
 
-<table>
+<table style="text-align:center">
     <tr>
         <td>
             <img src="https://axios-http.com/assets/logo.svg" />
@@ -62,7 +66,6 @@ TinyCRUD 适合用于满足小型团队或个人项目中需要简单、轻量�
             wx（微信小程序） ✔
         </td>
     </tr>
-
 </table>
 
 ## 安装
