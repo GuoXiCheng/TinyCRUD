@@ -15,6 +15,11 @@ export class GiteeRepository<T extends BaseModel> extends BaseRepository<T> {
         super(request, issueNumber);
     }
 
+    /**
+     * Finds items in the Gitee repository.
+     * @param params - Optional parameters for the search.
+     * @returns A promise that resolves to an array of items.
+     */
     async find(params?: GiteeParams): Promise<T[]> {
         return super.find(params);
     }
