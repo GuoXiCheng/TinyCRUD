@@ -7,9 +7,9 @@
 
 ## Introduction
 
-TinyCRUD is a lightweight data storage library based on the Issue API of the code hosting platform. It can use Issue as a database table, and the comments of Issue as data table records. It serializes/deserializes data through the Issue API to achieve data addition, deletion, modification and query.
+TinyCRUD is a lightweight data storage library based on the Issue API of the code hosting platform. It can use Issues as database tables, and Issue comments as records in these tables. It performs data serialization/deserialization through the Issue API to enable data addition, deletion, modification, and querying.
 
-## Applicable scenarios
+## Applicable Scenarios
 
 TinyCRUD is suitable for small teams or personal projects that require simple and lightweight data storage, but do not want or need to set up a complex database system.
 
@@ -147,7 +147,8 @@ userRepository.deleteById(1);
 
 ## Documentation
 
-👉[TinyCRUD Docs](https://guoxicheng.top/en/projects/TinyCRUD-Docs) 
+- more detailed documentation 👉[TinyCRUD Docs](https://guoxicheng.top/en/projects/TinyCRUD-Docs) 
+- If you find it helpful, please consider giving it a little star, and thank you for your support! 🌟
 
 ## License
 

@@ -146,7 +146,7 @@ userRepository.updateById(1, {
 userRepository.deleteById(1);
 ```
 
-## 说明
+## 详细文档
 
 * 更好的阅读体验以及详细的使用文档请戳 👉[TinyCRUD Docs](https://guoxicheng.top/projects/TinyCRUD-Docs/)
 * 如果对你有帮助的话可以给颗小星星，感谢支持！🌟
