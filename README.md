@@ -1,3 +1,5 @@
+简体中文 | [English](README.en.md)
+
 # TinyCRUD
 
 ![GitHub Workflow Status (with event)](https://img.shields.io/github/actions/workflow/status/GuoXiCheng/TinyCRUD/ci.yml)
@@ -33,13 +35,13 @@ TinyCRUD 适合用于满足小型团队或个人项目中需要简单、轻量�
     </tr>
     <tr>
         <td>
-            API latest ✔
+            Github API latest
         </td>
         <td>
-            API v4 ✔
+            Gitlab API v4
         </td>
         <td>
-            API v5 ✔
+            Gitee API v5
         </td>
     </tr>
 </table>
@@ -59,10 +61,10 @@ TinyCRUD 适合用于满足小型团队或个人项目中需要简单、轻量�
     </tr>
     <tr>
         <td>
-            <p align="center">axios ✔</p>
+            <p align="center">axios</p>
         </td>
         <td>
-            wx（微信小程序） ✔
+            wx（微信小程序）
         </td>
     </tr>
 </table>
@@ -144,7 +146,7 @@ userRepository.updateById(1, {
 userRepository.deleteById(1);
 ```
 
-## 说明
+## 详细文档
 
 * 更好的阅读体验以及详细的使用文档请戳 👉[TinyCRUD Docs](https://guoxicheng.top/projects/TinyCRUD-Docs/)
 * 如果对你有帮助的话可以给颗小星星，感谢支持！🌟
