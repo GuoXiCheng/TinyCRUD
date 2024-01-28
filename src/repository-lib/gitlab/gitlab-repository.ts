@@ -41,7 +41,7 @@ export class GitlabRepository<T extends BaseModel> extends BaseRepository<T> {
      */
     async find(params?: GitlabParams): Promise<T[]> {
         const url = this.getRoute(RouteType.find);
-        const response = await this.request.get<BaseComment[]>(url, params);
+        const response = await this.request.get<BaseComment[]>(url, this.cleanParams(params));
         return response.filter(item => item['system'] === false).map((item) => this.deserialize<T>(item));
     }
 

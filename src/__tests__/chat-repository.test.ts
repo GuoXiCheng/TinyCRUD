@@ -2,7 +2,7 @@ import { PlainObject } from "../index";
 import { ChatModel } from "./helper/chat-model";
 import { Chat } from "./helper/chat-repository";
 import { USE_API } from "./helper/helper";
-import { setupGitlabMock} from "./mock/mock-gitlab-api";
+import { GitlabMock } from "./mock/gitlab-mock";
 
 
 describe('Use Gitlab Test Chat Storage', () => {
@@ -115,7 +115,7 @@ describe('Use Gitlab Test Chat Storage', () => {
         if (USE_API) {
             await Chat.deleteAll();
         } else {
-            setupGitlabMock();
+            new GitlabMock().setUpMock();
         }
     });
 
@@ -233,6 +233,11 @@ describe('Use Gitlab Test Chat Storage', () => {
             order_by: 'created_at'
         });
         expect(findAsc.map(item => item.id)).toEqual(findDesc.map(item => item.id).reverse());
+    });
+
+    test('Test find Chat with params sort & order_by undefined', async () => {
+        const result = await Chat.find({ sort: undefined, order_by: undefined });
+        expect(result.length).toBeGreaterThan(0);
     });
 
     test('Test get Chat Detail', async()=>{

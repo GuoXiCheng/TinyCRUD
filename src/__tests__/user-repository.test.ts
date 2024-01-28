@@ -2,8 +2,8 @@ import dayjs from "dayjs";
 import { PlainObject } from "../index";
 import { UserModel } from "./helper/user-model";
 import { User } from "./helper/user-repository";
-import { setupGiteeMock } from "./mock/mock-gitee-api";
 import { USE_API } from "./helper/helper";
+import { GiteeMock } from "./mock/gitee-mock";
 
 
 describe('Test User Repository', () => {
@@ -52,7 +52,7 @@ describe('Test User Repository', () => {
         if (USE_API) {
             await User.deleteAll();
         } else {
-            setupGiteeMock();
+            new GiteeMock().setUpMock();
         }
     });
 
@@ -161,6 +161,11 @@ describe('Test User Repository', () => {
 
         const lastPage = await User.find({ page: 4, per_page: 3 });
         expect(lastPage.length).toEqual(1);
+    });
+
+    test('Test find user with params page & per_page undefined', async () => {
+        const result = await User.find({ page: undefined, per_page: undefined });
+        expect(result.length).toBeGreaterThan(0);
     });
 
     test('Test get User Detail', async()=>{
