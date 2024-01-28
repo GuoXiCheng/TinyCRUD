@@ -49,6 +49,22 @@ export abstract class BaseRepository<T extends BaseModel> {
     }
 
     /**
+     * Cleans the provided parameters by removing any properties with null or undefined values.
+     * @param params - The parameters to be cleaned.
+     * @returns The cleaned parameters or undefined if all properties are null or undefined.
+     */
+    protected cleanParams(params?: BaseParams): BaseParams | undefined {
+        if (params == null) return;
+        const copyParams = JSON.parse(JSON.stringify(params));
+        for (const key in copyParams) {
+            if (copyParams[key] == null) {
+                delete copyParams[key];
+            }
+        }
+        return Object.keys(copyParams).length > 0 ? copyParams : undefined;
+    }
+
+    /**
      * Finds items in the storage based on the provided parameters.
      * @param params - The parameters used for filtering the items.
      * @returns A promise that resolves to an array of items found in the storage.

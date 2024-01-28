@@ -1,7 +1,7 @@
 {
   "name": "tiny-crud",
-  "version": "1.1.0",
-  "description": "A tiny CRUD library based on Git Issue API",
+  "version": "1.1.1",
+  "description": "Lightweight Data Repository Based on Git Issue API",
   "main": "dist/bundle.cjs.js",
   "module": "dist/bundle.esm.js",
   "types": "dist/index.d.ts",
@@ -17,6 +17,19 @@
     "dist/bundle.esm.js",
     "dist/index.d.ts"
   ],
+  "keywords": [
+    "git",
+    "issue",
+    "crud",
+    "data",
+    "repository",
+    "api"
+  ],
+  "homepage": "https://guoxicheng.top/projects/TinyCRUD-Docs",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/GuoXiCheng/TinyCRUD.git"
+  },
   "devDependencies": {
     "@babel/preset-env": "^7.23.3",
     "@babel/preset-typescript": "^7.23.3",

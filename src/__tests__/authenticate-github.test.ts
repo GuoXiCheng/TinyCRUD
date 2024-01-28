@@ -1,11 +1,11 @@
 import { GithubUser } from "../index";
 import { USE_API, githubRequest } from "./helper/helper";
-import { mockGithubUser } from "./mock/mock-git-user";
+import { GithubMock } from "./mock/github-mock";
 
 describe('Test Authenticate Github', () => {
     beforeAll(() => {
         if (USE_API) return;
-        mockGithubUser();
+        new GithubMock().setUpMock();
     });
 
     test('Test Authenticate Github', async () => {
