@@ -41,8 +41,8 @@ export class GitlabRepository<T extends BaseModel> extends BaseRepository<T> {
      */
     async find(params?: GitlabParams): Promise<T[]> {
         const url = this.getRoute(RouteType.find);
-        const response = await this.request.get<BaseComment[]>(url, this.cleanParams(params));
-        return response.filter(item => item['system'] === false).map((item) => this.deserialize<T>(item));
+        const response = await this.request.get<BaseComment[]>(url, super.cleanParams(params));
+        return response.filter(item => item['system'] === false).map((item) => super.deserialize<T>(item));
     }
 
     /**
@@ -54,9 +54,9 @@ export class GitlabRepository<T extends BaseModel> extends BaseRepository<T> {
      */
     async updateById(id: number, data: PlainObject<T>): Promise<T> {
         const url = this.getRoute(RouteType.updateById, id);
-        const body = this.serialize<PlainObject<T>>(data);
+        const body = super.serialize<PlainObject<T>>(data);
         const response = await this.request.put<BaseComment>(url, body);
-        return this.deserialize<T>(response);
+        return super.deserialize<T>(response);
     }
 
     /**
