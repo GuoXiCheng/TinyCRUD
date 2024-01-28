@@ -16,6 +16,11 @@ export function setupGithubMock() {
 function mockGithubFind() {
     mock?.onGet(`https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/issues/${GITHUB_NUMBER}/comments`).reply(async (config) => {
         const result = readJSONSync(filename);
+        if (config.params) {
+            Object.values(config.params).forEach((item)=>{
+                expect(item).not.toBeNull();
+            })
+        }
         if (config.params?.since) {
             return [200, result.filter((item: any) => dayjs(item.created_at).isAfter(dayjs(config.params.since)))];
         }

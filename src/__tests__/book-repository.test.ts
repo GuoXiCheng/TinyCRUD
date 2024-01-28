@@ -1,7 +1,7 @@
 import dayjs from "dayjs";
 import { PlainObject } from "../index";
 import { BookModel } from "./helper/book-model";
-import { USE_API } from "./helper/helper";
+import { USE_API, mock } from "./helper/helper";
 import { Book } from "./helper/book-repository";
 import { setupGithubMock } from "./mock/mock-github-api";
 
@@ -65,7 +65,7 @@ describe('Test Book Storage', () => {
         if (USE_API) {
             await Book.deleteAll();
         } else {
-            await setupGithubMock();
+            setupGithubMock();
         }
     });
 
@@ -149,7 +149,7 @@ describe('Test Book Storage', () => {
         }
     });
 
-    (USE_API ? test: test.skip)('Test createAll Book', async () => {
+    (USE_API ? test : test.skip)('Test createAll Book', async () => {
         await Book.deleteAll();
         const result = await Book.createAll(bookList);
         expect(result.length).toEqual(10);
@@ -176,6 +176,11 @@ describe('Test Book Storage', () => {
         });
     });
 
+    test('Test find Book with params since undefined', async () => {
+        const result = await Book.find({ since: undefined });
+        expect(result.length).toBeGreaterThan(0);
+    });
+
     test('Test find Book with params page & per_page', async () => {
         const firstPage = await Book.find({ page: 1, per_page: 3 });
         expect(firstPage.length).toEqual(3);
@@ -184,9 +189,9 @@ describe('Test Book Storage', () => {
         expect(lastPage.length).toEqual(1);
     });
 
-    test('Test get Book Detail', async()=>{
+    test('Test get Book Detail', async () => {
         const result = await Book.detail();
-        const {id, issue_number, comments, created_at, updated_at} = result;
+        const { id, issue_number, comments, created_at, updated_at } = result;
         expect(id).not.toBeNull();
         expect(issue_number).not.toBeNull();
         expect(comments).not.toBeNull();

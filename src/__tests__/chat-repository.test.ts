@@ -235,6 +235,11 @@ describe('Use Gitlab Test Chat Storage', () => {
         expect(findAsc.map(item => item.id)).toEqual(findDesc.map(item => item.id).reverse());
     });
 
+    test('Test find Chat with params sort & order_by undefined', async () => {
+        const result = await Chat.find({ sort: undefined, order_by: undefined });
+        expect(result.length).toBeGreaterThan(0);
+    });
+
     test('Test get Chat Detail', async()=>{
         const result = await Chat.detail();
         const {id, issue_number, comments, created_at, updated_at} = result;

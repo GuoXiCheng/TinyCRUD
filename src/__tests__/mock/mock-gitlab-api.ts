@@ -16,6 +16,11 @@ export function setupGitlabMock() {
 function mockGitlabFind() {
     mock?.onGet(`https://gitlab.com/api/v4/projects/${GITLAB_PROJECT_ID}/issues/${GITLAB_NUMBER}/notes`).reply(async (config) => {
         const result = readJSONSync(filename);
+        if (config.params) {
+            Object.values(config.params).forEach((item)=>{
+                expect(item).not.toBeNull();
+            });
+        }
         if (config.params?.sort) {
             const sort = config.params?.sort;
             result.sort((a: any, b: any) => {

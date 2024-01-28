@@ -163,6 +163,11 @@ describe('Test User Repository', () => {
         expect(lastPage.length).toEqual(1);
     });
 
+    test('Test find user with params page & per_page undefined', async () => {
+        const result = await User.find({ page: undefined, per_page: undefined });
+        expect(result.length).toBeGreaterThan(0);
+    });
+
     test('Test get User Detail', async()=>{
         const result = await User.detail();
         const {id, issue_number, comments, created_at, updated_at} = result;

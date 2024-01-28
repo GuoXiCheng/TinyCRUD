@@ -8,8 +8,6 @@ import timezone from 'dayjs/plugin/timezone';
 import MockAdapter from 'axios-mock-adapter';
 import jsonfile from 'jsonfile';
 
-// export const mock = new MockAdapter(axios);
-
 dayjs.extend(utc);
 dayjs.extend(timezone);
 dayjs.tz.setDefault('Asia/Shanghai');

@@ -16,6 +16,11 @@ export function setupGiteeMock() {
 function mockGiteeFind() {
     mock?.onGet(`https://gitee.com/api/v5/repos/${GITEE_OWNER}/${GITEE_REPO}/issues/${GITEE_NUMBER}/comments`).reply(async (config) => {
         const result = readJSONSync(filename);
+        if (config.params) {
+            Object.values(config.params).forEach((item)=>{
+                expect(item).not.toBeNull();
+            });
+        }
         if (config.params?.since) {
             return [200, result.filter((item: any) => dayjs(item.created_at).isAfter(dayjs(config.params.since)))];
         }
