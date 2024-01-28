@@ -25,7 +25,7 @@ export class GiteeRepository<T extends BaseModel> extends BaseRepository<T> {
      * @returns A promise that resolves to an array of items.
      */
     async find(params?: GiteeParams): Promise<T[]> {
-        return super.find(this.cleanParams(params));
+        return super.find(params);
     }
 
     /**

@@ -56,11 +56,6 @@ export abstract class BaseRepository<T extends BaseModel> {
     protected cleanParams(params?: BaseParams): BaseParams | undefined {
         if (params == null) return;
         const copyParams = JSON.parse(JSON.stringify(params));
-        for (const key in copyParams) {
-            if (copyParams[key] == null) {
-                delete copyParams[key];
-            }
-        }
         return Object.keys(copyParams).length > 0 ? copyParams : undefined;
     }
 
@@ -71,7 +66,7 @@ export abstract class BaseRepository<T extends BaseModel> {
      */
     async find(params?: BaseParams): Promise<T[]> {
         const url = this.getRoute(RouteType.find);
-        const response = await this.request.get<BaseComment[]>(url, params);
+        const response = await this.request.get<BaseComment[]>(url, this.cleanParams(params));
         return response.map((item) => this.deserialize<T>(item));
     }
 
