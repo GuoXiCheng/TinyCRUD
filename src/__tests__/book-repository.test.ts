@@ -1,9 +1,9 @@
 import dayjs from "dayjs";
 import { PlainObject } from "../index";
 import { BookModel } from "./helper/book-model";
-import { USE_API, mock } from "./helper/helper";
+import { USE_API } from "./helper/helper";
 import { Book } from "./helper/book-repository";
-import { setupGithubMock } from "./mock/mock-github-api";
+import { GithubMock } from "./mock/github-mock";
 
 
 describe('Test Book Storage', () => {
@@ -65,7 +65,7 @@ describe('Test Book Storage', () => {
         if (USE_API) {
             await Book.deleteAll();
         } else {
-            setupGithubMock();
+            new GithubMock().setUpMock();
         }
     });
 

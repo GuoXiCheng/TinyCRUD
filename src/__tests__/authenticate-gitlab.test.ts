@@ -1,10 +1,10 @@
 import { USE_API, gitlabRequest } from "./helper/helper";
-import { mockGitlabUser } from "./mock/mock-git-user";
+import { GitlabMock } from "./mock/gitlab-mock";
 
 describe('Test Authenticate Gitlab', () => {
     beforeAll(() => {
         if (USE_API) return;
-        mockGitlabUser();
+        new GitlabMock().setUpMock();
     });
 
     test('Test Authenticate Gitlab', async () => {

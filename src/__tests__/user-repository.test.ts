@@ -2,8 +2,8 @@ import dayjs from "dayjs";
 import { PlainObject } from "../index";
 import { UserModel } from "./helper/user-model";
 import { User } from "./helper/user-repository";
-import { setupGiteeMock } from "./mock/mock-gitee-api";
 import { USE_API } from "./helper/helper";
+import { GiteeMock } from "./mock/gitee-mock";
 
 
 describe('Test User Repository', () => {
@@ -52,7 +52,7 @@ describe('Test User Repository', () => {
         if (USE_API) {
             await User.deleteAll();
         } else {
-            setupGiteeMock();
+            new GiteeMock().setUpMock();
         }
     });
 

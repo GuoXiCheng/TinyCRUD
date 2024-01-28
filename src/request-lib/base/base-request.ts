@@ -1,4 +1,4 @@
-import { StoragePlatform } from "../../enums";
+import { OfficialUrl, StoragePlatform } from "../../enums";
 import { GiteeUser } from '../../repository-lib/gitee/gitee-user';
 import { GithubUser } from '../../repository-lib/github/github-user';
 import { GitlabUser } from '../../repository-lib/gitlab/gitlab-user';
@@ -54,11 +54,11 @@ export abstract class BaseRequest {
     private getBaseUrl() {
         switch(this.options.platform) {
             case StoragePlatform.gitee:
-                return 'https://gitee.com';
+                return OfficialUrl.gitee;
             case StoragePlatform.github:
-                return 'https://api.github.com';
+                return OfficialUrl.github;
             case StoragePlatform.gitlab:
-                return 'https://gitlab.com';
+                return OfficialUrl.gitlab;
             default:
                 throw new Error('Unsupported Platform');
         }
