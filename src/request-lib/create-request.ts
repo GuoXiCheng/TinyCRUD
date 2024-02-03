@@ -1,12 +1,11 @@
-import { AxiosInstance } from "axios";
 import { RequestType } from "../enums";
 import { AxiosRequest } from "./axios/axios-request";
 import { WxRequest } from "./wx/wx-request";
-import { WxInstance } from "./wx/wx-interface";
 import { RequestOptions } from "./base/request-options";
+import { BaseRequest } from "./base/base-request";
 
 
-export function createRequest(options: RequestOptions) {
+export function createRequest(options: RequestOptions): BaseRequest {
     const { httpLib, httpClient } = options;
     switch (httpLib) {
         case RequestType.axios:
@@ -23,7 +22,7 @@ export function createRequest(options: RequestOptions) {
 }
 
 
-function isAxiosInstance(instance: any): instance is AxiosInstance {
+function isAxiosInstance(instance: any): Boolean {
     return instance
         && typeof instance.get === 'function'
         && typeof instance.post === 'function'
@@ -32,6 +31,6 @@ function isAxiosInstance(instance: any): instance is AxiosInstance {
         && typeof instance.patch === 'function';
 }
 
-function isWxInstance(instance: any): instance is WxInstance {
+function isWxInstance(instance: any): Boolean {
     return instance && typeof instance.request === 'function';
 }

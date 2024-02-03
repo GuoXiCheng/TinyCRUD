@@ -1,19 +1,18 @@
-import { AxiosInstance } from 'axios';
 import { BaseRequest } from '../base/base-request';
 import { RequestOptions } from '../base/request-options';
 import { RequestMethods } from '../base/request-methods';
 
 export class AxiosRequest extends BaseRequest {
-    private axios: AxiosInstance;
+    private axios: any;
     constructor(
         public options: RequestOptions
     ) {
         super(options);
-        this.axios = options.httpClient as AxiosInstance;
+        this.axios = options.httpClient;
     }
 
     protected async sendRequest<T>(method: RequestMethods, url: string, body?: string, params?: any): Promise<T> {
-        const response = await this.axios.request<T>({
+        const response = await this.axios.request({
             url,
             method,
             headers: {
