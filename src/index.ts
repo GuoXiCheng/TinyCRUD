@@ -20,7 +20,5 @@ export { GithubUser } from './repository-lib/github/github-user';
 
 export { GiteeUser } from './repository-lib/gitee/gitee-user';
 
-export { AxiosRequest } from './request-lib/axios/axios-request';
-
-export { WxRequest } from './request-lib/wx/wx-request';
+export { BaseRequest } from './request-lib/base/base-request';
 

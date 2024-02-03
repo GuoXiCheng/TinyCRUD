@@ -1,6 +1,6 @@
 {
   "name": "tiny-crud",
-  "version": "1.1.2",
+  "version": "1.1.3",
   "description": "Lightweight Data Repository Based on Git Issue API",
   "main": "dist/bundle.cjs.js",
   "module": "dist/bundle.esm.js",

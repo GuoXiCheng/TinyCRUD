@@ -3,17 +3,17 @@ import { RequestMethods } from '../base/request-methods';
 import { RequestOptions } from '../base/request-options';
 
 export class WxRequest extends BaseRequest {
-    private wx: WechatMiniprogram.Wx;
+    private wx: any;
     constructor(
         public options: RequestOptions
     ) {
         super(options);
-        this.wx = options.httpClient as WechatMiniprogram.Wx;
+        this.wx = options.httpClient;
     }
 
     protected async sendRequest<T>(method: RequestMethods, url: string, body?: string, params?: any): Promise<T> {
         return new Promise((resolve, reject) => {
-            const options: WechatMiniprogram.RequestOption = {
+            const options = {
                 url,
                 method,
                 ...(body && { data: { body } }),
