@@ -3,7 +3,7 @@ export default {
     // 站点级选项
     title: 'TinyCRUD Docs',
     description: 'Just playing around.',
-
+    base: "/",
     locales: {
         root: {
             label: '简体中文',
