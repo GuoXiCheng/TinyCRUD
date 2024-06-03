@@ -20,13 +20,28 @@ export default {
             { text: "首页", link: "/" },
             { text: "指南", link: "/guide/intro/what-is-tinycrud" }
         ],
+        outline: {
+            level: "deep",
+        },
         sidebar: {
             "/guide/": [
                 {
                     text: "简介",
                     items: [{
                         text: "什么是 TinyCRUD",
-                        link: "/intro/what-is-tinycrud"
+                        link: "/guide/intro/what-is-tinycrud"
+                    }]
+                }, {
+                    text: "安装配置",
+                    items: [{
+                        text: "准备工作",
+                        link: "/guide/install/prepare"
+                    }, {
+                        text: "创建请求",
+                        link: "/guide/install/create-request"
+                    }, {
+                        text: "应用加密",
+                        link: "/guide/install/encryption"
                     }]
                 }
             ]
