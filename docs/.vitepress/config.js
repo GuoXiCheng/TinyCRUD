@@ -33,6 +33,24 @@ export default {
                                 text: "应用加密",
                                 link: "/guide/install/encryption"
                             }]
+                        }, {
+                            text: "开始使用",
+                            items: [{
+                                text: "创建数据模型",
+                                link: "/guide/usage/create-model"
+                            }, {
+                                text: "创建数据存储库",
+                                link: "/guide/usage/create-repository"
+                            }, {
+                                text: "增删改查方法",
+                                link: "/guide/usage/crud"
+                            }]
+                        }, {
+                            text: "贡献指南",
+                            items: [{
+                                text: "构建运行",
+                                link: "/guide/contribute/build"
+                            }]
                         }
                     ]
                 }
@@ -65,6 +83,24 @@ export default {
                             }, {
                                 text: "Encryption",
                                 link: "/en/guide/install/encryption"
+                            }]
+                        }, {
+                            text: "Usage",
+                            items: [{
+                                text: "Create Model",
+                                link: "/en/guide/usage/create-model"
+                            }, {
+                                text: "Create Repository",
+                                link: "/en/guide/usage/create-repository"
+                            }, {
+                                text: "CRUD",
+                                link: "/en/guide/usage/crud"
+                            }]
+                        }, {
+                            text: "Contribute",
+                            items: [{
+                                text: "Build",
+                                link: "/en/guide/contribute/build"
                             }]
                         }
                     ]

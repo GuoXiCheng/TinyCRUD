@@ -71,7 +71,7 @@ TinyCRUD 适合用于满足小型团队或个人项目中需要简单、轻量�
 
 ## 安装
 
-```bash 
+```bash
 npm install tiny-crud
 
 ```
@@ -85,13 +85,13 @@ import axios from "axios";
 import { createRequest } from "tiny-crud";
 
 const GithubRequest = createRequest({
-    httpLib: "axios",
-    httpClient: axios,
-    accessToken: "Your Personal Access Token",
+  httpLib: "axios",
+  httpClient: axios,
+  accessToken: "Your Personal Access Token",
 
-    platform: "github",
-    owner: "Your Owner",
-    repo: "Your Repo",
+  platform: "github",
+  owner: "Your Owner",
+  repo: "Your Repo",
 });
 ```
 
@@ -101,9 +101,9 @@ const GithubRequest = createRequest({
 import { BaseModel } from "tiny-crud";
 
 export interface UserModel extends BaseModel {
-    name: string;
-    age: number;
-    gender: string;
+  name: string;
+  age: number;
+  gender: string;
 }
 ```
 
@@ -114,9 +114,9 @@ import { GithubRepository } from "tiny-crud";
 import { githubRequest } from "./github-request";
 
 export class UserRepository extends GithubRepository<UserModel> {
-    constructor() {
-        super(githubRequest, "Your Issue Number");
-    }
+  constructor() {
+    super(githubRequest, "Your Issue Number");
+  }
 }
 ```
 
@@ -127,9 +127,9 @@ const userRepository = new UserRepository();
 
 // 创建数据
 userRepository.create({
-    name: "John",
-    age: 30,
-    gender: "male",
+  name: "John",
+  age: 30,
+  gender: "male",
 });
 
 // 查询数据
@@ -137,9 +137,9 @@ userRepository.find();
 
 // 更新数据
 userRepository.updateById(1, {
-    name: "Mary",
-    age: 25,
-    gender: "female",
+  name: "Mary",
+  age: 25,
+  gender: "female",
 });
 
 // 删除数据
@@ -148,8 +148,8 @@ userRepository.deleteById(1);
 
 ## 详细文档
 
-* 更好的阅读体验以及详细的使用文档请戳 👉[TinyCRUD Docs](https://guoxicheng.top/projects/TinyCRUD-Docs/)
-* 如果对你有帮助的话可以给颗小星星，感谢支持！🌟
+- 更好的阅读体验以及详细的使用文档请戳 👉[TinyCRUD Docs](https://tinycrud.guoxicheng.top)
+- 如果对你有帮助的话可以给颗小星星，感谢支持！🌟
 
 ## License
 
