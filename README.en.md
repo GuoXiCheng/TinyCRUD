@@ -1,4 +1,4 @@
-[简体中文](README.md) | ENGLISH 
+[简体中文](README.md) | ENGLISH
 
 # TinyCRUD
 
@@ -84,13 +84,13 @@ import axios from "axios";
 import { createRequest } from "tiny-crud";
 
 const GithubRequest = createRequest({
-    httpLib: "axios",
-    httpClient: axios,
-    accessToken: "Your Personal Access Token",
+  httpLib: "axios",
+  httpClient: axios,
+  accessToken: "Your Personal Access Token",
 
-    platform: "github",
-    owner: "Your Owner",
-    repo: "Your Repo",
+  platform: "github",
+  owner: "Your Owner",
+  repo: "Your Repo",
 });
 ```
 
@@ -100,9 +100,9 @@ const GithubRequest = createRequest({
 import { BaseModel } from "tiny-crud";
 
 export interface UserModel extends BaseModel {
-    name: string;
-    age: number;
-    gender: string;
+  name: string;
+  age: number;
+  gender: string;
 }
 ```
 
@@ -113,9 +113,9 @@ import { GithubRepository } from "tiny-crud";
 import { githubRequest } from "./github-request";
 
 export class UserRepository extends GithubRepository<UserModel> {
-    constructor() {
-        super(githubRequest, "Your Issue Number");
-    }
+  constructor() {
+    super(githubRequest, "Your Issue Number");
+  }
 }
 ```
 
@@ -126,9 +126,9 @@ const userRepository = new UserRepository();
 
 // create data
 userRepository.create({
-    name: "John",
-    age: 30,
-    gender: "male",
+  name: "John",
+  age: 30,
+  gender: "male",
 });
 
 // find data
@@ -136,9 +136,9 @@ userRepository.find();
 
 // update data
 userRepository.updateById(1, {
-    name: "Mary",
-    age: 25,
-    gender: "female",
+  name: "Mary",
+  age: 25,
+  gender: "female",
 });
 
 // delete data
@@ -147,7 +147,7 @@ userRepository.deleteById(1);
 
 ## Documentation
 
-- more detailed documentation 👉[TinyCRUD Docs](https://guoxicheng.top/en/projects/TinyCRUD-Docs) 
+- more detailed documentation 👉[TinyCRUD Docs](https://tinycrud.guoxicheng.top)
 - If you find it helpful, please consider giving it a little star, and thank you for your support! 🌟
 
 ## License
